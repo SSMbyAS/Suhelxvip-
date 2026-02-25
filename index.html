@@ -1,0 +1,131 @@
+store:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUHEL X MODS  - Key Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <nav class="bg-[#1a73e8] p-4 text-white flex justify-between items-center shadow-md">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-cube"></i>
+            <span class="font-bold tracking-tight">YSM TEAM PANEL</span>
+        </div>
+        <i class="fas fa-bars"></i>
+    </nav>
+
+    <div class="max-w-md mx-auto p-4 mt-2">
+        
+        <div id="inputCard" class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div class="p-3 bg-gray-50 border-b rounded-t-lg">
+                <h2 class="text-gray-700 text-sm font-medium">Create License - Global</h2>
+            </div>
+            <div class="p-5 space-y-4">
+                <div class="flex items-center border rounded bg-gray-50 p-2">
+                    <i class="fas fa-gamepad text-gray-400 w-8 text-center"></i>
+                    <select class="w-full bg-transparent outline-none text-gray-700">
+                        <option>Free Fire</option>
+                    </select>
+                </div>
+                <div class="flex items-center border rounded bg-gray-50 p-2">
+                    <i class="fas fa-mobile-alt text-gray-400 w-8 text-center"></i>
+                    <input type="text" value="1" readonly class="w-full bg-transparent outline-none text-gray-700">
+                    <span class="text-gray-400 text-sm px-2">device</span>
+                </div>
+                <button onclick="startGeneration()" class="w-full bg-[#1a73e8] text-white py-2.5 rounded shadow hover:bg-blue-700 flex justify-center items-center gap-2">
+                    <i class="fas fa-sign-in-alt"></i> Generate
+                </button>
+            </div>
+        </div>
+
+        <div id="successCard" class="hidden animate-fade-in">
+            <div class="bg-[#e6f4ea] border border-[#ceead6] rounded-lg p-6 text-center mb-4">
+                <div class="bg-[#1e8e3e] text-white w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 shadow-sm">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2 class="text-[#137333] font-bold text-lg">Key Generated Successfully!</h2>
+                <p class="text-[#137333] text-xs">Your free key has been generated and is ready to use.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-[#1a73e8] text-white p-2 text-center text-sm font-semibold flex justify-center items-center gap-2">
+                    <i class="fas fa-key text-[10px]"></i> Key Details
+                </div>
+                
+                <div class="p-5 text-center">
+                    <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-widest uppercase">Your Key</p>
+                    <div class="flex border rounded-md overflow-hidden mb-6">
+                        <input id="keyDisplay" type="text" readonly class="w-full p-2.5 text-center font-mono font-bold text-gray-800 bg-gray-50 outline-none">
+                        <button onclick="copyKey()" class="bg-blue-50 border-l px-4 text-blue-600 hover:bg-blue-100 transition-colors">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-y-6 border-t pt-6">
+
+<div>
+                            <i class="fas fa-gamepad text-blue-500 mb-1"></i>
+                            <p class="text-[9px] text-gray-400 uppercase font-black">Game</p>
+                            <p class="text-xs font-bold text-gray-700">Free Fire</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-calendar-check text-green-500 mb-1"></i>
+                            <p class="text-[9px] text-gray-400 uppercase font-black">Duration</p>
+                            <p class="text-xs font-bold text-gray-700">1 Days</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-mobile-screen text-blue-400 mb-1"></i>
+                            <p class="text-[9px] text-gray-400 uppercase font-black">Devices</p>
+                            <p class="text-xs font-bold text-gray-700">1 Device</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-gem text-yellow-500 mb-1"></i>
+                            <p class="text-[9px] text-gray-400 uppercase font-black">Type</p>
+                            <div><span class="bg-gray-500 text-white text-[9px] px-2 py-0.5 rounded font-bold uppercase">Free</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // AAPKI DI HUYI 4 KEYS
+        const userKeys = [
+            "75482190",
+            "65487280", 
+            "72453184",
+            "245188999"
+        ];
+
+        function startGeneration() {
+            // Randomly pick one of the 4 keys
+            const selectedKey = userKeys[Math.floor(Math.random() * userKeys.length)];
+            
+            // Set the key in input box
+            document.getElementById('keyDisplay').value = selectedKey;
+            
+            // UI Toggle
+            document.getElementById('inputCard').classList.add('hidden');
+            document.getElementById('successCard').classList.remove('hidden');
+        }
+
+        function copyKey() {
+            const copyText = document.getElementById("keyDisplay");
+            copyText.select();
+            document.execCommand("copy");
+            
+            // Simple visual feedback
+            alert("Key Copied: " + copyText.value);
+        }
+    </script>
+</body>
+</html>
