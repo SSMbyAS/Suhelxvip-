@@ -21,7 +21,7 @@
         .btn { width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 15px; transition: 0.2s; }
         .btn-blue { background: var(--primary); color: white; }
         .btn-green { background: var(--success); color: white; }
-        .user-row { background: #f8fafc; padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--primary); font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .loading { opacity: 0.5; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -88,17 +88,12 @@
     </div>
 
     <div id="admin-panel" class="screen">
-        <div class="card" style="background:var(--dark); color:white; text-align:center;"><h3>Admin</h3></div>
+        <div class="card" style="background:var(--dark); color:white; text-align:center;"><h3>Admin Control</h3></div>
         <div class="card">
-            <h4>Registered Users</h4>
-            <div id="userList" style="max-height: 150px; overflow-y: auto;"></div>
-            <button class="btn" style="background:#f1f5f9; color:var(--dark); padding:8px; margin-top:10px;" onclick="refreshUserList()">Refresh List</button>
-        </div>
-        <div class="card">
-            <h4>Add Balance</h4>
+            <h4>Update User Balance</h4>
             <input type="text" id="admTarget" placeholder="Username">
             <input type="number" id="admAmount" placeholder="Amount">
-            <button class="btn btn-green" onclick="adminAddBal()">Update Balance</button>
+            <button class="btn btn-green" onclick="adminAddBal()">Add Balance</button>
             <button class="btn" style="margin-top:10px; background:#ddd;" onclick="location.reload()">Exit Admin</button>
         </div>
     </div>
@@ -106,7 +101,8 @@
     <script>
         let db = JSON.parse(localStorage.getItem('smm_db')) || {};
         let sessionUser = null;
-        const sheetURL = "https://script.google.com/macros/s/AKfycbw6XP51RdK_or-iR6MhaHjGcmnRGLVfi6XjDJLTwyBdUBQa5xRwx2vXfYynSpVyfrE7Ew/exec";
+        // Updated URL from User
+        const sheetURL = "https://script.google.com/macros/s/AKfycbxRPNReLWFEz8FNOqEA02sqQORMHFuL7E790bdoqVhynbme6pJXJ3t3jaf4qv6JFUPsAQ/exec";
 
         function toggleScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -124,32 +120,78 @@
             const u = document.getElementById('s-user').value.trim();
             const p = document.getElementById('s-pass').value.trim();
             const ph = document.getElementById('s-phone').value.trim();
-            if(!u || !p || !ph) return alert("Details bhariye!");
-            if(db[u]) return alert("Username already taken!");
+            if(!u || !p || !ph) return alert("All fields required!");
             db[u] = { pass: p, phone: ph, bal: 0.00 };
             localStorage.setItem('smm_db', JSON.stringify(db));
-            alert("Success! Now Login.");
-            toggleScreen('login-screen');
+            alert("Signup Success!"); toggleScreen('login-screen');
         }
 
         function doLogin() {
             const u = document.getElementById('l-user').value.trim();
             const p = document.getElementById('l-pass').value.trim();
-            if(u === "admin" && p === "suhel7388") {
-                toggleScreen('admin-panel');
-                refreshUserList();
-                return;
-            }
+            if(u === "admin" && p === "suhel7388") { toggleScreen('admin-panel'); return; }
             if(db[u] && db[u].pass === p) {
                 sessionUser = u;
                 document.getElementById('displayUser').innerText = u.toUpperCase();
                 updateUserUI();
                 toggleScreen('user-panel');
-            } else { alert("Invalid login!"); }
+            } else { alert("Login Failed!"); }
         }
 
         function updateUserUI() {
             document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2);
+        }
+
+        function placeOrder() {
+            const btn = document.getElementById('orderBtn');
+            const cost = parseFloat(document.getElementById('serviceSelect').value);
+            const link = document.getElementById('orderLink').value.trim();
+            const srvName = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
+
+            if(cost === 0 || !link) return alert("Fill link and select service!");
+            if(db[sessionUser].bal < cost) return alert("Low Balance!");
+
+            btn.innerText = "Processing...";
+            btn.classList.add('loading');
+
+            // Send data to Google Sheets
+            fetch(sheetURL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user: sessionUser,
+                    service: srvName,
+                    link: link,
+                    price: cost
+                })
+            }).then(() => {
+                db[sessionUser].bal -= cost;
+                localStorage.setItem('smm_db', JSON.stringify(db));
+                updateUserUI();
+                alert("Order Placed! Details sent to Sheet. ✅");
+                btn.innerText = "Place Order";
+                btn.classList.remove('loading');
+                document.getElementById('orderLink').value = "";
+            }).catch(err => {
+                alert("Error! Check internet.");
+                btn.innerText = "Place Order";
+                btn.classList.remove('loading');
+            });
+        }
+
+        function adminAddBal() {
+            const u = document.getElementById('admTarget').value.trim();
+            const a = parseFloat(document.getElementById('admAmount').value);
+            if(!db[u]) return alert("User not found!");
+            db[u].bal += a;
+            localStorage.setItem('smm_db', JSON.stringify(db));
+            alert("Balance added!");
+        }
+
+        function updatePriceText() {
+            const p = document.getElementById('serviceSelect').value;
+            document.getElementById('priceLabel').innerText = p > 0 ? "Cost: ₹" + p : "";
         }
 
         function genQR() {
@@ -163,72 +205,8 @@
         function sendRequest() {
             const a = document.getElementById('depositAmt').value;
             const utr = document.getElementById('utrInput').value;
-            if(utr.length < 12) return alert("Enter 12 Digit UTR!");
-            window.open(`https://wa.me/917388720012?text=User: ${sessionUser}, Amount: ₹${a}, UTR: ${utr}. Approve!`);
-        }
-
-        function placeOrder() {
-            const btn = document.getElementById('orderBtn');
-            const cost = parseFloat(document.getElementById('serviceSelect').value);
-            const link = document.getElementById('orderLink').value.trim();
-            const srvName = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
-
-            if(cost === 0 || !link) return alert("Sahi Link aur Service chuniye!");
-            if(db[sessionUser].bal < cost) return alert("Wallet me paise kam hain!");
-
-            // Update UI
-            btn.innerText = "Processing...";
-            btn.disabled = true;
-
-            // Send to Google Sheets
-            fetch(sheetURL, {
-                method: "POST",
-                mode: "no-cors",
-                cache: "no-cache",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    user: sessionUser,
-                    service: srvName,
-                    link: link,
-                    price: cost
-                })
-            }).then(() => {
-                db[sessionUser].bal -= cost;
-                localStorage.setItem('smm_db', JSON.stringify(db));
-                updateUserUI();
-                alert("Order Placed Successfully! Sheet updated. ✅");
-                location.reload();
-            }).catch(err => {
-                alert("Order failed! Try again.");
-                btn.innerText = "Place Order";
-                btn.disabled = false;
-            });
-        }
-
-        function refreshUserList() {
-            const list = document.getElementById('userList');
-            list.innerHTML = "";
-            for(let user in db) {
-                let div = document.createElement('div');
-                div.className = "user-row";
-                div.innerHTML = `<span><b>${user}</b><br><small>${db[user].phone}</small></span> <span>₹${db[user].bal.toFixed(2)}</span>`;
-                list.appendChild(div);
-            }
-        }
-
-        function adminAddBal() {
-            const u = document.getElementById('admTarget').value.trim();
-            const a = parseFloat(document.getElementById('admAmount').value);
-            if(!db[u]) return alert("User not found!");
-            db[u].bal += a;
-            localStorage.setItem('smm_db', JSON.stringify(db));
-            refreshUserList();
-            alert("Added ₹" + a + " to " + u);
-        }
-
-        function updatePriceText() {
-            const p = document.getElementById('serviceSelect').value;
-            document.getElementById('priceLabel').innerText = p > 0 ? "Cost: ₹" + p : "";
+            if(utr.length < 12) return alert("Invalid UTR!");
+            window.open(`https://wa.me/917388720012?text=User: ${sessionUser}, ₹${a}, UTR: ${utr}`);
         }
     </script>
 </body>
