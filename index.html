@@ -1,131 +1,179 @@
-store:
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUHEL X MODS  - Key Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SMMbyAS PANEL - Professional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; --whatsapp: #25d366; --telegram: #0088cc; --gold: #facc15; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        
+        @keyframes rainbow { 0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } 50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; } 100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } }
+        .logo-box { background: rgba(255, 255, 255, 0.1); padding: 10px 30px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
+        .changing-text { font-weight: 900; letter-spacing: 2px; font-size: 20px; animation: rainbow 3s linear infinite; }
+
+        /* Platform Tabs */
+        .platform-tabs { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; width: 100%; max-width: 450px; flex-wrap: wrap; }
+        .tab-btn { width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; background: var(--card); }
+        .tab-btn.active { transform: translateY(-5px); border-color: var(--primary); background: rgba(56, 189, 248, 0.1); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3); }
+        .tab-ig { color: #e1306c; } .tab-yt { color: #ff0000; } .tab-fb { color: #1877f2; } .tab-tg { color: #0088cc; }
+
+        .card { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); box-sizing: border-box; }
+        label { display: block; margin: 15px 0 8px; font-weight: 600; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+        input, select { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 14px; outline: none; box-sizing: border-box; transition: 0.3s; }
+        input:focus, select:focus { border-color: var(--primary); }
+        
+        .price-box { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; font-size: 30px; margin: 25px 0; border: 2px solid #38bdf8; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .btn-pay { width: 100%; background: #22c55e; color: white; border: none; padding: 18px; border-radius: 12px; cursor: pointer; font-size: 20px; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); }
+        .btn-pay:hover { background: #16a34a; transform: scale(1.02); }
+
+        #qr-section { display: none; text-align: center; margin-top: 20px; padding: 20px; border-radius: 15px; background: rgba(255,255,255,0.05); border: 1px dashed #475569; }
+        .qr-img { width: 220px; border: 8px solid white; border-radius: 15px; margin: 15px 0; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body>
 
-    <nav class="bg-[#1a73e8] p-4 text-white flex justify-between items-center shadow-md">
-        <div class="flex items-center gap-2">
-            <i class="fas fa-cube"></i>
-            <span class="font-bold tracking-tight">YSM TEAM PANEL</span>
-        </div>
-        <i class="fas fa-bars"></i>
-    </nav>
+<div class="logo-box"><span class="changing-text">SMMbyAS PANEL</span></div>
 
-    <div class="max-w-md mx-auto p-4 mt-2">
-        
-        <div id="inputCard" class="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div class="p-3 bg-gray-50 border-b rounded-t-lg">
-                <h2 class="text-gray-700 text-sm font-medium">Create License - Global</h2>
-            </div>
-            <div class="p-5 space-y-4">
-                <div class="flex items-center border rounded bg-gray-50 p-2">
-                    <i class="fas fa-gamepad text-gray-400 w-8 text-center"></i>
-                    <select class="w-full bg-transparent outline-none text-gray-700">
-                        <option>Free Fire</option>
-                    </select>
-                </div>
-                <div class="flex items-center border rounded bg-gray-50 p-2">
-                    <i class="fas fa-mobile-alt text-gray-400 w-8 text-center"></i>
-                    <input type="text" value="1" readonly class="w-full bg-transparent outline-none text-gray-700">
-                    <span class="text-gray-400 text-sm px-2">device</span>
-                </div>
-                <button onclick="startGeneration()" class="w-full bg-[#1a73e8] text-white py-2.5 rounded shadow hover:bg-blue-700 flex justify-center items-center gap-2">
-                    <i class="fas fa-sign-in-alt"></i> Generate
-                </button>
-            </div>
-        </div>
+<div class="platform-tabs">
+    <div class="tab-btn tab-ig active" onclick="filterPlatform('ig', this)"><i class="fab fa-instagram"></i></div>
+    <div class="tab-btn tab-fb" onclick="filterPlatform('fb', this)"><i class="fab fa-facebook-f"></i></div>
+    <div class="tab-btn tab-yt" onclick="filterPlatform('yt', this)"><i class="fab fa-youtube"></i></div>
+    <div class="tab-btn tab-tg" onclick="filterPlatform('tg', this)"><i class="fab fa-telegram-plane"></i></div>
+</div>
 
-        <div id="successCard" class="hidden animate-fade-in">
-            <div class="bg-[#e6f4ea] border border-[#ceead6] rounded-lg p-6 text-center mb-4">
-                <div class="bg-[#1e8e3e] text-white w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-2 shadow-sm">
-                    <i class="fas fa-check"></i>
-                </div>
-                <h2 class="text-[#137333] font-bold text-lg">Key Generated Successfully!</h2>
-                <p class="text-[#137333] text-xs">Your free key has been generated and is ready to use.</p>
-            </div>
+<div class="card">
+    <label><i class="fas fa-link"></i> Target Link</label>
+    <input type="text" id="targetLink" placeholder="https://www.instagram.com/p/...">
 
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div class="bg-[#1a73e8] text-white p-2 text-center text-sm font-semibold flex justify-center items-center gap-2">
-                    <i class="fas fa-key text-[10px]"></i> Key Details
-                </div>
-                
-                <div class="p-5 text-center">
-                    <p class="text-[10px] text-gray-400 font-bold mb-2 tracking-widest uppercase">Your Key</p>
-                    <div class="flex border rounded-md overflow-hidden mb-6">
-                        <input id="keyDisplay" type="text" readonly class="w-full p-2.5 text-center font-mono font-bold text-gray-800 bg-gray-50 outline-none">
-                        <button onclick="copyKey()" class="bg-blue-50 border-l px-4 text-blue-600 hover:bg-blue-100 transition-colors">
-                            <i class="far fa-copy"></i>
-                        </button>
-                    </div>
+    <label><i class="fas fa-list"></i> Category</label>
+    <select id="categorySelect" onchange="loadServices()">
+        <option value="">-- Select Platform --</option>
+        <option value="ig_views">Instagram Views 🎬</option>
+        <option value="ig_likes">Instagram Likes ❤️</option>
+        <option value="ig_f_no">Instagram Followers 👥</option>
+        <option value="yt_views">YouTube Views 🎬</option>
+        <option value="yt_subs">YouTube Subscribers 🔴</option>
+        <option value="fb_likes">Facebook Post Likes 👍</option>
+        <option value="tg_members">Telegram Members 🚀</option>
+    </select>
 
-                    <div class="grid grid-cols-2 gap-y-6 border-t pt-6">
+    <label><i class="fas fa-box-open"></i> Select Package</label>
+    <select id="serviceSelect" onchange="updatePrice()"><option value="">Select Category First</option></select>
 
-<div>
-                            <i class="fas fa-gamepad text-blue-500 mb-1"></i>
-                            <p class="text-[9px] text-gray-400 uppercase font-black">Game</p>
-                            <p class="text-xs font-bold text-gray-700">Free Fire</p>
-                        </div>
-                        <div>
-                            <i class="fas fa-calendar-check text-green-500 mb-1"></i>
-                            <p class="text-[9px] text-gray-400 uppercase font-black">Duration</p>
-                            <p class="text-xs font-bold text-gray-700">1 Days</p>
-                        </div>
-                        <div>
-                            <i class="fas fa-mobile-screen text-blue-400 mb-1"></i>
-                            <p class="text-[9px] text-gray-400 uppercase font-black">Devices</p>
-                            <p class="text-xs font-bold text-gray-700">1 Device</p>
-                        </div>
-                        <div>
-                            <i class="fas fa-gem text-yellow-500 mb-1"></i>
-                            <p class="text-[9px] text-gray-400 uppercase font-black">Type</p>
-                            <div><span class="bg-gray-500 text-white text-[9px] px-2 py-0.5 rounded font-bold uppercase">Free</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="price-box" id="priceDisplay">₹0.00</div>
+    
+    <button class="btn-pay" id="payBtn" onclick="showQR()">Place Order Now</button>
 
+    <div id="qr-section">
+        <p style="color:var(--gold); font-weight:bold; font-size: 18px;">Total Payable: ₹<span id="finalAmt">0.00</span></p>
+        <img src="" id="qrImg" class="qr-img">
+        <p style="font-size:12px; color: #94a3b8;">UPI ID: 7388720012@fam</p>
+        <input type="text" id="utr" placeholder="Enter 12 Digit UTR Number" maxlength="12">
+        <button class="btn-pay" style="background:#2563eb; margin-top: 10px;" onclick="submitOrder()">Confirm Payment</button>
     </div>
+</div>
 
-    <script>
-        // AAPKI DI HUYI 4 KEYS
-        const userKeys = [
-            "75482190",
-            "65487280", 
-            "72453184",
-            "245188999"
-        ];
+<script>
+    const serviceData = {
+        "ig_views": [
+            {name: "1k Views (Cheapest)", price: 1}, 
+            {name: "10k Views (Super Fast)", price: 8},
+            {name: "50k Views (Bulk)", price: 35},
+            {name: "100k Views (Viral)", price: 60}
+        ],
+        "ig_likes": [
+            {name: "1k Real Likes", price: 8},
+            {name: "5k Likes (Mix)", price: 35},
+            {name: "10k Likes (Indian)", price: 120}
+        ],
+        "ig_f_no": [
+            {name: "1k Followers (Low Drop)", price: 25},
+            {name: "5k Followers (Best)", price: 110},
+            {name: "10k Followers (Non-Drop)", price: 210}
+        ],
+        "yt_views": [
+            {name: "1k Views (Non-Drop)", price: 75},
+            {name: "5k Views (Ads Speed)", price: 340}
+        ],
+        "yt_subs": [
+            {name: "100 Subscribers", price: 15},
+            {name: "500 Subscribers", price: 60},
+            {name: "1k Subscribers (Cheap)", price: 100},
+            {name: "1k Subscribers (Refill)", price: 1600}
+        ],
+        "fb_likes": [
+            {name: "1k Post Likes", price: 12},
+            {name: "5k Post Likes", price: 55}
+        ],
+        "tg_members": [
+            {name: "1k Channel Members", price: 28},
+            {name: "5k Members (Super Fast)", price: 130}
+        ]
+    };
 
-        function startGeneration() {
-            // Randomly pick one of the 4 keys
-            const selectedKey = userKeys[Math.floor(Math.random() * userKeys.length)];
-            
-            // Set the key in input box
-            document.getElementById('keyDisplay').value = selectedKey;
-            
-            // UI Toggle
-            document.getElementById('inputCard').classList.add('hidden');
-            document.getElementById('successCard').classList.remove('hidden');
+    function filterPlatform(platform, element) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+        const catSelect = document.getElementById("categorySelect");
+        const options = catSelect.options;
+
+        for (let i = 0; i < options.length; i++) {
+            const val = options[i].value;
+            if (val === "" || val.startsWith(platform)) {
+                options[i].style.display = "block";
+            } else {
+                options[i].style.display = "none";
+            }
         }
+        catSelect.selectedIndex = 0;
+        loadServices();
+    }
 
-        function copyKey() {
-            const copyText = document.getElementById("keyDisplay");
-            copyText.select();
-            document.execCommand("copy");
-            
-            // Simple visual feedback
-            alert("Key Copied: " + copyText.value);
+    function loadServices() {
+        const cat = document.getElementById("categorySelect").value;
+        const sSelect = document.getElementById("serviceSelect");
+        sSelect.innerHTML = '<option value="">-- Select Package --</option>';
+        if(cat && serviceData[cat]) {
+            serviceData[cat].forEach(s => {
+                let opt = document.createElement("option");
+                opt.value = JSON.stringify({name: s.name, price: s.price});
+                opt.text = `${s.name} - ₹${s.price}`;
+                sSelect.add(opt);
+            });
         }
-    </script>
+        updatePrice();
+    }
+
+    function updatePrice() {
+        const val = document.getElementById("serviceSelect").value;
+        const display = document.getElementById("priceDisplay");
+        const final = document.getElementById("finalAmt");
+        if(val) {
+            const s = JSON.parse(val);
+            display.innerText = "₹" + s.price.toFixed(2);
+            final.innerText = s.price.toFixed(2);
+            document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=7388720012@fam%26am=${s.price}%26cu=INR`;
+        } else {
+            display.innerText = "₹0.00";
+        }
+    }
+
+    function showQR() {
+        if(!document.getElementById("targetLink").value) return alert("Bhai, Target Link toh daalo!");
+        if(!document.getElementById("serviceSelect").value) return alert("Pehle package select karein!");
+        document.getElementById("qr-section").style.display = "block";
+        document.getElementById("payBtn").style.display = "none";
+    }
+
+    function submitOrder() {
+        let utr = document.getElementById("utr").value.trim();
+        if(utr.length < 12) return alert("Invalid UTR! 12 digit ka number daalo.");
+        alert("Payment Received! ✅ Aapka order 10-30 minute mein start ho jayega.");
+        location.reload();
+    }
+</script>
 </body>
 </html>
+
