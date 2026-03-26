@@ -3,292 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS PANEL - Professional</title>
+    <title>SMMbyAS - Add Funds Mode</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* MRSMM.org Color Palette & Fonts */
-        :root { 
-            --primary: #3b82f6; 
-            --bg: #111827; 
-            --card: #1f2937; 
-            --text-main: #f3f4f6; 
-            --text-sub: #9ca3af; 
-            --whatsapp: #22c55e; 
-            --telegram: #0088cc; 
-            --youtube: #ff0000; 
-            --gold: #facc15; 
-        }
-        
-        body { 
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-            background: var(--bg); 
-            color: var(--text-main); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px; 
-            margin: 0; 
-            padding-bottom: 120px; 
-            overflow-x: hidden; 
-        }
-        
-        @keyframes rainbow { 0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } 50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; } 100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } }
-        .logo-box { background: rgba(255, 255, 255, 0.05); padding: 12px 35px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 25px; }
-        .changing-text { font-weight: 900; letter-spacing: 2px; font-size: 22px; animation: rainbow 3s linear infinite; }
+        :root { --primary: #3b82f6; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
 
-        /* Platform Selection Tabs (MRSMM.org Copy) */
-        .platform-tabs { 
-            display: flex; 
-            gap: 12px; 
-            justify-content: center; 
-            margin-bottom: 25px; 
-            width: 100%; 
-            max-width: 480px; 
-            flex-wrap: wrap; 
-        }
-        .tab-btn { 
-            width: 65px; 
-            height: 65px; 
-            border-radius: 18px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 26px; 
-            cursor: pointer; 
-            border: 2px solid rgba(255,255,255,0.08); 
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            background: var(--card); 
-        }
-        .tab-btn:hover, .tab-btn.active { 
-            transform: translateY(-7px); 
-            border-color: var(--primary); 
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4); 
-            background: rgba(59, 130, 246, 0.1);
-        }
-        .tab-ig { color: #e1306c; } 
-        .tab-yt { color: #ff0000; } 
-        .tab-fb { color: #1877f2; } 
-        .tab-tg { color: #0088cc; }
-        .tab-tw { color: #1da1f2; }
-        .tab-all { color: #a855f7; }
+        /* MRSMM style Stats Cards */
+        .stats-container { width: 100%; max-width: 450px; display: grid; gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: var(--card); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .stat-icon { font-size: 24px; color: var(--primary); background: #eff6ff; padding: 12px; border-radius: 10px; }
+        .stat-info h2 { margin: 0; font-size: 20px; font-weight: 800; }
+        .stat-info p { margin: 0; font-size: 12px; color: #6b7280; font-weight: 600; }
 
-        /* Main Card Design */
-        .card { 
-            background: var(--card); 
-            padding: 25px; 
-            border-radius: 20px; 
-            width: 100%; 
-            max-width: 480px; 
-            border: 1px solid rgba(255,255,255,0.08); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
-            box-sizing: border-box; 
-        }
-        label { 
-            display: block; 
-            margin: 15px 0 8px; 
-            font-weight: 600; 
-            font-size: 13px; 
-            color: var(--text-sub); 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-        }
-        input, select { 
-            width: 100%; 
-            padding: 15px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            background: rgba(0,0,0,0.15); 
-            color: var(--text-main); 
-            font-size: 15px; 
-            outline: none; 
-            box-sizing: border-box; 
-            transition: 0.3s; 
-        }
-        input:focus, select:focus { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); 
-        }
+        /* Main Card */
+        .card { background: var(--card); padding: 20px; border-radius: 15px; width: 100%; max-width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); box-sizing: border-box; }
+        .header { font-size: 18px; font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+
+        /* Payment Form */
+        label { display: block; margin: 15px 0 8px; font-size: 13px; font-weight: 600; color: #4b5563; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d1d5db; background: #f9fafb; font-size: 14px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); background: white; }
+
+        /* QR Section */
+        #qr-box { margin-top: 20px; text-align: center; display: none; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px dashed #cbd5e1; }
+        .qr-code { width: 200px; border: 5px solid white; border-radius: 10px; margin-bottom: 10px; }
         
-        .price-box { 
-            background: linear-gradient(135deg, #2563eb, #3b82f6); 
-            color: white; 
-            padding: 22px; 
-            border-radius: 15px; 
-            text-align: center; 
-            font-weight: bold; 
-            font-size: 32px; 
-            margin: 30px 0; 
-            border: 2px solid #60a5fa; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
-        }
-        .btn-pay { 
-            width: 100%; 
-            background: #22c55e; 
-            color: white; 
-            border: none; 
-            padding: 18px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-size: 20px; 
-            font-weight: bold; 
-            transition: 0.3s; 
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); 
-        }
-        .btn-pay:hover { background: #16a34a; transform: scale(1.02); }
+        .btn-pay { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-pay:hover { background: #2563eb; }
 
-        #qr-section { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 15px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15); }
-        .qr-img { width: 230px; border: 10px solid white; border-radius: 15px; margin: 15px 0; }
+        /* Description Box like MRSMM */
+        .desc-box { background: #fffbeb; border: 1px solid #fef3c7; padding: 15px; border-radius: 10px; margin-top: 20px; width: 100%; max-width: 450px; box-sizing: border-box; }
+        .desc-box h4 { margin: 0 0 10px; color: #92400e; font-size: 14px; }
+        .desc-box p { font-size: 12px; color: #b45309; line-height: 1.6; margin: 0; }
     </style>
 </head>
 <body>
 
-<div class="logo-box"><span class="changing-text">SMMbyAS PANEL</span></div>
-
-<div class="platform-tabs">
-    <div class="tab-btn tab-all active" onclick="filterPlatform('all', this)"><i class="fas fa-th-large"></i></div>
-    <div class="tab-btn tab-ig" onclick="filterPlatform('ig', this)"><i class="fab fa-instagram"></i></div>
-    <div class="tab-btn tab-yt" onclick="filterPlatform('yt', this)"><i class="fab fa-youtube"></i></div>
-    <div class="tab-btn tab-fb" onclick="filterPlatform('fb', this)"><i class="fab fa-facebook-f"></i></div>
-    <div class="tab-btn tab-tg" onclick="filterPlatform('tg', this)"><i class="fab fa-telegram-plane"></i></div>
-    <div class="tab-btn tab-tw" onclick="filterPlatform('tw', this)"><i class="fab fa-twitter"></i></div>
-</div>
-
-<div class="card">
-    <label><i class="fas fa-link"></i> Target Link</label>
-    <input type="text" id="targetLink" placeholder="Paste link here...">
-
-    <label><i class="fas fa-list"></i> Category</label>
-    <select id="categorySelect" onchange="loadServices()">
-        <option value="">-- Select Platform --</option>
-        
-        <optgroup label="Instagram">
-            <option value="ig_views">Instagram Views 🎬</option>
-            <option value="ig_likes">Instagram Likes ❤️</option>
-            <option value="ig_followers">Instagram Followers 👥</option>
-        </optgroup>
-        
-        <optgroup label="YouTube">
-            <option value="yt_subs">YouTube Subscribers 🔴</option>
-            <option value="yt_views">YouTube Views 🎬</option>
-        </optgroup>
-        
-        <optgroup label="Facebook">
-            <option value="fb_likes">Facebook Post Likes 👍</option>
-            <option value="fb_followers">Facebook Followers 👥</option>
-        </optgroup>
-        
-        <optgroup label="Telegram">
-            <option value="tg_members">Telegram Channel Members 🚀</option>
-            <option value="tg_views">Telegram Post Views 👀</option>
-        </optgroup>
-        
-        <optgroup label="Twitter (X)">
-            <option value="tw_followers">Twitter Followers 👥</option>
-            <option value="tw_likes">Twitter Post Likes ❤️</option>
-        </optgroup>
-    </select>
-
-    <label><i class="fas fa-box-open"></i> Select Package</label>
-    <select id="serviceSelect" onchange="updatePrice()"><option value="">Select Category First</option></select>
-
-    <div class="price-box" id="priceDisplay">₹0.00</div>
-    
-    <button class="btn-pay" id="payBtn" onclick="showQR()">Place Order Now</button>
-
-    <div id="qr-section">
-        <p style="color:var(--gold); font-weight:bold; font-size: 18px;">Payable: ₹<span id="finalAmt">0.00</span></p>
-        <img src="" id="qrImg" class="qr-img">
-        <p style="font-size:12px; color: var(--text-sub);">UPI ID: 7388720012@fam</p>
-        <input type="text" id="utr" placeholder="Enter 12 Digit UTR Number" maxlength="12">
-        <button class="btn-pay" style="background:#2563eb; margin-top: 10px;" onclick="submitOrder()">Confirm Payment</button>
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-wallet"></i></div>
+            <div class="stat-info">
+                <h2 id="balance">₹0.00</h2>
+                <p>ACCOUNT BALANCE</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-shopping-basket"></i></div>
+            <div class="stat-info">
+                <h2 id="spent">₹4.08</h2>
+                <p>SPENT BALANCE</p>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-    // Comprehensive Service Data
-    const serviceData = {
-        "ig_views": [{name: "1k Views (Fast)", price: 1}, {name: "10k Views", price: 8}, {name: "100k Views", price: 65}],
-        "ig_likes": [{name: "1k Likes (Real)", price: 10}, {name: "5k Likes (Mixed)", price: 45}],
-        "ig_followers": [{name: "1k Followers (No-Drop)", price: 35}, {name: "10k Followers", price: 320}],
+    <div class="card">
+        <div class="header"><i class="fas fa-plus-circle" style="color:var(--primary)"></i> Add Funds</div>
         
-        "yt_subs": [{name: "1k Subscribers (Fast)", price: 150}, {name: "1k Subscribers (Refill)", price: 1750}],
-        "yt_views": [{name: "1k Views (Non-Drop)", price: 85}, {name: "5k Views", price: 410}],
-        
-        "fb_likes": [{name: "1k Post Likes", price: 15}, {name: "5k Post Likes", price: 70}],
-        "fb_followers": [{name: "1k Page Followers", price: 60}],
-        
-        "tg_members": [{name: "1k Channel Members", price: 28}, {name: "10k Channel Members", price: 260}],
-        "tg_views": [{name: "1k Post Views (Real)", price: 3}, {name: "10k Views", price: 25}],
-        
-        "tw_followers": [{name: "1k Followers (X)", price: 110}],
-        "tw_likes": [{name: "1k Post Likes", price: 90}]
-    };
+        <label>Method</label>
+        <select id="payMethod">
+            <option value="upi">UPI / QR Code (Manual)</option>
+        </select>
 
-    function filterPlatform(platform, element) {
-        // Active button visual change
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        element.classList.add('active');
+        <label>Amount (INR)</label>
+        <input type="number" id="amount" placeholder="Min: ₹10" oninput="updateQR()">
 
-        const catSelect = document.getElementById("categorySelect");
-        const options = catSelect.options;
+        <div id="qr-box">
+            <p style="font-size: 12px; font-weight: bold; color: #1e293b;">Scan & Pay</p>
+            <img id="qrImg" class="qr-code" src="">
+            <p style="font-size: 11px; color: #64748b;">UPI ID: 7388720012@fam</p>
+        </div>
 
-        // Filtering logic: match the start of the category value
-        for (let i = 0; i < options.length; i++) {
-            const val = options[i].value;
-            if (val === "" || platform === "all" || val.startsWith(platform)) {
-                options[i].style.display = "block";
+        <label>Transaction ID / UTR</label>
+        <input type="text" id="utr" placeholder="12 Digit UTR Number">
+
+        <button class="btn-pay" onclick="submitFundRequest()">Submit Request</button>
+    </div>
+
+    <div class="desc-box">
+        <h4><i class="fas fa-exclamation-triangle"></i> Instructions:</h4>
+        <p>
+            1. Amount daalein aur QR code scan karein.<br>
+            2. Payment karne ke baad 12-digit UTR number yahan enter karein.<br>
+            3. 5-10 minute mein aapka balance update ho jayega.<br>
+            4. Kisi bhi problem ke liye WhatsApp par contact karein.
+        </p>
+    </div>
+
+    <script>
+        function updateQR() {
+            let amt = document.getElementById("amount").value;
+            let qrBox = document.getElementById("qr-box");
+            let qrImg = document.getElementById("qrImg");
+
+            if(amt >= 10) {
+                qrBox.style.display = "block";
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=7388720012@fam%26am=${amt}%26cu=INR`;
             } else {
-                options[i].style.display = "none";
+                qrBox.style.display = "none";
             }
         }
-        catSelect.selectedIndex = 0;
-        loadServices();
-    }
 
-    function loadServices() {
-        const cat = document.getElementById("categorySelect").value;
-        const sSelect = document.getElementById("serviceSelect");
-        sSelect.innerHTML = '<option value="">-- Choose Package --</option>';
-        if(cat && serviceData[cat]) {
-            serviceData[cat].forEach(s => {
-                let opt = document.createElement("option");
-                opt.value = JSON.stringify({name: s.name, price: s.price});
-                opt.text = `${s.name} - ₹${s.price}`;
-                sSelect.add(opt);
-            });
+        function submitFundRequest() {
+            let utr = document.getElementById("utr").value.trim();
+            let amt = document.getElementById("amount").value;
+
+            if(amt < 10) return alert("Bhai, kam se kam ₹10 add karo!");
+            if(utr.length < 12) return alert("Sahi UTR number daalein!");
+
+            // Google Sheet URL (Wahi use karein jo pehle banaya tha)
+            const sheetURL = `https://script.google.com/macros/s/AKfycbzcNBM_wOhioW1k3NWbLKiWTSax3Y8H3wgNyRByQhq2YC8uWzUY539QBtvkA9Qvna9C/exec?type=FUND&amount=${amt}&utr=${utr}&date=${new Date().toLocaleString()}`;
+
+            alert("Request Sent! ✅ Admin check karke 10 min mein balance add kar dega.");
+            window.location.reload();
         }
-        updatePrice();
-    }
-
-    function updatePrice() {
-        const val = document.getElementById("serviceSelect").value;
-        const display = document.getElementById("priceDisplay");
-        const final = document.getElementById("finalAmt");
-        if(val) {
-            const s = JSON.parse(val);
-            display.innerText = "₹" + s.price.toFixed(2);
-            final.innerText = s.price.toFixed(2);
-            // Automatic QR generation based on price
-            document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=7388720012@fam%26am=${s.price}%26cu=INR`;
-        } else {
-            display.innerText = "₹0.00";
-        }
-    }
-
-    function showQR() {
-        if(!document.getElementById("targetLink").value) return alert("Target link toh daalo!");
-        if(!document.getElementById("serviceSelect").value) return alert("Pehle package select karein!");
-        document.getElementById("qr-section").style.display = "block";
-        document.getElementById("payBtn").style.display = "none";
-    }
-
-    function submitOrder() {
-        let utr = document.getElementById("utr").value.trim();
-        if(utr.length < 12) return alert("Please, 12 digit UTR number sahi se daalo!");
-        alert("Payment Success! ✅ Order process ho raha hai.");
-        location.reload();
-    }
-</script>
+    </script>
 </body>
 </html>
 
