@@ -3,40 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS PANEL</title>
+    <title>SMMbyAS PANEL - Professional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; --whatsapp: #25d366; --telegram: #0088cc; --youtube: #ff0000; --gold: #facc15; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; padding-bottom: 150px; overflow-x: hidden; }
+        /* MRSMM.org Color Palette & Fonts */
+        :root { 
+            --primary: #3b82f6; 
+            --bg: #111827; 
+            --card: #1f2937; 
+            --text-main: #f3f4f6; 
+            --text-sub: #9ca3af; 
+            --whatsapp: #22c55e; 
+            --telegram: #0088cc; 
+            --youtube: #ff0000; 
+            --gold: #facc15; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 20px; 
+            margin: 0; 
+            padding-bottom: 120px; 
+            overflow-x: hidden; 
+        }
         
         @keyframes rainbow { 0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } 50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; } 100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } }
-        .logo-box { background: rgba(255, 255, 255, 0.1); padding: 8px 25px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.2); margin-bottom: 15px; }
-        .changing-text { font-weight: 900; letter-spacing: 2px; font-size: 18px; animation: rainbow 3s linear infinite; }
+        .logo-box { background: rgba(255, 255, 255, 0.05); padding: 12px 35px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 25px; }
+        .changing-text { font-weight: 900; letter-spacing: 2px; font-size: 22px; animation: rainbow 3s linear infinite; }
 
-        /* Platform Tabs Design (MRSMM Style) */
-        .platform-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; width: 100%; max-width: 450px; flex-wrap: wrap; }
-        .tab-btn { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; background: var(--card); }
-        .tab-btn:hover, .tab-btn.active { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3); }
-        .tab-ig { color: #e1306c; } .tab-fb { color: #1877f2; } .tab-yt { color: #ff0000; } .tab-tg { color: #0088cc; }
+        /* Platform Selection Tabs (MRSMM.org Copy) */
+        .platform-tabs { 
+            display: flex; 
+            gap: 12px; 
+            justify-content: center; 
+            margin-bottom: 25px; 
+            width: 100%; 
+            max-width: 480px; 
+            flex-wrap: wrap; 
+        }
+        .tab-btn { 
+            width: 65px; 
+            height: 65px; 
+            border-radius: 18px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 26px; 
+            cursor: pointer; 
+            border: 2px solid rgba(255,255,255,0.08); 
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            background: var(--card); 
+        }
+        .tab-btn:hover, .tab-btn.active { 
+            transform: translateY(-7px); 
+            border-color: var(--primary); 
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4); 
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .tab-ig { color: #e1306c; } 
+        .tab-yt { color: #ff0000; } 
+        .tab-fb { color: #1877f2; } 
+        .tab-tg { color: #0088cc; }
+        .tab-tw { color: #1da1f2; }
+        .tab-all { color: #a855f7; }
 
-        .card { background: var(--card); padding: 20px; border-radius: 15px; width: 100%; max-width: 450px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3); box-sizing: border-box; }
-        label { display: block; margin: 12px 0 6px; font-weight: 600; font-size: 12px; color: #94a3b8; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-size: 14px; outline: none; box-sizing: border-box; }
-        .price-box { background: #0ea5e9; color: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 26px; margin: 20px 0; border: 2px solid #38bdf8; }
-        .btn-pay { width: 100%; background: #22c55e; color: white; border: none; padding: 16px; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
-        #qr-section { display: none; text-align: center; margin-top: 20px; border-top: 1px dashed #334155; padding-top: 15px; }
-        .qr-img { width: 200px; border: 5px solid white; border-radius: 10px; margin: 10px 0; }
+        /* Main Card Design */
+        .card { 
+            background: var(--card); 
+            padding: 25px; 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 480px; 
+            border: 1px solid rgba(255,255,255,0.08); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+            box-sizing: border-box; 
+        }
+        label { 
+            display: block; 
+            margin: 15px 0 8px; 
+            font-weight: 600; 
+            font-size: 13px; 
+            color: var(--text-sub); 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        input, select { 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            background: rgba(0,0,0,0.15); 
+            color: var(--text-main); 
+            font-size: 15px; 
+            outline: none; 
+            box-sizing: border-box; 
+            transition: 0.3s; 
+        }
+        input:focus, select:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); 
+        }
+        
+        .price-box { 
+            background: linear-gradient(135deg, #2563eb, #3b82f6); 
+            color: white; 
+            padding: 22px; 
+            border-radius: 15px; 
+            text-align: center; 
+            font-weight: bold; 
+            font-size: 32px; 
+            margin: 30px 0; 
+            border: 2px solid #60a5fa; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+        }
+        .btn-pay { 
+            width: 100%; 
+            background: #22c55e; 
+            color: white; 
+            border: none; 
+            padding: 18px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-size: 20px; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); 
+        }
+        .btn-pay:hover { background: #16a34a; transform: scale(1.02); }
+
+        #qr-section { display: none; text-align: center; margin-top: 25px; padding: 25px; border-radius: 15px; background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.15); }
+        .qr-img { width: 230px; border: 10px solid white; border-radius: 15px; margin: 15px 0; }
     </style>
 </head>
 <body>
 
-<div class="logo-box"><span class="changing-text">SMMbyAS</span></div>
+<div class="logo-box"><span class="changing-text">SMMbyAS PANEL</span></div>
 
 <div class="platform-tabs">
-    <div class="tab-btn tab-ig active" onclick="filterPlatform('ig', this)"><i class="fab fa-instagram"></i></div>
-    <div class="tab-btn tab-fb" onclick="filterPlatform('fb', this)"><i class="fab fa-facebook-f"></i></div>
+    <div class="tab-btn tab-all active" onclick="filterPlatform('all', this)"><i class="fas fa-th-large"></i></div>
+    <div class="tab-btn tab-ig" onclick="filterPlatform('ig', this)"><i class="fab fa-instagram"></i></div>
     <div class="tab-btn tab-yt" onclick="filterPlatform('yt', this)"><i class="fab fa-youtube"></i></div>
+    <div class="tab-btn tab-fb" onclick="filterPlatform('fb', this)"><i class="fab fa-facebook-f"></i></div>
     <div class="tab-btn tab-tg" onclick="filterPlatform('tg', this)"><i class="fab fa-telegram-plane"></i></div>
+    <div class="tab-btn tab-tw" onclick="filterPlatform('tw', this)"><i class="fab fa-twitter"></i></div>
 </div>
 
 <div class="card">
@@ -45,14 +159,33 @@
 
     <label><i class="fas fa-list"></i> Category</label>
     <select id="categorySelect" onchange="loadServices()">
-        <option value="">-- Choose Category --</option>
-        <option value="ig_views">Instagram Views 🎬</option>
-        <option value="ig_likes">Instagram Likes ❤️</option>
-        <option value="ig_f_no">Instagram Followers 👥</option>
-        <option value="yt_subs">YouTube Subscribers 🔴</option>
-        <option value="yt_views">YouTube Views 🎬</option>
-        <option value="fb_likes">Facebook Post Likes 👍</option>
-        <option value="tg_members">Telegram Members 🚀</option>
+        <option value="">-- Select Platform --</option>
+        
+        <optgroup label="Instagram">
+            <option value="ig_views">Instagram Views 🎬</option>
+            <option value="ig_likes">Instagram Likes ❤️</option>
+            <option value="ig_followers">Instagram Followers 👥</option>
+        </optgroup>
+        
+        <optgroup label="YouTube">
+            <option value="yt_subs">YouTube Subscribers 🔴</option>
+            <option value="yt_views">YouTube Views 🎬</option>
+        </optgroup>
+        
+        <optgroup label="Facebook">
+            <option value="fb_likes">Facebook Post Likes 👍</option>
+            <option value="fb_followers">Facebook Followers 👥</option>
+        </optgroup>
+        
+        <optgroup label="Telegram">
+            <option value="tg_members">Telegram Channel Members 🚀</option>
+            <option value="tg_views">Telegram Post Views 👀</option>
+        </optgroup>
+        
+        <optgroup label="Twitter (X)">
+            <option value="tw_followers">Twitter Followers 👥</option>
+            <option value="tw_likes">Twitter Post Likes ❤️</option>
+        </optgroup>
     </select>
 
     <label><i class="fas fa-box-open"></i> Select Package</label>
@@ -60,45 +193,49 @@
 
     <div class="price-box" id="priceDisplay">₹0.00</div>
     
-    <button class="btn-pay" id="payBtn" onclick="showQR()">Place Order</button>
+    <button class="btn-pay" id="payBtn" onclick="showQR()">Place Order Now</button>
 
     <div id="qr-section">
-        <p style="color:var(--gold); font-weight:bold;">Amount: ₹<span id="finalAmt">0.00</span></p>
+        <p style="color:var(--gold); font-weight:bold; font-size: 18px;">Payable: ₹<span id="finalAmt">0.00</span></p>
         <img src="" id="qrImg" class="qr-img">
-        <p style="font-size:12px;">UPI: 7388720012@fam</p>
-        <input type="text" id="utr" placeholder="Enter 12 Digit UTR Number">
-        <button class="btn-pay" style="background:#2563eb;" onclick="submitOrder()">Confirm Payment</button>
+        <p style="font-size:12px; color: var(--text-sub);">UPI ID: 7388720012@fam</p>
+        <input type="text" id="utr" placeholder="Enter 12 Digit UTR Number" maxlength="12">
+        <button class="btn-pay" style="background:#2563eb; margin-top: 10px;" onclick="submitOrder()">Confirm Payment</button>
     </div>
 </div>
 
 <script>
-    // Service Data with Prices
+    // Comprehensive Service Data
     const serviceData = {
-        "ig_views": [
-            {name: "1k Views (Cheapest)", price: 1}, 
-            {name: "10k Views", price: 4},
-            {name: "50k Views", price: 15},
-            {name: "100k Views", price: 21}
-        ],
-        "ig_likes": [{name: "1k Real Likes", price: 8}, {name: "1k Indian Likes", price: 12}],
-        "ig_f_no": [{name: "1k Followers (No Drop)", price: 25}],
-        "yt_subs": [{name: "100 Subs", price: 15}, {name: "1k Subs (Cheap)", price: 100}],
-        "yt_views": [{name: "1k Views", price: 75}],
-        "fb_likes": [{name: "1k Post Likes", price: 12}],
-        "tg_members": [{name: "1k Channel Members", price: 28}]
+        "ig_views": [{name: "1k Views (Fast)", price: 1}, {name: "10k Views", price: 8}, {name: "100k Views", price: 65}],
+        "ig_likes": [{name: "1k Likes (Real)", price: 10}, {name: "5k Likes (Mixed)", price: 45}],
+        "ig_followers": [{name: "1k Followers (No-Drop)", price: 35}, {name: "10k Followers", price: 320}],
+        
+        "yt_subs": [{name: "1k Subscribers (Fast)", price: 150}, {name: "1k Subscribers (Refill)", price: 1750}],
+        "yt_views": [{name: "1k Views (Non-Drop)", price: 85}, {name: "5k Views", price: 410}],
+        
+        "fb_likes": [{name: "1k Post Likes", price: 15}, {name: "5k Post Likes", price: 70}],
+        "fb_followers": [{name: "1k Page Followers", price: 60}],
+        
+        "tg_members": [{name: "1k Channel Members", price: 28}, {name: "10k Channel Members", price: 260}],
+        "tg_views": [{name: "1k Post Views (Real)", price: 3}, {name: "10k Views", price: 25}],
+        
+        "tw_followers": [{name: "1k Followers (X)", price: 110}],
+        "tw_likes": [{name: "1k Post Likes", price: 90}]
     };
 
-    // Platform Filtering Logic
     function filterPlatform(platform, element) {
+        // Active button visual change
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
 
         const catSelect = document.getElementById("categorySelect");
         const options = catSelect.options;
 
+        // Filtering logic: match the start of the category value
         for (let i = 0; i < options.length; i++) {
             const val = options[i].value;
-            if (val === "" || val.startsWith(platform)) {
+            if (val === "" || platform === "all" || val.startsWith(platform)) {
                 options[i].style.display = "block";
             } else {
                 options[i].style.display = "none";
@@ -125,26 +262,30 @@
 
     function updatePrice() {
         const val = document.getElementById("serviceSelect").value;
+        const display = document.getElementById("priceDisplay");
+        const final = document.getElementById("finalAmt");
         if(val) {
             const s = JSON.parse(val);
-            document.getElementById("priceDisplay").innerText = "₹" + s.price.toFixed(2);
-            document.getElementById("finalAmt").innerText = s.price.toFixed(2);
+            display.innerText = "₹" + s.price.toFixed(2);
+            final.innerText = s.price.toFixed(2);
+            // Automatic QR generation based on price
             document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=7388720012@fam%26am=${s.price}%26cu=INR`;
         } else {
-            document.getElementById("priceDisplay").innerText = "₹0.00";
+            display.innerText = "₹0.00";
         }
     }
 
     function showQR() {
-        if(!document.getElementById("targetLink").value) return alert("Link daalo!");
+        if(!document.getElementById("targetLink").value) return alert("Target link toh daalo!");
+        if(!document.getElementById("serviceSelect").value) return alert("Pehle package select karein!");
         document.getElementById("qr-section").style.display = "block";
         document.getElementById("payBtn").style.display = "none";
     }
 
     function submitOrder() {
         let utr = document.getElementById("utr").value.trim();
-        if(utr.length < 12) return alert("12-digit UTR daalo!");
-        alert("Order Success! ✅");
+        if(utr.length < 12) return alert("Please, 12 digit UTR number sahi se daalo!");
+        alert("Payment Success! ✅ Order process ho raha hai.");
         location.reload();
     }
 </script>
