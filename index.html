@@ -12,7 +12,7 @@
         .screen { display: none; width: 100%; max-width: 500px; margin: 0 auto; min-height: 100vh; background: #fff; }
         .active { display: block; }
 
-        /* Dual Dashboard Boxes */
+        /* Dashboard UI */
         .dash-container { padding: 15px; display: flex; flex-direction: column; gap: 12px; }
         .welcome-box { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; padding: 22px; border-radius: 20px; box-shadow: 0 8px 16px rgba(99,102,241,0.2); }
         .balance-box { background: linear-gradient(135deg, #3b82f6, #2dd4bf); color: white; padding: 22px; border-radius: 20px; box-shadow: 0 8px 16px rgba(59,130,246,0.2); text-align: right; }
@@ -23,14 +23,11 @@
         .nav-item i { display: block; font-size: 20px; margin-bottom: 4px; }
 
         .card { background: #fff; margin: 0 15px 15px; padding: 20px; border-radius: 18px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 5px; display: block; }
-        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; margin-bottom: 15px; outline: none; font-size: 14px; transition: 0.3s; }
-        input:focus { border-color: var(--primary); }
+        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; margin-bottom: 15px; outline: none; font-size: 14px; }
         
         .btn-place { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        .btn-place:active { transform: scale(0.98); }
+        .btn-logout { background: #fee2e2; color: #ef4444; border: 1px solid #fecaca; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; }
 
-        /* Table Styles */
         .admin-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
         .admin-table th, .admin-table td { border: 1px solid #eee; padding: 10px; text-align: left; }
     </style>
@@ -38,24 +35,23 @@
 <body>
 
     <div id="login-screen" class="screen active">
-        <div style="padding: 60px 30px 20px; text-align: center;">
-            <h1 style="color:var(--primary); font-weight:800; margin-bottom:30px;">SMMbyAS</h1>
+        <div style="padding: 60px 30px; text-align: center;">
+            <h1 style="color:var(--primary); font-weight:800;">SMMbyAS</h1>
             <input type="text" id="l-user" placeholder="Username">
             <input type="password" id="l-pass" placeholder="Password">
             <button class="btn-place" onclick="doLogin()">Sign In</button>
-            <p onclick="toggleScreen('signup-screen')" style="margin-top:20px; color:#64748b; cursor:pointer;">New User? <b>Register</b></p>
+            <p onclick="toggleScreen('signup-screen')" style="margin-top:20px; color:#64748b; cursor:pointer;">Register New Account</p>
         </div>
     </div>
 
     <div id="signup-screen" class="screen">
         <div class="card" style="margin-top:50px;">
-            <h2>Register Account</h2>
+            <h2>Register</h2>
             <input type="text" id="s-user" placeholder="Username">
-            <input type="email" id="s-email" placeholder="Gmail ID">
-            <input type="text" id="s-phone" placeholder="WhatsApp Number">
+            <input type="email" id="s-email" placeholder="Gmail">
+            <input type="text" id="s-phone" placeholder="WhatsApp No">
             <input type="password" id="s-pass" placeholder="Password">
             <button class="btn-place" style="background:var(--success)" onclick="doSignup()">Create Account</button>
-            <p onclick="toggleScreen('login-screen')" style="text-align:center; margin-top:15px; cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
@@ -69,90 +65,76 @@
 
         <div class="dash-container">
             <div class="welcome-box">
-                <small style="text-transform: uppercase; font-weight: 700; opacity: 0.8;">Namaste,</small>
-                <h2 id="displayUser" style="margin: 5px 0 0 0;">USER</h2>
+                <small>WELCOME BACK,</small>
+                <h2 id="displayUser">USER</h2>
             </div>
             <div class="balance-box">
-                <small style="font-weight: 700; opacity: 0.8;">MY BALANCE</small>
-                <h1 id="userBalDisplay" style="margin: 5px 0 0 0; font-size: 36px;">₹0.00</h1>
+                <small>ACCOUNT BALANCE</small>
+                <h1 id="userBalDisplay">₹0.00</h1>
             </div>
         </div>
 
         <div id="order-tab" class="tab-content active">
             <div class="card">
-                <h3>Place New Order</h3>
-                <label>Category</label>
+                <h3>Submit Order</h3>
                 <select id="catSelect" onchange="loadServices()">
-                    <option value="">Select Category</option>
-                    <option value="insta">Instagram Services</option>
-                    <option value="tele">Telegram Services</option>
-                    <option value="yt">YouTube Services</option>
+                    <option value="">Choose Category</option>
+                    <option value="insta">Instagram</option>
+                    <option value="tele">Telegram</option>
                 </select>
-
-                <label>Service</label>
                 <select id="serviceSelect" onchange="updateCost()">
-                    <option value="0">Pehle category chunein</option>
+                    <option value="0">Select Service</option>
                 </select>
-
-                <label>Link</label>
-                <input type="text" id="orderLink" placeholder="https://instagram.com/p/...">
-                
-                <div id="costDisplay" style="margin-bottom:15px; font-weight:800; color:var(--primary); font-size:18px;">Total Cost: ₹0</div>
-                <button class="btn-place" id="placeBtn" onclick="handlePlaceOrder()">Confirm Order</button>
+                <input type="text" id="orderLink" placeholder="Link Here">
+                <div id="costDisplay" style="margin-bottom:15px; font-weight:800; color:var(--primary);">Cost: ₹0</div>
+                <button class="btn-place" onclick="handlePlaceOrder()">Place Order Now</button>
             </div>
         </div>
 
         <div id="funds-tab" class="tab-content" style="display:none;">
             <div class="card">
                 <h3>Add Funds</h3>
-                <input type="number" id="payAmount" placeholder="Enter Amount" oninput="updateQR()">
-                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px; background:#f1f5f9; padding:10px; border-radius:15px;">
-                    <img id="qrImg" style="width:160px;"><br>
-                    <small><b>UPI: 7388720012@fam</b></small>
-                </div>
-                <input type="text" id="payTxn" placeholder="12 Digit TXN ID">
-                <button class="btn-place" style="background:var(--success)" onclick="submitPayment()">Submit for Approval</button>
+                <input type="number" id="payAmount" placeholder="Amount" oninput="updateQR()">
+                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px;"><img id="qrImg" style="width:160px;"></div>
+                <input type="text" id="payTxn" placeholder="TXN ID">
+                <button class="btn-place" style="background:var(--success)" onclick="submitPayment()">Submit</button>
             </div>
         </div>
 
-        <div id="track-tab" class="tab-content" style="display:none;">
-            <div class="card"><h4>Order Status</h4><div id="userHistoryList"></div></div>
-        </div>
+        <div id="track-tab" class="tab-content" style="display:none;"><div class="card" id="userHistoryList"></div></div>
     </div>
 
     <div id="admin-panel" class="screen">
         <div style="padding:20px; background:#1e293b; color:white; text-align:center;">
-            <h2>Admin Control</h2>
+            <h2>Admin Dashboard</h2>
             <div id="adminStats">Users: 0 | Bal: ₹0</div>
+            <button class="btn-logout" onclick="location.reload()">Admin Logout</button>
         </div>
         <div class="card">
-            <h4>Add Balance</h4>
-            <input type="text" id="admTargetUser" placeholder="Username">
+            <h4>Quick Search</h4>
+            <input type="text" id="adminSearch" placeholder="Search user..." onkeyup="filterUsers()">
+            <input type="text" id="admTargetUser" placeholder="Target Username">
             <input type="number" id="admTargetAmt" placeholder="Amount">
-            <button class="btn-place" onclick="adminAddBal()">Add Money</button>
+            <button class="btn-place" onclick="adminAddBal()">Add Balance</button>
         </div>
         <div class="card" style="overflow-x:auto;">
             <table class="admin-table">
-                <thead><tr style="background:#f8fafc"><th>User</th><th>Gmail</th><th>Bal</th><th>Action</th></tr></thead>
+                <thead><tr><th>User</th><th>Bal</th><th>Action</th></tr></thead>
                 <tbody id="userTableBody"></tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // SHEET CONFIG (Aapka URL yahan paste karein)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyC-9H0C6Wj8v4U7L4Z5M6N7O8P9Q0R1S2T3U4V/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz20XdCsPYuxVCKlk7BKNr_vQWya2068bopjYW1LPH8g2GI6YEEtT4_DhVGnS1F3e5rCQ/exec";
 
         let db = JSON.parse(localStorage.getItem('smm_db')) || {};
         let sessionUser = null;
 
         const services = {
-            insta: [ {n: "Insta Views (1k)", p: 5}, {n: "Insta Followers (1k)", p: 80} ],
-            tele: [ {n: "Telegram Members (1k)", p: 35} ],
-            yt: [ {n: "YouTube Subs (100)", p: 180} ]
+            insta: [ {n: "Insta Views", p: 5}, {n: "Insta Followers", p: 80} ],
+            tele: [ {n: "Tele Members", p: 35} ]
         };
-
-        function save() { localStorage.setItem('smm_db', JSON.stringify(db)); }
 
         function toggleScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -169,25 +151,17 @@
             let cat = document.getElementById('catSelect').value;
             let sel = document.getElementById('serviceSelect');
             sel.innerHTML = "";
-            if(services[cat]) {
-                services[cat].forEach(s => sel.innerHTML += `<option value="${s.p}">${s.n} - ₹${s.p}</option>`);
-            } else {
-                sel.innerHTML = `<option value="0">Category select karein</option>`;
-            }
+            if(services[cat]) services[cat].forEach(s => sel.innerHTML += `<option value="${s.p}">${s.n} - ₹${s.p}</option>`);
             updateCost();
         }
 
-        function updateCost() {
-            let cost = document.getElementById('serviceSelect').value;
-            document.getElementById('costDisplay').innerText = "Total Cost: ₹" + cost;
-        }
+        function updateCost() { document.getElementById('costDisplay').innerText = "Cost: ₹" + document.getElementById('serviceSelect').value; }
 
-        // --- AUTH ---
         function doSignup() {
             let u = document.getElementById('s-user').value.trim();
-            if(!u || db[u]) return alert("Username error!");
-            db[u] = { email: document.getElementById('s-email').value, phone: document.getElementById('s-phone').value, pass: document.getElementById('s-pass').value, bal: 0, orders: [] };
-            save(); alert("Registered!"); toggleScreen('login-screen');
+            if(!u || db[u]) return alert("Error!");
+            db[u] = { email: document.getElementById('s-email').value, pass: document.getElementById('s-pass').value, bal: 0, orders: [] };
+            localStorage.setItem('smm_db', JSON.stringify(db)); toggleScreen('login-screen');
         }
 
         function doLogin() {
@@ -196,48 +170,39 @@
             if(db[u] && db[u].pass === p) { sessionUser = u; updateUI(); toggleScreen('user-panel'); } else alert("Wrong Login!");
         }
 
-        // --- ORDER ---
         async function handlePlaceOrder() {
             let cost = parseFloat(document.getElementById('serviceSelect').value);
             let link = document.getElementById('orderLink').value;
             let srv = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
 
-            if(!link || cost === 0) return alert("Details poori bharein!");
-            if(db[sessionUser].bal < cost) return alert("Paisa kam hai!");
+            if(!link) return alert("Link missing!");
+            if(db[sessionUser].bal < cost) return alert("Bhai, aapka balance kam hai!");
 
             db[sessionUser].bal -= cost;
-            let orderID = "#ORD" + Math.floor(1000 + Math.random() * 9000);
-            let orderData = { id: orderID, user: sessionUser, service: srv, link: link, date: new Date().toLocaleString(), status: "Pending" };
-            
+            let orderData = { user: sessionUser, service: srv, link: link, date: new Date().toLocaleString() };
             db[sessionUser].orders.unshift(orderData);
-            save(); updateUI();
+            localStorage.setItem('smm_db', JSON.stringify(db)); updateUI();
 
-            // Google Sheets Push
             fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
-
-            window.open(`https://wa.me/917388720012?text=SMM Order: ${orderID}%0AUser: ${sessionUser}%0AService: ${srv}%0ALink: ${link}`);
-            alert("Order Successful!");
+            window.open(`https://wa.me/917388720012?text=Order: ${srv}%0AUser: ${sessionUser}%0ALink: ${link}`);
+            alert("Order Success!");
         }
 
         function loadAdminUsers() {
             let body = document.getElementById('userTableBody'); body.innerHTML = "";
-            let totalB = 0, users = Object.keys(db);
-            users.forEach(u => {
-                totalB += db[u].bal;
-                body.innerHTML += `<tr><td>${u}</td><td>${db[u].email}</td><td>₹${db[u].bal}</td><td><button onclick="deleteUser('${u}')" style="color:red;border:none;">Del</button></td></tr>`;
+            Object.keys(db).forEach(u => {
+                body.innerHTML += `<tr><td>${u}</td><td>₹${db[u].bal}</td><td><button onclick="deleteUser('${u}')">Del</button></td></tr>`;
             });
-            document.getElementById('adminStats').innerText = `Users: ${users.length} | Total Bal: ₹${totalB.toFixed(2)}`;
+            document.getElementById('adminStats').innerText = `Users: ${Object.keys(db).length}`;
         }
-
-        function deleteUser(u) { if(confirm("Delete user?")) { delete db[u]; save(); loadAdminUsers(); } }
 
         function adminAddBal() {
             let u = document.getElementById('admTargetUser').value, a = parseFloat(document.getElementById('admTargetAmt').value);
-            if(db[u]) { db[u].bal += a; save(); loadAdminUsers(); alert("Added!"); }
+            if(db[u]) { db[u].bal += a; localStorage.setItem('smm_db', JSON.stringify(db)); loadAdminUsers(); alert("Added!"); }
         }
 
         function updateUI() { 
-            document.getElementById('userBalDisplay').innerText = "₹" + (db[sessionUser].bal || 0).toFixed(2);
+            document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2);
             document.getElementById('displayUser').innerText = sessionUser;
         }
 
