@@ -3,49 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - Pro Admin & User Panel</title>
+    <title>SMMbyAS - Pro Admin Control</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #007bff; --bg: #f4f7fe; --card: #ffffff; --success: #10b981; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        .screen { display: none; width: 100%; max-width: 500px; margin: 0 auto; min-height: 100vh; background: #fff; }
+        .screen { display: none; width: 100%; max-width: 500px; margin: 0 auto; min-height: 100vh; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
         .active { display: block; }
         
-        /* Nav & Cards */
-        .top-nav { display: flex; background: #fff; padding: 10px 0; border-bottom: 1px solid #eee; position: sticky; top:0; z-index:100; }
+        /* Navigation */
+        .top-nav { display: flex; background: #fff; padding: 12px 0; border-bottom: 1px solid #eee; position: sticky; top:0; z-index:100; }
         .nav-item { flex: 1; text-align: center; color: #999; font-size: 10px; cursor: pointer; font-weight: bold; }
         .nav-item.active-nav { color: var(--primary); }
-        .nav-item i { display: block; font-size: 18px; margin-bottom: 3px; }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 3px; }
 
-        .balance-card { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(59,130,246,0.2); }
-        .card { background: #fff; margin: 15px; padding: 20px; border-radius: 15px; border: 1px solid #f0f0f0; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        /* Dashboard Elements */
+        .balance-card { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(59,130,246,0.25); }
+        .card { background: #fff; margin: 15px; padding: 20px; border-radius: 18px; border: 1px solid #f0f0f0; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 15px; }
+        .stat-box { background: #fff; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #eee; }
         
-        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 12px; box-sizing: border-box; outline: none; font-size: 14px; }
-        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        input, select { width: 100%; padding: 15px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 12px; box-sizing: border-box; outline: none; font-size: 14px; }
+        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
         .btn-blue { background: var(--primary); color: white; }
         .btn-green { background: var(--success); color: white; }
 
         /* Admin Table */
-        .admin-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
-        .admin-table th, .admin-table td { border: 1px solid #eee; padding: 8px; text-align: left; }
-        .admin-table th { background: #f8f9fa; }
+        .admin-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+        .admin-table th, .admin-table td { border: 1px solid #eee; padding: 10px; text-align: left; }
+        .admin-table th { background: #f1f5f9; }
 
-        /* Graphics for Login */
-        .graphics-box { position: relative; height: 280px; overflow: hidden; background: #fff; margin-top: 20px; }
-        .purple-shape { position: absolute; bottom: -50px; width: 150%; height: 250px; background: #7a5df5; border-radius: 50% 50% 0 0; left: -25%; }
-        .girl-img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 260px; z-index: 2; }
+        /* Graphics */
+        .graphics-box { position: relative; height: 300px; overflow: hidden; background: #fff; }
+        .purple-shape { position: absolute; bottom: -60px; width: 160%; height: 260px; background: #7a5df5; border-radius: 50% 50% 0 0; left: -30%; }
+        .girl-img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 280px; z-index: 2; }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="screen active">
-        <div style="padding: 30px; font-size: 26px; font-weight: 800; color: var(--primary);">SMMbyAS</div>
+        <div style="padding: 30px; font-size: 28px; font-weight: 800; color: var(--primary);">SMMbyAS</div>
         <div style="padding: 0 30px;">
             <input type="text" id="l-user" placeholder="Username">
             <input type="password" id="l-pass" placeholder="Password">
-            <button class="btn btn-blue" onclick="doLogin()">Sign In</button>
-            <p style="text-align:center; font-size:13px; color:#666; margin-top:15px;">Naya account? <span style="color:var(--primary); font-weight:800; cursor:pointer;" onclick="toggleScreen('signup-screen')">Register</span></p>
+            <button class="btn btn-blue" onclick="doLogin()">Login Account</button>
+            <p style="text-align:center; font-size:14px; color:#666; margin-top:20px;">Naya account? <span style="color:var(--primary); font-weight:800; cursor:pointer;" onclick="toggleScreen('signup-screen')">Register</span></p>
         </div>
         <div class="graphics-box">
             <div class="purple-shape"></div>
@@ -54,75 +57,87 @@
     </div>
 
     <div id="signup-screen" class="screen">
-        <div class="card" style="margin-top:40px;">
+        <div class="card" style="margin-top:50px;">
             <h2 style="text-align:center;">Register</h2>
             <input type="text" id="s-user" placeholder="Username">
             <input type="email" id="s-email" placeholder="Gmail ID">
             <input type="text" id="s-phone" placeholder="WhatsApp Number">
             <input type="password" id="s-pass" placeholder="Password">
             <button class="btn btn-green" onclick="doSignup()">Create Account</button>
-            <p onclick="toggleScreen('login-screen')" style="text-align:center; color:var(--primary); cursor:pointer; font-weight:bold; margin-top:15px;">Back to Login</p>
+            <p onclick="toggleScreen('login-screen')" style="text-align:center; color:var(--primary); cursor:pointer; font-weight:bold; margin-top:20px;">Login Here</p>
         </div>
     </div>
 
     <div id="user-panel" class="screen">
         <div class="top-nav">
-            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-cart"></i>Order</div>
-            <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-wallet"></i>Funds</div>
-            <div class="nav-item" onclick="showTab('track-tab', this); loadOrders();"><i class="fas fa-truck"></i>Track</div>
-            <div class="nav-item" style="color:red" onclick="location.reload()"><i class="fas fa-power-off"></i>Exit</div>
+            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-basket"></i>Order</div>
+            <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-plus-circle"></i>Funds</div>
+            <div class="nav-item" onclick="showTab('track-tab', this); loadOrders();"><i class="fas fa-list-ul"></i>Track</div>
+            <div class="nav-item" style="color:#ef4444" onclick="location.reload()"><i class="fas fa-power-off"></i>Logout</div>
         </div>
         <div class="balance-card">
-            <div style="font-size:10px; opacity:0.8; font-weight:800;">TOTAL BALANCE</div>
-            <h1 id="userBalDisplay" style="font-size:42px; margin:5px 0;">₹0.00</h1>
-            <div id="displayUser" style="background:rgba(255,255,255,0.2); padding:4px 10px; border-radius:50px; display:inline-block; font-size:12px;">USER</div>
+            <div style="font-size:11px; opacity:0.8; font-weight:800;">MY BALANCE</div>
+            <h1 id="userBalDisplay" style="font-size:48px; margin:5px 0;">₹0.00</h1>
+            <div id="displayUser" style="background:rgba(255,255,255,0.25); padding:5px 15px; border-radius:50px; font-size:13px; font-weight:700; display:inline-block;">USER</div>
         </div>
 
         <div id="order-tab" class="tab-content active">
             <div class="card">
-                <h3>Submit New Order</h3>
+                <h3>Submit Order</h3>
                 <select id="serviceSelect">
                     <option value="5">Insta Views (1k) - ₹5</option>
                     <option value="80">Insta Followers (1k) - ₹80</option>
-                    <option value="30">Telegram Members (1k) - ₹30</option>
-                    <option value="150">YouTube Subs (100) - ₹150</option>
+                    <option value="35">Telegram Members (1k) - ₹35</option>
+                    <option value="180">YT Subs (100) - ₹180</option>
                 </select>
                 <input type="text" id="orderLink" placeholder="Link (Post/Profile)">
-                <button class="btn btn-blue" onclick="placeOrder()">Order Now & WhatsApp</button>
+                <button class="btn btn-blue" onclick="placeOrder()">Place Order</button>
             </div>
         </div>
 
         <div id="funds-tab" class="tab-content" style="display:none;">
             <div class="card">
                 <h3>Add Funds</h3>
-                <input type="number" id="payAmount" placeholder="Amount ₹" oninput="updateQR()">
-                <div id="qrBox" style="display:none; text-align:center; margin-bottom:10px;">
-                    <img id="qrImg" style="width:160px;"><br>
-                    <small>UPI: 7388720012@fam</small>
+                <input type="number" id="payAmount" placeholder="Amount (₹)" oninput="updateQR()">
+                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px; background:#f8fafc; padding:10px; border-radius:15px;">
+                    <img id="qrImg" style="width:180px;"><br>
+                    <b>UPI: 7388720012@fam</b>
                 </div>
-                <input type="text" id="payTxn" placeholder="12 Digit Transaction ID">
-                <button class="btn btn-green" onclick="submitPayment()">Submit Payment</button>
+                <input type="text" id="payTxn" placeholder="Transaction ID">
+                <button class="btn btn-green" onclick="submitPayment()">Submit for Approval</button>
             </div>
         </div>
 
         <div id="track-tab" class="tab-content" style="display:none;">
-            <div class="card"><h3>Order History</h3><div id="orderList"></div></div>
+            <div class="card"><h3>My Orders</h3><div id="orderList"></div></div>
         </div>
     </div>
 
     <div id="admin-panel" class="screen">
-        <div class="card" style="background:var(--primary); color:white;"><h2>Admin Controls</h2></div>
+        <div class="card" style="background:#1e293b; color:white;"><h2>Admin Controls</h2></div>
         
+        <div class="stats-grid">
+            <div class="stat-box">
+                <small>Total Users</small>
+                <h2 id="totalUsersCount" style="margin:5px 0; color:var(--primary);">0</h2>
+            </div>
+            <div class="stat-box">
+                <small>Total Balance</small>
+                <h2 id="totalPanelBal" style="margin:5px 0; color:var(--success);">₹0</h2>
+            </div>
+        </div>
+
         <div class="card">
-            <h4>Add Balance</h4>
-            <input type="text" id="admUser" placeholder="Target Username">
-            <input type="number" id="admAmt" placeholder="Amount to Add">
-            <button class="btn btn-blue" onclick="adminAddBal()">Add Money Now</button>
+            <h4>Search & Add Balance</h4>
+            <input type="text" id="adminSearch" placeholder="Search Username..." onkeyup="adminSearchUser()">
+            <input type="text" id="admUser" placeholder="Username">
+            <input type="number" id="admAmt" placeholder="Amount">
+            <button class="btn btn-blue" onclick="adminAddBal()">Add Money</button>
         </div>
 
         <div class="card" style="overflow-x:auto;">
-            <h4>Registered Users Details</h4>
-            <table class="admin-table" id="userTable">
+            <h4>Users Details</h4>
+            <table class="admin-table">
                 <thead><tr><th>User</th><th>Gmail</th><th>Phone</th><th>Bal</th></tr></thead>
                 <tbody id="userTableBody"></tbody>
             </table>
@@ -146,18 +161,19 @@
             el.classList.add('active-nav');
         }
 
+        // --- USER SIDE ---
         function doSignup() {
             let u = document.getElementById('s-user').value.trim();
             let g = document.getElementById('s-email').value;
             let ph = document.getElementById('s-phone').value;
             let p = document.getElementById('s-pass').value;
-            if(!u || db[u]) return alert("Username error!");
+            if(!u || db[u]) return alert("Username already taken!");
             db[u] = { email: g, phone: ph, pass: p, bal: 0, orders: [] };
-            save(); alert("Registered Successfully!"); toggleScreen('login-screen');
+            save(); alert("Success!"); toggleScreen('login-screen');
         }
 
         function doLogin() {
-            let u = document.getElementById('l-user').value, p = document.getElementById('l-pass').value;
+            let u = document.getElementById('l-user').value.trim(), p = document.getElementById('l-pass').value;
             if(u === "admin" && p === "suhel7388") { 
                 toggleScreen('admin-panel'); 
                 loadAdminData(); 
@@ -168,7 +184,7 @@
                 document.getElementById('displayUser').innerText = u;
                 updateUI(); 
                 toggleScreen('user-panel');
-            } else alert("Wrong Login!");
+            } else alert("Invalid Credentials!");
         }
 
         function updateQR() {
@@ -176,63 +192,76 @@
             let box = document.getElementById('qrBox');
             if(a >= 1) {
                 box.style.display = "block";
-                document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent("upi://pay?pa=7388720012@fam&am="+a+"&cu=INR")}`;
+                document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent("upi://pay?pa=7388720012@fam&am="+a+"&cu=INR")}`;
             } else box.style.display = "none";
         }
 
         function submitPayment() {
             let a = document.getElementById('payAmount').value, t = document.getElementById('payTxn').value;
             if(!a || !t) return alert("Fill all details!");
-            window.open(`https://wa.me/917388720012?text=New Payment Submission:%0AUser: ${sessionUser}%0AAmt: ₹${a}%0ATXN: ${t}`);
-            alert("Sent to Admin!");
+            window.open(`https://wa.me/917388720012?text=Fund Request:%0AUser: ${sessionUser}%0AAmt: ₹${a}%0ATXN ID: ${t}`);
+            alert("Payment Sent for Approval!");
         }
 
         function placeOrder() {
             let cost = parseFloat(document.getElementById('serviceSelect').value);
             let link = document.getElementById('orderLink').value;
             let srv = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
-            
-            if(!link) return alert("Link daaliye!");
-            if(db[sessionUser].bal < cost) return alert("Low Balance!");
+            if(!link) return alert("Link please!");
+            if(db[sessionUser].bal < cost) return alert("Insufficient Funds!");
 
             db[sessionUser].bal -= cost;
-            let orderID = "#ORD" + Math.floor(1000 + Math.random() * 9000);
-            db[sessionUser].orders.unshift({ id: orderID, srv: srv, link: link, status: "Pending", date: new Date().toLocaleDateString() });
+            let orderID = "#ORD" + Math.floor(10000 + Math.random() * 90000);
+            db[sessionUser].orders.unshift({ id: orderID, srv: srv, link: link, status: "Processing", date: new Date().toLocaleString() });
             save(); updateUI();
 
-            // WhatsApp Redirect for Order
-            let msg = `🔥 *NEW ORDER PLACED* 🔥%0A%0AOrder ID: ${orderID}%0AUser: ${sessionUser}%0AService: ${srv}%0ALink: ${link}`;
+            let msg = `🚀 *NEW ORDER* 🚀%0AID: ${orderID}%0AUser: ${sessionUser}%0AService: ${srv}%0ALink: ${link}`;
             window.open(`https://wa.me/917388720012?text=${msg}`);
-            alert("Order Successful!");
+            alert("Order Success!");
         }
 
         function loadOrders() {
             let list = document.getElementById('orderList'); list.innerHTML = "";
             db[sessionUser].orders.forEach(o => {
                 list.innerHTML += `<div style="padding:10px; border-bottom:1px solid #eee; font-size:12px;">
-                    <b>${o.id}</b> - <span style="color:orange">${o.status}</span><br>
-                    ${o.srv}<br><small>${o.date}</small>
+                    <b>${o.id}</b> | <span style="color:var(--primary)">${o.status}</span><br>${o.srv}<br><small>${o.date}</small>
                 </div>`;
             });
         }
 
+        // --- ADMIN SIDE ---
         function loadAdminData() {
             let body = document.getElementById('userTableBody'); body.innerHTML = "";
-            Object.keys(db).forEach(u => {
+            let totalB = 0;
+            let users = Object.keys(db);
+            
+            users.forEach(u => {
+                totalB += db[u].bal;
                 body.innerHTML += `<tr>
-                    <td>${u}</td>
+                    <td><b>${u}</b></td>
                     <td>${db[u].email || '-'}</td>
                     <td>${db[u].phone || '-'}</td>
-                    <td>₹${db[u].bal.toFixed(2)}</td>
+                    <td style="color:green; font-weight:bold;">₹${db[u].bal.toFixed(2)}</td>
                 </tr>`;
             });
+            
+            document.getElementById('totalUsersCount').innerText = users.length;
+            document.getElementById('totalPanelBal').innerText = "₹" + totalB.toFixed(2);
+        }
+
+        function adminSearchUser() {
+            let input = document.getElementById('adminSearch').value.toLowerCase();
+            let rows = document.getElementById('userTableBody').getElementsByTagName('tr');
+            for (let row of rows) {
+                row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
+            }
         }
 
         function adminAddBal() {
-            let u = document.getElementById('admUser').value, a = parseFloat(document.getElementById('admAmt').value);
+            let u = document.getElementById('admUser').value.trim(), a = parseFloat(document.getElementById('admAmt').value);
             if(db[u]) {
-                db[u].bal += a; save(); loadAdminData(); alert("Balance Added!");
-            } else alert("User nahi mila!");
+                db[u].bal += a; save(); loadAdminData(); alert("Updated!");
+            } else alert("User not found!");
         }
 
         function save() { localStorage.setItem('smm_db', JSON.stringify(db)); }
@@ -240,3 +269,4 @@
     </script>
 </body>
 </html>
+
