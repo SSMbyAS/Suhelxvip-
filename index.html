@@ -3,38 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS PANEL - Professional</title>
+    <title>SMMbyAS PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; --whatsapp: #25d366; --telegram: #0088cc; --gold: #facc15; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; --whatsapp: #25d366; --telegram: #0088cc; --youtube: #ff0000; --gold: #facc15; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; display: flex; flex-direction: column; align-items: center; padding: 15px; margin: 0; padding-bottom: 150px; overflow-x: hidden; }
         
         @keyframes rainbow { 0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } 50% { color: #00ff00; text-shadow: 0 0 10px #00ff00; } 100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; } }
-        .logo-box { background: rgba(255, 255, 255, 0.1); padding: 10px 30px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.2); margin-bottom: 20px; }
-        .changing-text { font-weight: 900; letter-spacing: 2px; font-size: 20px; animation: rainbow 3s linear infinite; }
+        .logo-box { background: rgba(255, 255, 255, 0.1); padding: 8px 25px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.2); margin-bottom: 15px; }
+        .changing-text { font-weight: 900; letter-spacing: 2px; font-size: 18px; animation: rainbow 3s linear infinite; }
 
-        /* Platform Tabs */
-        .platform-tabs { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; width: 100%; max-width: 450px; flex-wrap: wrap; }
-        .tab-btn { width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; background: var(--card); }
-        .tab-btn.active { transform: translateY(-5px); border-color: var(--primary); background: rgba(56, 189, 248, 0.1); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3); }
-        .tab-ig { color: #e1306c; } .tab-yt { color: #ff0000; } .tab-fb { color: #1877f2; } .tab-tg { color: #0088cc; }
+        /* Platform Tabs Design (MRSMM Style) */
+        .platform-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; width: 100%; max-width: 450px; flex-wrap: wrap; }
+        .tab-btn { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; background: var(--card); }
+        .tab-btn:hover, .tab-btn.active { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.3); }
+        .tab-ig { color: #e1306c; } .tab-fb { color: #1877f2; } .tab-yt { color: #ff0000; } .tab-tg { color: #0088cc; }
 
-        .card { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 450px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); box-sizing: border-box; }
-        label { display: block; margin: 15px 0 8px; font-weight: 600; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-        input, select { width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 14px; outline: none; box-sizing: border-box; transition: 0.3s; }
-        input:focus, select:focus { border-color: var(--primary); }
-        
-        .price-box { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; font-size: 30px; margin: 25px 0; border: 2px solid #38bdf8; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .btn-pay { width: 100%; background: #22c55e; color: white; border: none; padding: 18px; border-radius: 12px; cursor: pointer; font-size: 20px; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); }
-        .btn-pay:hover { background: #16a34a; transform: scale(1.02); }
-
-        #qr-section { display: none; text-align: center; margin-top: 20px; padding: 20px; border-radius: 15px; background: rgba(255,255,255,0.05); border: 1px dashed #475569; }
-        .qr-img { width: 220px; border: 8px solid white; border-radius: 15px; margin: 15px 0; }
+        .card { background: var(--card); padding: 20px; border-radius: 15px; width: 100%; max-width: 450px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3); box-sizing: border-box; }
+        label { display: block; margin: 12px 0 6px; font-weight: 600; font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 10px; font-size: 14px; outline: none; box-sizing: border-box; }
+        .price-box { background: #0ea5e9; color: white; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 26px; margin: 20px 0; border: 2px solid #38bdf8; }
+        .btn-pay { width: 100%; background: #22c55e; color: white; border: none; padding: 16px; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
+        #qr-section { display: none; text-align: center; margin-top: 20px; border-top: 1px dashed #334155; padding-top: 15px; }
+        .qr-img { width: 200px; border: 5px solid white; border-radius: 10px; margin: 10px 0; }
     </style>
 </head>
 <body>
 
-<div class="logo-box"><span class="changing-text">SMMbyAS PANEL</span></div>
+<div class="logo-box"><span class="changing-text">SMMbyAS</span></div>
 
 <div class="platform-tabs">
     <div class="tab-btn tab-ig active" onclick="filterPlatform('ig', this)"><i class="fab fa-instagram"></i></div>
@@ -45,16 +41,16 @@
 
 <div class="card">
     <label><i class="fas fa-link"></i> Target Link</label>
-    <input type="text" id="targetLink" placeholder="https://www.instagram.com/p/...">
+    <input type="text" id="targetLink" placeholder="Paste link here...">
 
     <label><i class="fas fa-list"></i> Category</label>
     <select id="categorySelect" onchange="loadServices()">
-        <option value="">-- Select Platform --</option>
+        <option value="">-- Choose Category --</option>
         <option value="ig_views">Instagram Views 🎬</option>
         <option value="ig_likes">Instagram Likes ❤️</option>
         <option value="ig_f_no">Instagram Followers 👥</option>
-        <option value="yt_views">YouTube Views 🎬</option>
         <option value="yt_subs">YouTube Subscribers 🔴</option>
+        <option value="yt_views">YouTube Views 🎬</option>
         <option value="fb_likes">Facebook Post Likes 👍</option>
         <option value="tg_members">Telegram Members 🚀</option>
     </select>
@@ -64,58 +60,39 @@
 
     <div class="price-box" id="priceDisplay">₹0.00</div>
     
-    <button class="btn-pay" id="payBtn" onclick="showQR()">Place Order Now</button>
+    <button class="btn-pay" id="payBtn" onclick="showQR()">Place Order</button>
 
     <div id="qr-section">
-        <p style="color:var(--gold); font-weight:bold; font-size: 18px;">Total Payable: ₹<span id="finalAmt">0.00</span></p>
+        <p style="color:var(--gold); font-weight:bold;">Amount: ₹<span id="finalAmt">0.00</span></p>
         <img src="" id="qrImg" class="qr-img">
-        <p style="font-size:12px; color: #94a3b8;">UPI ID: 7388720012@fam</p>
-        <input type="text" id="utr" placeholder="Enter 12 Digit UTR Number" maxlength="12">
-        <button class="btn-pay" style="background:#2563eb; margin-top: 10px;" onclick="submitOrder()">Confirm Payment</button>
+        <p style="font-size:12px;">UPI: 7388720012@fam</p>
+        <input type="text" id="utr" placeholder="Enter 12 Digit UTR Number">
+        <button class="btn-pay" style="background:#2563eb;" onclick="submitOrder()">Confirm Payment</button>
     </div>
 </div>
 
 <script>
+    // Service Data with Prices
     const serviceData = {
         "ig_views": [
             {name: "1k Views (Cheapest)", price: 1}, 
-            {name: "10k Views (Super Fast)", price: 8},
-            {name: "50k Views (Bulk)", price: 35},
-            {name: "100k Views (Viral)", price: 60}
+            {name: "10k Views", price: 4},
+            {name: "50k Views", price: 15},
+            {name: "100k Views", price: 21}
         ],
-        "ig_likes": [
-            {name: "1k Real Likes", price: 8},
-            {name: "5k Likes (Mix)", price: 35},
-            {name: "10k Likes (Indian)", price: 120}
-        ],
-        "ig_f_no": [
-            {name: "1k Followers (Low Drop)", price: 25},
-            {name: "5k Followers (Best)", price: 110},
-            {name: "10k Followers (Non-Drop)", price: 210}
-        ],
-        "yt_views": [
-            {name: "1k Views (Non-Drop)", price: 75},
-            {name: "5k Views (Ads Speed)", price: 340}
-        ],
-        "yt_subs": [
-            {name: "100 Subscribers", price: 15},
-            {name: "500 Subscribers", price: 60},
-            {name: "1k Subscribers (Cheap)", price: 100},
-            {name: "1k Subscribers (Refill)", price: 1600}
-        ],
-        "fb_likes": [
-            {name: "1k Post Likes", price: 12},
-            {name: "5k Post Likes", price: 55}
-        ],
-        "tg_members": [
-            {name: "1k Channel Members", price: 28},
-            {name: "5k Members (Super Fast)", price: 130}
-        ]
+        "ig_likes": [{name: "1k Real Likes", price: 8}, {name: "1k Indian Likes", price: 12}],
+        "ig_f_no": [{name: "1k Followers (No Drop)", price: 25}],
+        "yt_subs": [{name: "100 Subs", price: 15}, {name: "1k Subs (Cheap)", price: 100}],
+        "yt_views": [{name: "1k Views", price: 75}],
+        "fb_likes": [{name: "1k Post Likes", price: 12}],
+        "tg_members": [{name: "1k Channel Members", price: 28}]
     };
 
+    // Platform Filtering Logic
     function filterPlatform(platform, element) {
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
+
         const catSelect = document.getElementById("categorySelect");
         const options = catSelect.options;
 
@@ -134,7 +111,7 @@
     function loadServices() {
         const cat = document.getElementById("categorySelect").value;
         const sSelect = document.getElementById("serviceSelect");
-        sSelect.innerHTML = '<option value="">-- Select Package --</option>';
+        sSelect.innerHTML = '<option value="">-- Choose Package --</option>';
         if(cat && serviceData[cat]) {
             serviceData[cat].forEach(s => {
                 let opt = document.createElement("option");
@@ -148,29 +125,26 @@
 
     function updatePrice() {
         const val = document.getElementById("serviceSelect").value;
-        const display = document.getElementById("priceDisplay");
-        const final = document.getElementById("finalAmt");
         if(val) {
             const s = JSON.parse(val);
-            display.innerText = "₹" + s.price.toFixed(2);
-            final.innerText = s.price.toFixed(2);
+            document.getElementById("priceDisplay").innerText = "₹" + s.price.toFixed(2);
+            document.getElementById("finalAmt").innerText = s.price.toFixed(2);
             document.getElementById("qrImg").src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=7388720012@fam%26am=${s.price}%26cu=INR`;
         } else {
-            display.innerText = "₹0.00";
+            document.getElementById("priceDisplay").innerText = "₹0.00";
         }
     }
 
     function showQR() {
-        if(!document.getElementById("targetLink").value) return alert("Bhai, Target Link toh daalo!");
-        if(!document.getElementById("serviceSelect").value) return alert("Pehle package select karein!");
+        if(!document.getElementById("targetLink").value) return alert("Link daalo!");
         document.getElementById("qr-section").style.display = "block";
         document.getElementById("payBtn").style.display = "none";
     }
 
     function submitOrder() {
         let utr = document.getElementById("utr").value.trim();
-        if(utr.length < 12) return alert("Invalid UTR! 12 digit ka number daalo.");
-        alert("Payment Received! ✅ Aapka order 10-30 minute mein start ho jayega.");
+        if(utr.length < 12) return alert("12-digit UTR daalo!");
+        alert("Order Success! ✅");
         location.reload();
     }
 </script>
