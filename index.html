@@ -3,275 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - Pro Panel</title>
+    <title>SMMbyAS - VIP All-in-One</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #007bff; /* Professional Blue */
-            --primary-light: #e0f0ff;
-            --text-dark: #1a1a1a;
-            --text-light: #6c757d;
-            --card-bg: #ffffff;
-            --bg-body: #f7f9fc;
-            --purple-bg: #7a5df5; /* Background behind girl */
-            --orange-tag: #ff9f43; /* Rocket trail / chat support tag */
-            --shadow: 0 10px 40px rgba(0,0,0,0.06);
-            --shadow-float: 0 15px 50px rgba(0,0,0,0.1);
-            --border-radius: 16px;
+            --primary: #007bff; --bg: #f7f9fc; --card: #ffffff; 
+            --purple: #7a5df5; --border-radius: 16px;
         }
-
-        body { font-family: 'Inter', sans-serif; background: var(--bg-body); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; color: var(--text-dark); }
-
-        /* Screens */
-        .screen { display: none; width: 100%; max-width: 480px; padding: 20px; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; overflow-x: hidden; }
+        .screen { display: none; width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
         .active { display: block; }
 
-        /* --- NEW PROFESSIONAL LOGIN STYLE --- */
-        #login-screen { padding: 0; background: var(--card-bg); position: relative; height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; }
+        /* --- 1. NEW PRO LOGIN STYLE --- */
+        #login-screen { background: #fff; }
+        .login-header { display: flex; justify-content: space-between; padding: 25px 30px; }
+        .login-logo { font-size: 28px; font-weight: 800; color: var(--primary); text-decoration: underline; }
+        .form-area { padding: 0 30px; }
+        .input-group { position: relative; margin-bottom: 15px; }
+        .input-group i { position: absolute; left: 15px; top: 18px; color: #ccc; }
+        .input-group input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; outline: none; }
+        .btn-signin { width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
+        
+        .graphics-box { position: relative; height: 350px; margin-top: 30px; overflow: hidden; }
+        .purple-bg { position: absolute; bottom: -50px; width: 140%; height: 300px; background: var(--purple); border-radius: 50% 50% 0 0; left: -20%; }
+        .girl-img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 320px; z-index: 2; }
+        .support-tag { position: absolute; top: 40px; left: 20px; background: white; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; z-index: 3; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .social-bar { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 12px; display: flex; gap: 10px; z-index: 4; }
+        .social-bar img { width: 25px; }
 
-        /* Header (Logo & Menu) */
-        .login-header { display: flex; justify-content: space-between; align-items: center; padding: 25px 30px; }
-        .login-logo { font-size: 28px; font-weight: 800; color: var(--primary); text-decoration: underline; text-underline-offset: 6px; }
-        .menu-icon { font-size: 24px; color: var(--text-light); cursor: pointer; }
+        /* --- 2. USER PANEL STYLE --- */
+        .top-nav { display: flex; background: #fff; padding: 15px 0; border-radius: 0 0 20px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .nav-item { flex: 1; text-align: center; color: #9ca3af; font-size: 10px; font-weight: bold; cursor: pointer; }
+        .nav-item.active-nav { color: var(--primary); }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 4px; }
+        
+        .balance-card { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; margin: 20px; padding: 30px; border-radius: 24px; text-align: center; box-shadow: 0 10px 25px rgba(59,130,246,0.3); }
+        .user-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 50px; font-size: 12px; margin-top: 10px; text-transform: uppercase; }
 
-        /* Auth Form Card */
-        .login-form-container { padding: 0 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; margin-top: 10px; }
-        .form-card { background: var(--card-bg); }
-
-        /* Input Container with Icons */
-        .input-group { position: relative; margin-bottom: 18px; }
-        .input-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #b5b8c1; font-size: 19px; }
-        .input-group input { 
-            width: 100%; 
-            padding: 20px 20px 20px 55px; 
-            border-radius: 12px; 
-            border: 1.5px solid #eaeaea; 
-            box-sizing: border-box; 
-            outline: none; 
-            font-size: 16px; 
-            font-family: 'Inter', sans-serif;
-            transition: 0.2s;
-        }
-        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 12px rgba(0, 123, 255, 0.1); }
-        .password-toggle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #b5b8c1; cursor: pointer; font-size: 18px; }
-
-        /* Options (Remember & Forgot) */
-        .options-bar { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-light); margin-bottom: 25px; font-weight: 500; }
-        .options-bar a { color: var(--primary); text-decoration: none; font-weight: 600; }
-
-        /* Sign In Button */
-        .btn-signin { 
-            width: 100%; 
-            padding: 20px; 
-            border-radius: 12px; 
-            border: none; 
-            font-weight: 700; 
-            cursor: pointer; 
-            font-size: 18px; 
-            color: white; 
-            background: var(--primary); 
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.2); 
-            text-transform: capitalize; 
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-        }
-
-        /* Don't have an account? */
-        .signup-text { font-size: 15px; color: var(--text-light); text-align: center; font-weight: 500; }
-        .signup-text span { color: var(--primary); font-weight: 700; cursor: pointer; }
-
-        /* --- Graphics Section (Girl, Rocket, Icons) --- */
-        .login-graphics-wrapper { 
-            position: relative; 
-            width: 100%; 
-            height: 380px; /* Fixed height for graphics area */
-            margin-top: auto; 
-            margin-bottom: 0px;
-            overflow: hidden; 
-        }
-
-        /* Purple background shape */
-        .purple-shape { 
-            position: absolute; 
-            bottom: -50px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 130%; /* Very wide to curve */
-            height: 350px; 
-            background: var(--purple-bg); 
-            border-radius: 50% 50% 0 0; 
-            z-index: 1; 
-        }
-
-        /* The happy girl image */
-        .girl-image { 
-            position: absolute; 
-            bottom: 0; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: auto; 
-            height: 380px; 
-            z-index: 2; 
-        }
-
-        /* 24/7 Live Support Box */
-        .support-box { 
-            position: absolute; 
-            top: 60px; 
-            left: 30px; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(5px);
-            padding: 10px 15px; 
-            border-radius: 10px; 
-            display: flex; 
-            align-items: center; 
-            z-index: 3; 
-            box-shadow: var(--shadow-float);
-        }
-        .bolt-icon { color: #f9ca24; font-size: 18px; margin-right: 8px; }
-        .support-box span { font-size: 13px; font-weight: 700; color: #333; }
-
-        /* Floating Objects (Rocket & Cubes) */
-        .rocket-icon { 
-            position: absolute; 
-            top: 10px; 
-            right: 40px; 
-            height: 100px; 
-            z-index: 3; 
-            animation: float 4s ease-in-out infinite; 
-        }
-        .floating-cubes { 
-            position: absolute; 
-            top: 150px; 
-            left: 50px; 
-            height: 80px; 
-            z-index: 3; 
-            animation: floatOpposite 5s ease-in-out infinite; 
-        }
-
-        /* Social Icons Floating Bottom */
-        .social-icons-bar { 
-            position: absolute; 
-            bottom: 20px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(10px);
-            padding: 15px 30px; 
-            border-radius: 12px; 
-            display: flex; 
-            gap: 15px; 
-            z-index: 4; 
-            box-shadow: var(--shadow-float);
-            max-width: 80%;
-        }
-        .social-icons-bar img { height: 35px; width: 35px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-        .social-icons-bar img:hover { transform: translateY(-5px); }
-
-        /* Tiny floating emojis */
-        .tiny-emojis {
-            position: absolute;
-            bottom: 80px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 8px;
-            border-radius: 8px;
-            font-size: 18px;
-            z-index: 3;
-            box-shadow: var(--shadow);
-        }
-
-        /* Floating Animations */
-        @keyframes float { 
-            0%, 100% { transform: translateY(0) rotate(5deg); } 
-            50% { transform: translateY(-10px) rotate(-5deg); } 
-        }
-        @keyframes floatOpposite { 
-            0%, 100% { transform: translateY(0) rotate(-5deg); } 
-            50% { transform: translateY(10px) rotate(5deg); } 
-        }
-
-        /* Other Screens styles (placeholder) */
-        .card-old { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-
+        .card { background: #fff; margin: 0 20px 20px 20px; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .history-item { background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); font-size: 12px; }
+        #qrDisplay { display: none; text-align: center; background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="screen active">
-        
-        <div class="login-header">
-            <div class="login-logo">SMMbyAS</div>
-            <div class="menu-icon"><i class="fas fa-bars"></i></div>
-        </div>
-
-        <div class="login-form-container">
-            <div class="form-card">
-                
-                <div class="input-group">
-                    <i class="fas fa-user-circle input-icon"></i>
-                    <input type="text" id="l-user" placeholder="Username">
-                }
-
-                <div class="input-group">
-                    <i class="fas fa-lock input-icon"></i>
-                    <input type="password" id="l-pass" placeholder="Password">
-                    <i class="fas fa-eye password-toggle"></i>
-                </div>
-
-                <div class="options-bar">
-                    <label style="display:flex; align-items:center; cursor:pointer;">
-                        <input type="checkbox" style="width:16px; height:16px; margin:0 8px 0 0; cursor:pointer;">
-                        Remember me
-                    </label>
-                    <a href="#" onclick="alert('Bataiye admin ko WhatsApp pe!')">Forgot password?</a>
-                </div>
-
-                <button class="btn-signin" onclick="doLogin()">Sign in</button>
-
-                <p class="signup-text">Do not have an account? <span onclick="toggleScreen('signup-screen')">Sign up</span></p>
-
+        <div class="login-header"><div class="login-logo">SMMbyAS</div></div>
+        <div class="form-area">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="l-user" placeholder="Username">
             </div>
-        </div>
-
-        <div class="login-graphics-wrapper">
-            <div class="purple-shape"></div>
-            <img src="https://growfansite.com/assets/img/login_img.png" alt="Happy Girl" class="girl-image">
-            
-            <div class="support-box">
-                <i class="fas fa-bolt bolt-icon"></i>
-                <span>24/7 Live Chat Support</span>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="l-pass" placeholder="Password">
             </div>
-            
-            <img src="https://growfansite.com/assets/img/login_obj.png" alt="Rocket Object" class="rocket-icon">
-            
-            <img src="https://growfansite.com/assets/img/login_obj2.png" alt="Cube Object" class="floating-cubes">
-
-            <div class="tiny-emojis">🥰❤️</div>
-
-            <div class="social-icons-bar">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" alt="Twitter/X">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/TikTok_logo_with_wordmark.svg" alt="TikTok">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.svg" alt="YouTube">
+            <button class="btn-signin" onclick="doLogin()">Sign In</button>
+            <p style="text-align:center; font-size:14px; color:#666; margin-top:15px;">No account? <span style="color:var(--primary); font-weight:700; cursor:pointer;" onclick="toggleScreen('signup-screen')">Sign Up</span></p>
+        </div>
+        <div class="graphics-box">
+            <div class="support-tag"><i class="fas fa-bolt" style="color:#f9ca24"></i> 24/7 Live Support</div>
+            <div class="purple-bg"></div>
+            <img src="https://growfansite.com/assets/img/login_img.png" class="girl-img">
+            <div class="social-bar">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.svg">
             </div>
         </div>
     </div>
 
     <div id="signup-screen" class="screen">
-        <div class="card-old" style="margin-top:50px;">
-            <h2>Register</h2>
+        <div class="card" style="margin-top:50px; text-align:center;">
+            <h2>Create Account</h2>
             <input type="text" id="s-user" placeholder="Username">
-            <input type="email" id="s-email" placeholder="Gmail">
-            <input type="text" id="s-phone" placeholder="WhatsApp Number">
-            <input type="password" id="s-pass" placeholder="Create Password">
-            <button class="btn btn-blue" style="width:100%; padding:15px; margin-top:10px;" onclick="doSignup()">Create Account Now</button>
-            <p onclick="toggleScreen('login-screen')" style="color:#007bff; cursor:pointer; font-size:13px; text-align:center; margin-top:15px; font-weight:700;">Back to Login</p>
+            <input type="password" id="s-pass" placeholder="Password">
+            <button class="btn-signin" onclick="doSignup()">Register</button>
+            <p onclick="toggleScreen('login-screen')" style="margin-top:15px; cursor:pointer; color:var(--primary)">Back to Login</p>
         </div>
     </div>
-    
-    </body>
+
+    <div id="user-panel" class="screen">
+        <div class="top-nav">
+            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-cart"></i>Order</div>
+            <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-wallet"></i>Funds</div>
+            <div class="nav-item" onclick="showTab('history-tab', this); loadHistory();"><i class="fas fa-history"></i>History</div>
+            <div class="nav-item" style="color:red" onclick="location.reload()"><i class="fas fa-power-off"></i>Exit</div>
+        </div>
+
+        <div class="balance-card">
+            <div style="font-size:11px; opacity:0.8; font-weight:800;">CURRENT BALANCE</div>
+            <h1 id="userBalDisplay" style="font-size:42px; margin:5px 0;">₹0.00</h1>
+            <div class="user-badge" id="displayUser">USER</div>
+        </div>
+
+        <div id="order-tab" class="tab-content active">
+            <div class="card">
+                <h3>New Order</h3>
+                <input type="text" id="orderLink" placeholder="Post Link here">
+                <select id="serviceSelect">
+                    <option value="4">Instagram Views (10k) - ₹4</option>
+                    <option value="35">Instagram Followers (1k) - ₹35</option>
+                </select>
+                <button class="btn-signin" onclick="placeOrder()">Place Order</button>
+            </div>
+        </div>
+
+        <div id="funds-tab" class="tab-content" style="display:none;">
+            <div class="card">
+                <h3>Add Funds</h3>
+                <input type="number" id="payAmount" placeholder="Amount (₹)" oninput="updateQR()">
+                <div id="qrDisplay">
+                    <img id="qrImg" style="width:180px;"><br>
+                    <small>UPI: 7388720012@fam</small>
+                </div>
+                <input type="text" id="payTxn" placeholder="Transaction ID">
+                <button class="btn-signin" style="background:#10b981;" onclick="submitPayment()">Submit Details</button>
+            </div>
+        </div>
+
+        <div id="history-tab" class="tab-content" style="display:none;">
+            <div class="card"><h3>Payments</h3><div id="historyList"></div></div>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="screen">
+        <div class="card" style="margin-top:30px; background:#1f2937; color:white;"><h2>Admin Panel</h2></div>
+        <div class="card">
+            <h4>Add Balance</h4>
+            <input type="text" id="admTarget" placeholder="Username">
+            <input type="number" id="admAmount" placeholder="Amount">
+            <input type="text" id="admTxn" placeholder="TXN ID (to approve)">
+            <button class="btn-signin" onclick="adminApprove()">Approve & Add</button>
+            <button class="btn-signin" style="background:#666; margin-top:10px;" onclick="location.reload()">Logout Admin</button>
+        </div>
+    </div>
+
+    <script>
+        let db = JSON.parse(localStorage.getItem('smm_db')) || {};
+        let sessionUser = null;
+        const sheetURL = "https://script.google.com/macros/s/AKfycbxRPNReLWFEz8FNOqEA02sqQORMHFuL7E790bdoqVhynbme6pJXJ3t3jaf4qv6JFUPsAQ/exec";
+
+        function toggleScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function showTab(id, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
+            document.getElementById(id).style.display = 'block';
+            el.classList.add('active-nav');
+        }
+
+        function doSignup() {
+            let u = document.getElementById('s-user').value.trim();
+            let p = document.getElementById('s-pass').value;
+            if(!u || db[u]) return alert("Invalid Username");
+            db[u] = { pass: p, bal: 0, history: [] };
+            save(); alert("Success!"); toggleScreen('login-screen');
+        }
+
+        function doLogin() {
+            let u = document.getElementById('l-user').value, p = document.getElementById('l-pass').value;
+            if(u === "admin" && p === "suhel7388") return toggleScreen('admin-panel');
+            if(db[u] && db[u].pass === p) {
+                sessionUser = u; document.getElementById('displayUser').innerText = u;
+                updateUI(); toggleScreen('user-panel');
+            } else alert("Wrong Login");
+        }
+
+        function updateQR() {
+            let amt = document.getElementById('payAmount').value;
+            if(amt >= 1) {
+                document.getElementById('qrDisplay').style.display = "block";
+                let upi = `upi://pay?pa=7388720012@fam&am=${amt}&cu=INR`;
+                document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upi)}`;
+            }
+        }
+
+        function submitPayment() {
+            let amt = document.getElementById('payAmount').value, txn = document.getElementById('payTxn').value;
+            if(!amt || !txn) return alert("Fill details!");
+            db[sessionUser].history.unshift({ date: new Date().toLocaleString(), amt: amt, txn: txn, status: "Pending" });
+            save();
+            window.open(`https://wa.me/917388720012?text=Payment Request:%0AUser: ${sessionUser}%0AAmt: ₹${amt}%0ATXN: ${txn}`);
+            alert("Sent to admin!"); showTab('history-tab', document.querySelectorAll('.nav-item')[2]); loadHistory();
+        }
+
+        function loadHistory() {
+            let list = document.getElementById('historyList'); list.innerHTML = "";
+            db[sessionUser].history.forEach(h => {
+                list.innerHTML += `<div class="history-item"><b>₹${h.amt}</b> - <span style="color:${h.status=='Approved'?'green':'orange'}">${h.status}</span><br><small>${h.date} | TXN: ${h.txn}</small></div>`;
+            });
+        }
+
+        function adminApprove() {
+            let u = document.getElementById('admTarget').value, a = parseFloat(document.getElementById('admAmount').value), t = document.getElementById('admTxn').value;
+            if(!db[u]) return alert("No user");
+            db[u].bal += a;
+            let found = db[u].history.find(h => h.txn === t);
+            if(found) found.status = "Approved";
+            save(); alert("Balance Added!");
+        }
+
+        function placeOrder() {
+            let cost = parseFloat(document.getElementById('serviceSelect').value), link = document.getElementById('orderLink').value;
+            if(db[sessionUser].bal < cost) return alert("Low Balance!");
+            fetch(sheetURL, { method: "POST", mode: "no-cors", body: JSON.stringify({ user: sessionUser, service: "Order", link: link, price: cost })}).then(() => {
+                db[sessionUser].bal -= cost; save(); updateUI(); alert("Order Success!"); location.reload();
+            });
+        }
+
+        function save() { localStorage.setItem('smm_db', JSON.stringify(db)); }
+        function updateUI() { document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2); }
+    </script>
+</body>
 </html>
