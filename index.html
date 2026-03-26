@@ -3,117 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - Pro Panel</title>
+    <title>SMMbyAS - VIP Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary: #3b82f6; --primary-dark: #1e40af;
             --secondary-start: #ff47ff; --secondary-end: #47ffff;
             --bg: #f9fafb; --card: #ffffff; --success: #10b981; --dark: #1f2937;
-            --border-radius: 20px;
+            --border-radius: 24px;
         }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .screen { display: none; width: 100%; max-width: 480px; padding: 20px; box-sizing: border-box; animation: fadeIn 0.4s; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Auth Cards */
         .auth-card { background: var(--card); padding: 35px; border-radius: var(--border-radius); box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center; margin-top: 50px; }
-        .top-nav { display: flex; justify-content: space-around; background: var(--card); padding: 15px 0; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        
+        /* Modern Top Nav */
+        .top-nav { display: flex; justify-content: space-around; background: var(--card); padding: 15px 0; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .nav-item { text-align: center; color: #9ca3af; cursor: pointer; font-size: 11px; flex: 1; font-weight: bold; }
-        .nav-item i { display: block; font-size: 18px; margin-bottom: 5px; }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 5px; }
         .nav-item.active-nav { color: var(--primary); }
-        .card { background: var(--card); padding: 20px; border-radius: var(--border-radius); box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 12px; box-sizing: border-box; outline: none; background: #fcfcfc; }
-        .btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; font-size: 15px; text-transform: uppercase; transition: 0.3s; }
-        .btn-blue { background: linear-gradient(to right, var(--primary), #60a5fa); color: white; }
-        .btn-green { background: linear-gradient(to right, var(--success), #34d399); color: white; }
+
+        /* VIP Balance Card */
+        .balance-card { 
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); 
+            color: white; text-align: center; padding: 30px; 
+            border-radius: var(--border-radius); margin-bottom: 25px; 
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+            position: relative; overflow: hidden;
+        }
+        .balance-label { font-size: 11px; font-weight: 800; opacity: 0.8; letter-spacing: 1px; }
+        .balance-amount { margin: 10px 0; font-size: 44px; font-weight: 900; }
         
-        /* Balance & User UI */
-        .balance-card { background: linear-gradient(145deg, var(--primary-dark), #4f46e5); color: white; text-align: center; padding: 25px; border-radius: var(--border-radius); margin-bottom: 20px; }
-        .username-colored { margin-top: 10px; font-size: 22px; font-weight: 900; background: linear-gradient(to right, var(--secondary-start), var(--secondary-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; }
+        /* New Username Box Style */
+        .user-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 800;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card { background: var(--card); padding: 25px; border-radius: var(--border-radius); box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        h3 { font-size: 20px; margin-top: 0; color: var(--dark); }
         
-        /* Admin List Style */
-        .admin-user-box { background: #f1f5f9; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary); font-size: 13px; line-height: 1.6; }
-        .admin-user-box b { color: var(--primary-dark); }
+        /* Inputs & Buttons */
+        input, select { width: 100%; padding: 15px; border-radius: 15px; border: 1.5px solid #e5e7eb; margin-bottom: 15px; box-sizing: border-box; outline: none; font-size: 15px; background: #fcfcfc; }
+        input:focus { border-color: var(--primary); background: #fff; }
+        
+        .btn { width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; font-size: 16px; text-transform: uppercase; transition: 0.3s; }
+        .btn-blue { background: linear-gradient(to right, #2563eb, #3b82f6); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2); }
+        .btn-green { background: linear-gradient(to right, #059669, #10b981); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2); }
+
+        /* Admin List Info */
+        .admin-user-box { background: #f8fafc; padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 6px solid var(--primary); font-size: 13px; }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="screen active">
         <div class="auth-card">
-            <h2 style="color:var(--primary); margin-bottom:10px;">SMMbyAS</h2>
-            <p style="font-size:14px; color:#6b7280;">Apne account me login karein</p>
+            <h1 style="color:var(--primary); font-weight:900;">SMMbyAS</h1>
             <input type="text" id="l-user" placeholder="Username">
             <input type="password" id="l-pass" placeholder="Password">
-            <button class="btn btn-blue" onclick="doLogin()">Login</button>
-            <span style="color:var(--primary); cursor:pointer; font-size:13px; display:block; margin-top:15px; font-weight:bold;" onclick="toggleScreen('signup-screen')">Naya Account Banayein →</span>
+            <button class="btn btn-blue" onclick="doLogin()">Login Account</button>
+            <p onclick="toggleScreen('signup-screen')" style="color:var(--primary); cursor:pointer; font-size:13px; margin-top:20px; font-weight:700;">Create New Account →</p>
         </div>
     </div>
 
     <div id="signup-screen" class="screen">
         <div class="auth-card">
             <h2>Sign Up</h2>
-            <input type="text" id="s-user" placeholder="Choose Username">
+            <input type="text" id="s-user" placeholder="Username">
             <input type="email" id="s-email" placeholder="Gmail Address">
             <input type="text" id="s-phone" placeholder="WhatsApp Number">
-            <input type="password" id="s-pass" placeholder="Create Password">
-            <button class="btn btn-green" onclick="doSignup()">Register Now</button>
-            <span style="color:var(--primary); cursor:pointer; font-size:13px; display:block; margin-top:15px; font-weight:bold;" onclick="toggleScreen('login-screen')">Pehle se account hai? Login</span>
+            <input type="password" id="s-pass" placeholder="Password">
+            <button class="btn btn-green" onclick="doSignup()">Create Account</button>
+            <p onclick="toggleScreen('login-screen')" style="color:var(--primary); cursor:pointer; font-size:13px; margin-top:20px; font-weight:700;">Back to Login</p>
         </div>
     </div>
 
     <div id="user-panel" class="screen">
         <div class="top-nav">
-            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-cart"></i>Order</div>
+            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-basket"></i>Order</div>
             <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-wallet"></i>Funds</div>
-            <div class="nav-item" style="color:#ef4444" onclick="location.reload()"><i class="fas fa-power-off"></i>Logout</div>
+            <div class="nav-item" style="color:#f43f5e" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i>Logout</div>
         </div>
 
         <div class="balance-card">
-            <div style="font-size:12px; opacity:0.8; font-weight:bold;">YOUR BALANCE</div>
-            <h1 id="userBalDisplay" style="margin:5px 0; font-size:38px;">₹0.00</h1>
-            <div class="username-colored" id="displayUser">USER</div>
+            <div class="balance-label">CURRENT BALANCE</div>
+            <h1 id="userBalDisplay" class="balance-amount">₹0.00</h1>
+            <div class="user-badge" id="displayUser">USERNAME</div>
         </div>
 
         <div id="order-tab" class="tab-content active">
             <div class="card">
                 <h3>New Order</h3>
-                <input type="text" id="orderLink" placeholder="Link paste karein...">
+                <input type="text" id="orderLink" placeholder="Post / Profile Link">
                 <select id="serviceSelect" onchange="updatePriceText()">
-                    <option value="0">-- Service Chuniye --</option>
+                    <option value="0">-- Choose Service --</option>
                     <option value="4">Instagram Views (10k) - ₹4</option>
                     <option value="35">Instagram Followers (1k) - ₹35</option>
                 </select>
-                <p id="priceLabel" style="font-weight:bold; color:var(--primary);"></p>
-                <button class="btn btn-blue" id="orderBtn" onclick="placeOrder()">Place Order</button>
+                <p id="priceLabel" style="font-weight:900; color:var(--primary); text-align:right;"></p>
+                <button class="btn btn-blue" id="orderBtn" onclick="placeOrder()">Place Order Now</button>
             </div>
         </div>
 
         <div id="funds-tab" class="tab-content" style="display:none;">
-            <div class="card" style="text-align:center;">
-                <h3>Add Funds</h3>
-                <p style="font-size:13px; color:#666;">UPI: 7388720012@fam</p>
-                <button class="btn btn-green" onclick="alert('WhatsApp par contact karein!')">Contact Admin</button>
+            <div class="card">
+                <h3 style="text-align:center;">Add Payment</h3>
+                <div style="background:#fff7ed; padding:10px; border-radius:10px; border:1px dashed #ed8936; margin-bottom:15px; font-size:12px; color:#c05621; text-align:center;">
+                    <b>UPI ID:</b> 7388720012@fam <br> (Pehle payment karein, phir detail bharein)
+                </div>
+                
+                <label style="font-size:12px; font-weight:700; color:#666;">Payment Amount (₹)</label>
+                <input type="number" id="payAmount" placeholder="Enter Amount (e.g. 8)">
+                
+                <label style="font-size:12px; font-weight:700; color:#666;">Transaction / UTR ID</label>
+                <input type="text" id="payTxn" placeholder="12 Digit Transaction ID">
+                
+                <button class="btn btn-green" onclick="submitPayment()">Submit Payment</button>
             </div>
         </div>
     </div>
 
     <div id="admin-panel" class="screen">
-        <div class="card" style="background:var(--dark); color:white; text-align:center; padding:10px;">
-            <h3 style="margin:0; color:white;">Admin Dashboard</h3>
-        </div>
-
+        <div class="card" style="background:var(--dark); color:white; text-align:center; padding:10px;"><h3>Admin Control</h3></div>
         <div class="card">
-            <h4><i class="fas fa-users"></i> Registered Users Detail</h4>
-            <div id="adminUserList" style="max-height: 250px; overflow-y: auto; margin-bottom:10px;">
-                </div>
-            <button class="btn" style="background:#e2e8f0; font-size:12px; padding:8px;" onclick="loadAdminUsers()">Refresh User List</button>
+            <h4>User Management</h4>
+            <div id="adminUserList" style="max-height: 200px; overflow-y: auto;"></div>
+            <button class="btn" style="background:#eee; font-size:12px; padding:10px; margin-top:10px;" onclick="loadAdminUsers()">Refresh List</button>
         </div>
-
         <div class="card">
-            <h4>Update Balance</h4>
-            <input type="text" id="admTarget" placeholder="Username copy karein">
+            <h4>Add Balance</h4>
+            <input type="text" id="admTarget" placeholder="Username">
             <input type="number" id="admAmount" placeholder="Amount (₹)">
-            <button class="btn btn-green" onclick="adminUpdateBal()">Add Balance Now</button>
+            <button class="btn btn-green" onclick="adminUpdateBal()">Approve Balance</button>
             <button class="btn" style="margin-top:10px; background:#ddd;" onclick="location.reload()">Exit Admin</button>
         </div>
     </div>
@@ -135,58 +170,64 @@
             el.classList.add('active-nav');
         }
 
-        // --- AUTH LOGIC ---
         function doSignup() {
             const u = document.getElementById('s-user').value.trim();
             const e = document.getElementById('s-email').value.trim();
             const ph = document.getElementById('s-phone').value.trim();
             const p = document.getElementById('s-pass').value.trim();
-
-            if(!u || !e || !ph || !p) return alert("Saari details bhariye!");
-            if(db[u]) return alert("Ye Username pehle se hai!");
-
+            if(!u || !e || !ph || !p) return alert("Fill all details!");
             db[u] = { email: e, phone: ph, pass: p, bal: 0.00 };
             localStorage.setItem('smm_db', JSON.stringify(db));
-            alert("Signup Success! Ab login karein.");
-            toggleScreen('login-screen');
+            alert("Account Created!"); toggleScreen('login-screen');
         }
 
         function doLogin() {
             const u = document.getElementById('l-user').value.trim();
             const p = document.getElementById('l-pass').value.trim();
-
-            if(u === "admin" && p === "suhel7388") {
-                toggleScreen('admin-panel');
-                loadAdminUsers();
-                return;
-            }
-
+            if(u === "admin" && p === "suhel7388") { toggleScreen('admin-panel'); loadAdminUsers(); return; }
             if(db[u] && db[u].pass === p) {
                 sessionUser = u;
                 document.getElementById('displayUser').innerText = u;
                 updateUserUI();
                 toggleScreen('user-panel');
-            } else { alert("Wrong ID or Password!"); }
+            } else { alert("Wrong ID/Pass!"); }
         }
 
-        // --- ADMIN LOGIC ---
+        function submitPayment() {
+            const amt = document.getElementById('payAmount').value;
+            const txn = document.getElementById('payTxn').value.trim();
+            if(!amt || txn.length < 5) return alert("Sahi Amount aur Transaction ID dalein!");
+            
+            // Redirect to WhatsApp with details
+            const msg = `PAYMENT REQUEST:%0AUser: ${sessionUser}%0AAmount: ₹${amt}%0ATXN ID: ${txn}%0AApprove my payment please!`;
+            window.open(`https://wa.me/917388720012?text=${msg}`);
+        }
+
+        function placeOrder() {
+            const cost = parseFloat(document.getElementById('serviceSelect').value);
+            const link = document.getElementById('orderLink').value.trim();
+            const srv = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
+            if(cost === 0 || !link) return alert("Link aur Service chuniye!");
+            if(db[sessionUser].bal < cost) return alert("Kam Balance!");
+
+            fetch(sheetURL, { method: "POST", mode: "no-cors", body: JSON.stringify({
+                user: sessionUser, email: db[sessionUser].email, service: srv, link: link, price: cost
+            })}).then(() => {
+                db[sessionUser].bal -= cost;
+                localStorage.setItem('smm_db', JSON.stringify(db));
+                updateUserUI();
+                alert("Order Placed! ✅");
+                location.reload();
+            });
+        }
+
         function loadAdminUsers() {
             const container = document.getElementById('adminUserList');
             container.innerHTML = "";
-            let users = Object.keys(db);
-            
-            if(users.length === 0) container.innerHTML = "Koi user nahi mila.";
-
-            users.forEach(username => {
-                let data = db[username];
+            Object.keys(db).forEach(u => {
                 let box = document.createElement('div');
                 box.className = "admin-user-box";
-                box.innerHTML = `
-                    <b>User:</b> ${username} <br>
-                    <b>Gmail:</b> ${data.email} <br>
-                    <b>WhatsApp:</b> ${data.phone} <br>
-                    <b>Balance:</b> ₹${data.bal.toFixed(2)}
-                `;
+                box.innerHTML = `<b>User:</b> ${u} | <b>Email:</b> ${db[u].email} <br> <b>Bal:</b> ₹${db[u].bal.toFixed(2)}`;
                 container.appendChild(box);
             });
         }
@@ -194,49 +235,15 @@
         function adminUpdateBal() {
             const u = document.getElementById('admTarget').value.trim();
             const a = parseFloat(document.getElementById('admAmount').value);
-            if(!db[u]) return alert("User nahi mila!");
+            if(!db[u]) return alert("User not found!");
             db[u].bal += a;
             localStorage.setItem('smm_db', JSON.stringify(db));
             loadAdminUsers();
-            alert(u + " ka balance update ho gaya!");
+            alert("Done!");
         }
 
-        // --- ORDER LOGIC ---
-        function placeOrder() {
-            const cost = parseFloat(document.getElementById('serviceSelect').value);
-            const link = document.getElementById('orderLink').value.trim();
-            const srv = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
-
-            if(cost === 0 || !link) return alert("Link aur Service check karein!");
-            if(db[sessionUser].bal < cost) return alert("Paisa kam hai!");
-
-            document.getElementById('orderBtn').innerText = "Sending...";
-            
-            // Sending to Google Sheet
-            fetch(sheetURL, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({
-                    user: sessionUser,
-                    email: db[sessionUser].email, // Email bhi bhej rahe hain
-                    service: srv,
-                    link: link,
-                    price: cost
-                })
-            }).then(() => {
-                db[sessionUser].bal -= cost;
-                localStorage.setItem('smm_db', JSON.stringify(db));
-                updateUserUI();
-                alert("Order Successful! ✅ Details Sheet mein bhej di gayi hain.");
-                location.reload();
-            });
-        }
-
-        function updateUserUI() {
-            document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2);
-        }
-
-        function updatePriceText() {
+        function updateUserUI() { document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2); }
+        function updatePriceText() { 
             const p = document.getElementById('serviceSelect').value;
             document.getElementById('priceLabel').innerText = p > 0 ? "Cost: ₹" + p : "";
         }
