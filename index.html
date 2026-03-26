@@ -3,140 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - VIP All-in-One</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>SMMbyAS - VIP Pro Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #007bff; --bg: #f7f9fc; --card: #ffffff; 
-            --purple: #7a5df5; --border-radius: 16px;
+            --primary: #3b82f6; --primary-dark: #1e40af;
+            --bg: #f9fafb; --card: #ffffff; --success: #10b981; --dark: #1f2937;
+            --border-radius: 24px;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; overflow-x: hidden; }
-        .screen { display: none; width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .screen { display: none; width: 100%; max-width: 480px; padding: 20px; box-sizing: border-box; animation: fadeIn 0.4s; }
         .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- 1. NEW PRO LOGIN STYLE --- */
-        #login-screen { background: #fff; }
-        .login-header { display: flex; justify-content: space-between; padding: 25px 30px; }
-        .login-logo { font-size: 28px; font-weight: 800; color: var(--primary); text-decoration: underline; }
-        .form-area { padding: 0 30px; }
-        .input-group { position: relative; margin-bottom: 15px; }
-        .input-group i { position: absolute; left: 15px; top: 18px; color: #ccc; }
-        .input-group input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; outline: none; }
-        .btn-signin { width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
-        
-        .graphics-box { position: relative; height: 350px; margin-top: 30px; overflow: hidden; }
-        .purple-bg { position: absolute; bottom: -50px; width: 140%; height: 300px; background: var(--purple); border-radius: 50% 50% 0 0; left: -20%; }
-        .girl-img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 320px; z-index: 2; }
-        .support-tag { position: absolute; top: 40px; left: 20px; background: white; padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; z-index: 3; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .social-bar { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 12px; display: flex; gap: 10px; z-index: 4; }
-        .social-bar img { width: 25px; }
-
-        /* --- 2. USER PANEL STYLE --- */
-        .top-nav { display: flex; background: #fff; padding: 15px 0; border-radius: 0 0 20px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .nav-item { flex: 1; text-align: center; color: #9ca3af; font-size: 10px; font-weight: bold; cursor: pointer; }
+        /* Nav & Cards */
+        .top-nav { display: flex; justify-content: space-around; background: var(--card); padding: 15px 0; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .nav-item { text-align: center; color: #9ca3af; cursor: pointer; font-size: 10px; flex: 1; font-weight: bold; text-transform: uppercase; }
+        .nav-item i { display: block; font-size: 18px; margin-bottom: 5px; }
         .nav-item.active-nav { color: var(--primary); }
-        .nav-item i { display: block; font-size: 20px; margin-bottom: 4px; }
-        
-        .balance-card { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; margin: 20px; padding: 30px; border-radius: 24px; text-align: center; box-shadow: 0 10px 25px rgba(59,130,246,0.3); }
-        .user-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 50px; font-size: 12px; margin-top: 10px; text-transform: uppercase; }
 
-        .card { background: #fff; margin: 0 20px 20px 20px; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .history-item { background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); font-size: 12px; }
-        #qrDisplay { display: none; text-align: center; background: #f0f4f8; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
+        .balance-card { 
+            background: linear-gradient(135deg, #4f46e5, #3b82f6); 
+            color: white; text-align: center; padding: 30px; 
+            border-radius: var(--border-radius); margin-bottom: 25px; 
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+        }
+        .user-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 50px; font-size: 13px; font-weight: 800; text-transform: uppercase; margin-top: 10px; }
+
+        .card { background: var(--card); padding: 25px; border-radius: var(--border-radius); box-shadow: 0 8px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        input, select { width: 100%; padding: 15px; border-radius: 15px; border: 1.5px solid #e5e7eb; margin-bottom: 15px; box-sizing: border-box; }
+        
+        /* History List */
+        .history-item { background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid #cbd5e1; font-size: 13px; }
+        .status-pending { color: #f59e0b; font-weight: bold; }
+        .status-approved { color: #10b981; font-weight: bold; }
+
+        #qrDisplay { display: none; text-align: center; margin-bottom: 15px; padding: 10px; background: white; border-radius: 15px; border: 1px solid #eee; }
+        .btn { width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; font-size: 16px; text-transform: uppercase; transition: 0.3s; }
+        .btn-blue { background: linear-gradient(to right, #2563eb, #3b82f6); color: white; }
+        .btn-green { background: linear-gradient(to right, #059669, #10b981); color: white; }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="screen active">
-        <div class="login-header"><div class="login-logo">SMMbyAS</div></div>
-        <div class="form-area">
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" id="l-user" placeholder="Username">
-            </div>
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" id="l-pass" placeholder="Password">
-            </div>
-            <button class="btn-signin" onclick="doLogin()">Sign In</button>
-            <p style="text-align:center; font-size:14px; color:#666; margin-top:15px;">No account? <span style="color:var(--primary); font-weight:700; cursor:pointer;" onclick="toggleScreen('signup-screen')">Sign Up</span></p>
-        </div>
-        <div class="graphics-box">
-            <div class="support-tag"><i class="fas fa-bolt" style="color:#f9ca24"></i> 24/7 Live Support</div>
-            <div class="purple-bg"></div>
-            <img src="https://growfansite.com/assets/img/login_img.png" class="girl-img">
-            <div class="social-bar">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.svg">
-            </div>
+        <div class="card" style="margin-top:80px; text-align:center;">
+            <h1 style="color:var(--primary)">SMMbyAS</h1>
+            <input type="text" id="l-user" placeholder="Username">
+            <input type="password" id="l-pass" placeholder="Password">
+            <button class="btn btn-blue" onclick="doLogin()">Login</button>
+            <p onclick="toggleScreen('signup-screen')" style="color:var(--primary); cursor:pointer; font-size:13px; margin-top:20px; font-weight:700;">Naya Account Banayein</p>
         </div>
     </div>
 
     <div id="signup-screen" class="screen">
-        <div class="card" style="margin-top:50px; text-align:center;">
-            <h2>Create Account</h2>
+        <div class="card" style="margin-top:50px;">
+            <h2>Register</h2>
             <input type="text" id="s-user" placeholder="Username">
+            <input type="email" id="s-email" placeholder="Gmail">
+            <input type="text" id="s-phone" placeholder="WhatsApp">
             <input type="password" id="s-pass" placeholder="Password">
-            <button class="btn-signin" onclick="doSignup()">Register</button>
-            <p onclick="toggleScreen('login-screen')" style="margin-top:15px; cursor:pointer; color:var(--primary)">Back to Login</p>
+            <button class="btn btn-green" onclick="doSignup()">Sign Up</button>
+            <p onclick="toggleScreen('login-screen')" style="color:var(--primary); cursor:pointer; font-size:13px; margin-top:20px; font-weight:700;">Back to Login</p>
         </div>
     </div>
 
     <div id="user-panel" class="screen">
         <div class="top-nav">
-            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-cart"></i>Order</div>
-            <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-wallet"></i>Funds</div>
+            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-basket"></i>Order</div>
+            <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-qrcode"></i>Funds</div>
             <div class="nav-item" onclick="showTab('history-tab', this); loadHistory();"><i class="fas fa-history"></i>History</div>
-            <div class="nav-item" style="color:red" onclick="location.reload()"><i class="fas fa-power-off"></i>Exit</div>
+            <div class="nav-item" style="color:#f43f5e" onclick="location.reload()"><i class="fas fa-power-off"></i>Exit</div>
         </div>
 
         <div class="balance-card">
-            <div style="font-size:11px; opacity:0.8; font-weight:800;">CURRENT BALANCE</div>
-            <h1 id="userBalDisplay" style="font-size:42px; margin:5px 0;">₹0.00</h1>
+            <div style="font-size:11px; font-weight:800; opacity:0.8;">BALANCE</div>
+            <h1 id="userBalDisplay" style="font-size:45px; margin:5px 0;">₹0.00</h1>
             <div class="user-badge" id="displayUser">USER</div>
         </div>
 
         <div id="order-tab" class="tab-content active">
             <div class="card">
                 <h3>New Order</h3>
-                <input type="text" id="orderLink" placeholder="Post Link here">
-                <select id="serviceSelect">
+                <input type="text" id="orderLink" placeholder="Paste Link Here">
+                <select id="serviceSelect" onchange="updatePriceText()">
+                    <option value="0">-- Select Service --</option>
                     <option value="4">Instagram Views (10k) - ₹4</option>
                     <option value="35">Instagram Followers (1k) - ₹35</option>
                 </select>
-                <button class="btn-signin" onclick="placeOrder()">Place Order</button>
+                <p id="priceLabel" style="font-weight:900; color:var(--primary); text-align:right;"></p>
+                <button class="btn btn-blue" id="orderBtn" onclick="placeOrder()">Order Now</button>
             </div>
         </div>
 
         <div id="funds-tab" class="tab-content" style="display:none;">
             <div class="card">
-                <h3>Add Funds</h3>
+                <h3 style="text-align:center;">Add Funds</h3>
                 <input type="number" id="payAmount" placeholder="Amount (₹)" oninput="updateQR()">
                 <div id="qrDisplay">
                     <img id="qrImg" style="width:180px;"><br>
-                    <small>UPI: 7388720012@fam</small>
+                    <b>7388720012@fam</b>
                 </div>
-                <input type="text" id="payTxn" placeholder="Transaction ID">
-                <button class="btn-signin" style="background:#10b981;" onclick="submitPayment()">Submit Details</button>
+                <input type="text" id="payTxn" placeholder="12 Digit Transaction ID">
+                <button class="btn btn-green" onclick="submitPayment()">Submit Payment</button>
             </div>
         </div>
 
         <div id="history-tab" class="tab-content" style="display:none;">
-            <div class="card"><h3>Payments</h3><div id="historyList"></div></div>
+            <div class="card">
+                <h3>Payment History</h3>
+                <div id="historyList">
+                    </div>
+            </div>
         </div>
     </div>
 
     <div id="admin-panel" class="screen">
-        <div class="card" style="margin-top:30px; background:#1f2937; color:white;"><h2>Admin Panel</h2></div>
+        <div class="card" style="background:var(--dark); color:white; text-align:center;"><h3>Admin</h3></div>
         <div class="card">
-            <h4>Add Balance</h4>
+            <div id="adminUserList" style="max-height: 150px; overflow-y: auto;"></div>
+        </div>
+        <div class="card">
             <input type="text" id="admTarget" placeholder="Username">
             <input type="number" id="admAmount" placeholder="Amount">
-            <input type="text" id="admTxn" placeholder="TXN ID (to approve)">
-            <button class="btn-signin" onclick="adminApprove()">Approve & Add</button>
-            <button class="btn-signin" style="background:#666; margin-top:10px;" onclick="location.reload()">Logout Admin</button>
+            <input type="text" id="admTxn" placeholder="TXN ID (Optional)">
+            <button class="btn btn-green" onclick="adminUpdateBal()">Add & Approve</button>
+            <button class="btn" style="margin-top:10px; background:#ddd;" onclick="location.reload()">Logout Admin</button>
         </div>
     </div>
 
@@ -158,66 +150,85 @@
         }
 
         function doSignup() {
-            let u = document.getElementById('s-user').value.trim();
-            let p = document.getElementById('s-pass').value;
-            if(!u || db[u]) return alert("Invalid Username");
-            db[u] = { pass: p, bal: 0, history: [] };
-            save(); alert("Success!"); toggleScreen('login-screen');
+            const u = document.getElementById('s-user').value.trim();
+            if(!u || db[u]) return alert("Invalid Username!");
+            db[u] = { email: document.getElementById('s-email').value, phone: document.getElementById('s-phone').value, pass: document.getElementById('s-pass').value, bal: 0, history: [] };
+            saveDB(); alert("Success!"); toggleScreen('login-screen');
         }
 
         function doLogin() {
-            let u = document.getElementById('l-user').value, p = document.getElementById('l-pass').value;
-            if(u === "admin" && p === "suhel7388") return toggleScreen('admin-panel');
-            if(db[u] && db[u].pass === p) {
-                sessionUser = u; document.getElementById('displayUser').innerText = u;
-                updateUI(); toggleScreen('user-panel');
-            } else alert("Wrong Login");
+            const u = document.getElementById('l-user').value, p = document.getElementById('l-pass').value;
+            if(u === "admin" && p === "suhel7388") { toggleScreen('admin-panel'); loadAdminUsers(); return; }
+            if(db[u] && db[u].pass === p) { sessionUser = u; document.getElementById('displayUser').innerText = u; updateUserUI(); toggleScreen('user-panel'); }
+            else alert("Wrong Login!");
         }
 
         function updateQR() {
-            let amt = document.getElementById('payAmount').value;
+            const amt = document.getElementById('payAmount').value;
             if(amt >= 1) {
                 document.getElementById('qrDisplay').style.display = "block";
-                let upi = `upi://pay?pa=7388720012@fam&am=${amt}&cu=INR`;
+                const upi = `upi://pay?pa=7388720012@fam&am=${amt}&cu=INR`;
                 document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upi)}`;
             }
         }
 
         function submitPayment() {
-            let amt = document.getElementById('payAmount').value, txn = document.getElementById('payTxn').value;
-            if(!amt || !txn) return alert("Fill details!");
-            db[sessionUser].history.unshift({ date: new Date().toLocaleString(), amt: amt, txn: txn, status: "Pending" });
-            save();
-            window.open(`https://wa.me/917388720012?text=Payment Request:%0AUser: ${sessionUser}%0AAmt: ₹${amt}%0ATXN: ${txn}`);
-            alert("Sent to admin!"); showTab('history-tab', document.querySelectorAll('.nav-item')[2]); loadHistory();
+            const amt = document.getElementById('payAmount').value, txn = document.getElementById('payTxn').value;
+            if(!amt || !txn) return alert("Fill all details!");
+            
+            // History mein save karein
+            const entry = { date: new Date().toLocaleString(), amt: amt, txn: txn, status: "Pending" };
+            db[sessionUser].history.unshift(entry);
+            saveDB();
+            
+            window.open(`https://wa.me/917388720012?text=Payment Request:%0AUser: ${sessionUser}%0AAmount: ₹${amt}%0ATXN: ${txn}`);
+            alert("Payment Submitted! Admin ko WhatsApp message bhej diya gaya hai.");
+            showTab('history-tab', document.querySelectorAll('.nav-item')[2]);
+            loadHistory();
         }
 
         function loadHistory() {
-            let list = document.getElementById('historyList'); list.innerHTML = "";
+            const list = document.getElementById('historyList');
+            list.innerHTML = "";
             db[sessionUser].history.forEach(h => {
-                list.innerHTML += `<div class="history-item"><b>₹${h.amt}</b> - <span style="color:${h.status=='Approved'?'green':'orange'}">${h.status}</span><br><small>${h.date} | TXN: ${h.txn}</small></div>`;
+                list.innerHTML += `<div class="history-item">
+                    <b>₹${h.amt}</b> - <span class="status-${h.status.toLowerCase()}">${h.status}</span><br>
+                    <small>${h.date}</small><br><small>TXN: ${h.txn}</small>
+                </div>`;
             });
         }
 
-        function adminApprove() {
-            let u = document.getElementById('admTarget').value, a = parseFloat(document.getElementById('admAmount').value), t = document.getElementById('admTxn').value;
-            if(!db[u]) return alert("No user");
+        function loadAdminUsers() {
+            const container = document.getElementById('adminUserList');
+            container.innerHTML = "";
+            Object.keys(db).forEach(u => {
+                container.innerHTML += `<div style="padding:5px; border-bottom:1px solid #eee;">${u} - ₹${db[u].bal}</div>`;
+            });
+        }
+
+        function adminUpdateBal() {
+            const u = document.getElementById('admTarget').value, a = parseFloat(document.getElementById('admAmount').value), t = document.getElementById('admTxn').value;
+            if(!db[u]) return alert("No user!");
             db[u].bal += a;
-            let found = db[u].history.find(h => h.txn === t);
-            if(found) found.status = "Approved";
-            save(); alert("Balance Added!");
+            // History status update (Matching TXN ID if provided)
+            if(t) {
+                let found = db[u].history.find(h => h.txn === t);
+                if(found) found.status = "Approved";
+            }
+            saveDB(); loadAdminUsers(); alert("Approved!");
         }
 
         function placeOrder() {
-            let cost = parseFloat(document.getElementById('serviceSelect').value), link = document.getElementById('orderLink').value;
+            const cost = parseFloat(document.getElementById('serviceSelect').value), link = document.getElementById('orderLink').value;
             if(db[sessionUser].bal < cost) return alert("Low Balance!");
             fetch(sheetURL, { method: "POST", mode: "no-cors", body: JSON.stringify({ user: sessionUser, service: "Order", link: link, price: cost })}).then(() => {
-                db[sessionUser].bal -= cost; save(); updateUI(); alert("Order Success!"); location.reload();
+                db[sessionUser].bal -= cost; saveDB(); updateUserUI(); alert("Order Success!"); location.reload();
             });
         }
 
-        function save() { localStorage.setItem('smm_db', JSON.stringify(db)); }
-        function updateUI() { document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2); }
+        function saveDB() { localStorage.setItem('smm_db', JSON.stringify(db)); }
+        function updateUserUI() { document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal.toFixed(2); }
+        function updatePriceText() { const p = document.getElementById('serviceSelect').value; document.getElementById('priceLabel').innerText = p > 0 ? "Cost: ₹" + p : ""; }
     </script>
 </body>
 </html>
