@@ -3,162 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - Pro Admin Control</title>
+    <title>SMMbyAS - Pro Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #007bff; --bg: #f4f7fe; --card: #ffffff; --success: #10b981; --danger: #ef4444; }
+        :root { --primary: #3b82f6; --bg: #f8fafc; --success: #10b981; --danger: #ef4444; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        .screen { display: none; width: 100%; max-width: 500px; margin: 0 auto; min-height: 100vh; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
+        .screen { display: none; width: 100%; max-width: 500px; margin: 0 auto; min-height: 100vh; background: #fff; }
         .active { display: block; }
+
+        /* Dual Dashboard Boxes */
+        .dash-container { padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .welcome-box { background: linear-gradient(135deg, #6366f1, #a855f7); color: white; padding: 22px; border-radius: 20px; box-shadow: 0 8px 16px rgba(99,102,241,0.2); }
+        .balance-box { background: linear-gradient(135deg, #3b82f6, #2dd4bf); color: white; padding: 22px; border-radius: 20px; box-shadow: 0 8px 16px rgba(59,130,246,0.2); text-align: right; }
         
-        /* Navigation */
         .top-nav { display: flex; background: #fff; padding: 12px 0; border-bottom: 1px solid #eee; position: sticky; top:0; z-index:100; }
-        .nav-item { flex: 1; text-align: center; color: #999; font-size: 10px; cursor: pointer; font-weight: bold; }
+        .nav-item { flex: 1; text-align: center; color: #94a3b8; font-size: 11px; cursor: pointer; font-weight: bold; }
         .nav-item.active-nav { color: var(--primary); }
-        .nav-item i { display: block; font-size: 20px; margin-bottom: 3px; }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 4px; }
 
-        .balance-card { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: white; margin: 15px; padding: 25px; border-radius: 20px; text-align: center; }
-        .card { background: #fff; margin: 15px; padding: 20px; border-radius: 18px; border: 1px solid #f0f0f0; }
+        .card { background: #fff; margin: 0 15px 15px; padding: 20px; border-radius: 18px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        label { font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 5px; display: block; }
+        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; margin-bottom: 15px; outline: none; font-size: 14px; transition: 0.3s; }
+        input:focus { border-color: var(--primary); }
         
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 15px; }
-        .stat-box { background: #fff; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #eee; }
+        .btn-place { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .btn-place:active { transform: scale(0.98); }
 
-        input, select { width: 100%; padding: 14px; border-radius: 10px; border: 1.5px solid #eee; margin-bottom: 10px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: 800; cursor: pointer; }
-        .btn-blue { background: var(--primary); color: white; }
-        .btn-green { background: var(--success); color: white; }
-        .btn-red { background: var(--danger); color: white; padding: 5px 10px; width: auto; font-size: 10px; }
-
-        .admin-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-        .admin-table th, .admin-table td { border: 1px solid #eee; padding: 8px; text-align: left; }
-        
-        .tab-btn { padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; background: #fff; cursor: pointer; font-size: 12px; margin-right: 5px; }
-        .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+        /* Table Styles */
+        .admin-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+        .admin-table th, .admin-table td { border: 1px solid #eee; padding: 10px; text-align: left; }
     </style>
 </head>
 <body>
 
     <div id="login-screen" class="screen active">
-        <div style="padding: 40px 30px 10px 30px; font-size: 30px; font-weight: 800; color: var(--primary);">SMMbyAS</div>
-        <div style="padding: 30px;">
+        <div style="padding: 60px 30px 20px; text-align: center;">
+            <h1 style="color:var(--primary); font-weight:800; margin-bottom:30px;">SMMbyAS</h1>
             <input type="text" id="l-user" placeholder="Username">
             <input type="password" id="l-pass" placeholder="Password">
-            <button class="btn btn-blue" onclick="doLogin()">Login</button>
-            <p onclick="toggleScreen('signup-screen')" style="text-align:center; color:#666; margin-top:20px; cursor:pointer;">Naya account? <b style="color:var(--primary)">Register</b></p>
+            <button class="btn-place" onclick="doLogin()">Sign In</button>
+            <p onclick="toggleScreen('signup-screen')" style="margin-top:20px; color:#64748b; cursor:pointer;">New User? <b>Register</b></p>
         </div>
     </div>
 
     <div id="signup-screen" class="screen">
         <div class="card" style="margin-top:50px;">
-            <h2>Create Account</h2>
+            <h2>Register Account</h2>
             <input type="text" id="s-user" placeholder="Username">
             <input type="email" id="s-email" placeholder="Gmail ID">
             <input type="text" id="s-phone" placeholder="WhatsApp Number">
             <input type="password" id="s-pass" placeholder="Password">
-            <button class="btn btn-green" onclick="doSignup()">Sign Up</button>
-            <p onclick="toggleScreen('login-screen')" style="text-align:center; margin-top:15px; cursor:pointer;">Login Here</p>
+            <button class="btn-place" style="background:var(--success)" onclick="doSignup()">Create Account</button>
+            <p onclick="toggleScreen('login-screen')" style="text-align:center; margin-top:15px; cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
     <div id="user-panel" class="screen">
         <div class="top-nav">
-            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-bag"></i>Order</div>
+            <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-shopping-cart"></i>Order</div>
             <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-wallet"></i>Funds</div>
-            <div class="nav-item" onclick="showTab('track-tab', this); loadUserHistory();"><i class="fas fa-history"></i>History</div>
-            <div class="nav-item" style="color:red" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i>Exit</div>
+            <div class="nav-item" onclick="showTab('track-tab', this); loadUserHistory();"><i class="fas fa-tasks"></i>Track</div>
+            <div class="nav-item" style="color:var(--danger)" onclick="location.reload()"><i class="fas fa-power-off"></i>Exit</div>
         </div>
-        <div class="balance-card">
-            <div style="font-size:11px; opacity:0.8;">CURRENT BALANCE</div>
-            <h1 id="userBalDisplay" style="font-size:45px; margin:5px 0;">₹0.00</h1>
-            <div id="displayUser" style="background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:50px; font-size:12px;">USER</div>
+
+        <div class="dash-container">
+            <div class="welcome-box">
+                <small style="text-transform: uppercase; font-weight: 700; opacity: 0.8;">Namaste,</small>
+                <h2 id="displayUser" style="margin: 5px 0 0 0;">USER</h2>
+            </div>
+            <div class="balance-box">
+                <small style="font-weight: 700; opacity: 0.8;">MY BALANCE</small>
+                <h1 id="userBalDisplay" style="margin: 5px 0 0 0; font-size: 36px;">₹0.00</h1>
+            </div>
         </div>
 
         <div id="order-tab" class="tab-content active">
             <div class="card">
-                <h3>New Order</h3>
-                <select id="serviceSelect">
-                    <option value="4">Instagram Views (10k) - ₹4</option>
-                    <option value="75">Instagram Followers (1k) - ₹75</option>
-                    <option value="30">Telegram Members (1k) - ₹30</option>
+                <h3>Place New Order</h3>
+                <label>Category</label>
+                <select id="catSelect" onchange="loadServices()">
+                    <option value="">Select Category</option>
+                    <option value="insta">Instagram Services</option>
+                    <option value="tele">Telegram Services</option>
+                    <option value="yt">YouTube Services</option>
                 </select>
-                <input type="text" id="orderLink" placeholder="Paste Link Here">
-                <button class="btn btn-blue" onclick="placeOrder()">Place Order</button>
+
+                <label>Service</label>
+                <select id="serviceSelect" onchange="updateCost()">
+                    <option value="0">Pehle category chunein</option>
+                </select>
+
+                <label>Link</label>
+                <input type="text" id="orderLink" placeholder="https://instagram.com/p/...">
+                
+                <div id="costDisplay" style="margin-bottom:15px; font-weight:800; color:var(--primary); font-size:18px;">Total Cost: ₹0</div>
+                <button class="btn-place" id="placeBtn" onclick="handlePlaceOrder()">Confirm Order</button>
             </div>
         </div>
 
         <div id="funds-tab" class="tab-content" style="display:none;">
             <div class="card">
                 <h3>Add Funds</h3>
-                <input type="number" id="payAmount" placeholder="Amount (₹)" oninput="updateQR()">
-                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px;">
-                    <img id="qrImg" style="width:180px;"><br>
-                    <small>UPI: 7388720012@fam</small>
+                <input type="number" id="payAmount" placeholder="Enter Amount" oninput="updateQR()">
+                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px; background:#f1f5f9; padding:10px; border-radius:15px;">
+                    <img id="qrImg" style="width:160px;"><br>
+                    <small><b>UPI: 7388720012@fam</b></small>
                 </div>
-                <input type="text" id="payTxn" placeholder="Transaction ID">
-                <button class="btn btn-green" onclick="submitPayment()">Submit Payment</button>
+                <input type="text" id="payTxn" placeholder="12 Digit TXN ID">
+                <button class="btn-place" style="background:var(--success)" onclick="submitPayment()">Submit for Approval</button>
             </div>
         </div>
 
         <div id="track-tab" class="tab-content" style="display:none;">
-            <div class="card"><h4>My Activity</h4><div id="userHistoryList"></div></div>
+            <div class="card"><h4>Order Status</h4><div id="userHistoryList"></div></div>
         </div>
     </div>
 
     <div id="admin-panel" class="screen">
-        <div class="card" style="background:#1e293b; color:white;"><h2>Admin Dashboard</h2></div>
-        
-        <div class="stats-grid">
-            <div class="stat-box"><small>Total Users</small><h2 id="admTotalUsers">0</h2></div>
-            <div class="stat-box"><small>Total Bal</small><h2 id="admTotalBal">₹0</h2></div>
+        <div style="padding:20px; background:#1e293b; color:white; text-align:center;">
+            <h2>Admin Control</h2>
+            <div id="adminStats">Users: 0 | Bal: ₹0</div>
         </div>
-
         <div class="card">
-            <div style="margin-bottom:15px;">
-                <button class="tab-btn active" onclick="switchAdminTab('users', this)">Users</button>
-                <button class="tab-btn" onclick="switchAdminTab('payments', this)">Payments</button>
-                <button class="tab-btn" onclick="switchAdminTab('orders', this)">Orders</button>
-            </div>
-
-            <div id="adm-users-sec">
-                <input type="text" placeholder="Search User..." onkeyup="filterTable(this, 'userTableBody')">
-                <div style="overflow-x:auto;">
-                    <table class="admin-table">
-                        <thead><tr><th>User</th><th>Gmail/Phone</th><th>Bal</th><th>Action</th></tr></thead>
-                        <tbody id="userTableBody"></tbody>
-                    </table>
-                </div>
-                <hr>
-                <h4>Add Balance</h4>
-                <input type="text" id="admTargetUser" placeholder="Username">
-                <input type="number" id="admTargetAmt" placeholder="Amount">
-                <button class="btn btn-blue" onclick="adminAddBal()">Add Money</button>
-            </div>
-
-            <div id="adm-payments-sec" style="display:none;">
-                <h4>Payment Requests</h4>
-                <div id="adminPaymentList" style="font-size:12px;"></div>
-            </div>
-
-            <div id="adm-orders-sec" style="display:none;">
-                <h4>Service Orders</h4>
-                <div id="adminOrderList" style="font-size:12px;"></div>
-            </div>
+            <h4>Add Balance</h4>
+            <input type="text" id="admTargetUser" placeholder="Username">
+            <input type="number" id="admTargetAmt" placeholder="Amount">
+            <button class="btn-place" onclick="adminAddBal()">Add Money</button>
         </div>
-        <button class="btn btn-red" style="margin:15px; width:94%;" onclick="location.reload()">Logout Admin</button>
+        <div class="card" style="overflow-x:auto;">
+            <table class="admin-table">
+                <thead><tr style="background:#f8fafc"><th>User</th><th>Gmail</th><th>Bal</th><th>Action</th></tr></thead>
+                <tbody id="userTableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
+        // SHEET CONFIG (Aapka URL yahan paste karein)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyC-9H0C6Wj8v4U7L4Z5M6N7O8P9Q0R1S2T3U4V/exec";
+
         let db = JSON.parse(localStorage.getItem('smm_db')) || {};
-        let payments = JSON.parse(localStorage.getItem('smm_payments')) || [];
-        let orders = JSON.parse(localStorage.getItem('smm_orders')) || [];
         let sessionUser = null;
 
-        function save() { 
-            localStorage.setItem('smm_db', JSON.stringify(db));
-            localStorage.setItem('smm_payments', JSON.stringify(payments));
-            localStorage.setItem('smm_orders', JSON.stringify(orders));
-        }
+        const services = {
+            insta: [ {n: "Insta Views (1k)", p: 5}, {n: "Insta Followers (1k)", p: 80} ],
+            tele: [ {n: "Telegram Members (1k)", p: 35} ],
+            yt: [ {n: "YouTube Subs (100)", p: 180} ]
+        };
+
+        function save() { localStorage.setItem('smm_db', JSON.stringify(db)); }
 
         function toggleScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -171,101 +165,88 @@
             document.getElementById(id).style.display = 'block'; el.classList.add('active-nav');
         }
 
-        function switchAdminTab(sec, el) {
-            document.getElementById('adm-users-sec').style.display = 'none';
-            document.getElementById('adm-payments-sec').style.display = 'none';
-            document.getElementById('adm-orders-sec').style.display = 'none';
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`adm-${sec}-sec`).style.display = 'block';
-            el.classList.add('active');
-            if(sec === 'payments') loadAdminPayments();
-            if(sec === 'orders') loadAdminOrders();
+        function loadServices() {
+            let cat = document.getElementById('catSelect').value;
+            let sel = document.getElementById('serviceSelect');
+            sel.innerHTML = "";
+            if(services[cat]) {
+                services[cat].forEach(s => sel.innerHTML += `<option value="${s.p}">${s.n} - ₹${s.p}</option>`);
+            } else {
+                sel.innerHTML = `<option value="0">Category select karein</option>`;
+            }
+            updateCost();
         }
 
-        // --- Auth ---
+        function updateCost() {
+            let cost = document.getElementById('serviceSelect').value;
+            document.getElementById('costDisplay').innerText = "Total Cost: ₹" + cost;
+        }
+
+        // --- AUTH ---
         function doSignup() {
             let u = document.getElementById('s-user').value.trim();
-            if(!u || db[u]) return alert("Invalid Username");
-            db[u] = { email: document.getElementById('s-email').value, phone: document.getElementById('s-phone').value, pass: document.getElementById('s-pass').value, bal: 0 };
-            save(); alert("Success!"); toggleScreen('login-screen');
+            if(!u || db[u]) return alert("Username error!");
+            db[u] = { email: document.getElementById('s-email').value, phone: document.getElementById('s-phone').value, pass: document.getElementById('s-pass').value, bal: 0, orders: [] };
+            save(); alert("Registered!"); toggleScreen('login-screen');
         }
 
         function doLogin() {
             let u = document.getElementById('l-user').value.trim(), p = document.getElementById('l-pass').value;
             if(u === "admin" && p === "suhel7388") { toggleScreen('admin-panel'); loadAdminUsers(); return; }
-            if(db[u] && db[u].pass === p) { sessionUser = u; updateUI(); toggleScreen('user-panel'); } else alert("Wrong!");
+            if(db[u] && db[u].pass === p) { sessionUser = u; updateUI(); toggleScreen('user-panel'); } else alert("Wrong Login!");
         }
 
-        // --- User Actions ---
-        function updateQR() {
-            let a = document.getElementById('payAmount').value;
-            document.getElementById('qrBox').style.display = a >= 1 ? "block" : "none";
-            document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent("upi://pay?pa=7388720012@fam&am="+a+"&cu=INR")}`;
-        }
-
-        function submitPayment() {
-            let a = document.getElementById('payAmount').value, t = document.getElementById('payTxn').value;
-            if(!a || !t) return alert("Details missing");
-            payments.unshift({ user: sessionUser, amt: a, txn: t, date: new Date().toLocaleString() });
-            save();
-            window.open(`https://wa.me/917388720012?text=New Payment:%0AUser: ${sessionUser}%0AAmt: ₹${a}%0ATXN: ${t}`);
-            alert("Submitted!");
-        }
-
-        function placeOrder() {
+        // --- ORDER ---
+        async function handlePlaceOrder() {
             let cost = parseFloat(document.getElementById('serviceSelect').value);
             let link = document.getElementById('orderLink').value;
-            if(!link || db[sessionUser].bal < cost) return alert("Check Link/Balance");
+            let srv = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
+
+            if(!link || cost === 0) return alert("Details poori bharein!");
+            if(db[sessionUser].bal < cost) return alert("Paisa kam hai!");
+
             db[sessionUser].bal -= cost;
-            orders.unshift({ user: sessionUser, srv: document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text, link: link, date: new Date().toLocaleString() });
+            let orderID = "#ORD" + Math.floor(1000 + Math.random() * 9000);
+            let orderData = { id: orderID, user: sessionUser, service: srv, link: link, date: new Date().toLocaleString(), status: "Pending" };
+            
+            db[sessionUser].orders.unshift(orderData);
             save(); updateUI();
-            window.open(`https://wa.me/917388720012?text=New Order:%0AUser: ${sessionUser}%0AService: ${orders[0].srv}%0ALink: ${link}`);
-            alert("Order Placed!");
+
+            // Google Sheets Push
+            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(orderData) });
+
+            window.open(`https://wa.me/917388720012?text=SMM Order: ${orderID}%0AUser: ${sessionUser}%0AService: ${srv}%0ALink: ${link}`);
+            alert("Order Successful!");
         }
 
-        function loadUserHistory() {
-            let list = document.getElementById('userHistoryList'); list.innerHTML = "<b>Orders:</b>";
-            orders.filter(o => o.user === sessionUser).forEach(o => list.innerHTML += `<div style="font-size:11px; margin-top:5px; border-bottom:1px solid #eee;">${o.srv} - ${o.date}</div>`);
-        }
-
-        // --- Admin Actions ---
         function loadAdminUsers() {
             let body = document.getElementById('userTableBody'); body.innerHTML = "";
             let totalB = 0, users = Object.keys(db);
             users.forEach(u => {
                 totalB += db[u].bal;
-                body.innerHTML += `<tr><td>${u}</td><td>${db[u].email}<br>${db[u].phone}</td><td>₹${db[u].bal}</td><td><button class="btn-red" onclick="deleteUser('${u}')">Del</button></td></tr>`;
+                body.innerHTML += `<tr><td>${u}</td><td>${db[u].email}</td><td>₹${db[u].bal}</td><td><button onclick="deleteUser('${u}')" style="color:red;border:none;">Del</button></td></tr>`;
             });
-            document.getElementById('admTotalUsers').innerText = users.length;
-            document.getElementById('admTotalBal').innerText = "₹" + totalB;
+            document.getElementById('adminStats').innerText = `Users: ${users.length} | Total Bal: ₹${totalB.toFixed(2)}`;
         }
 
-        function loadAdminPayments() {
-            let list = document.getElementById('adminPaymentList'); list.innerHTML = "";
-            payments.forEach(p => list.innerHTML += `<div class="card" style="margin:5px 0; padding:10px;"><b>${p.user}</b>: ₹${p.amt} <br>TXN: ${p.txn} <br><small>${p.date}</small></div>`);
-        }
-
-        function loadAdminOrders() {
-            let list = document.getElementById('adminOrderList'); list.innerHTML = "";
-            orders.forEach(o => list.innerHTML += `<div class="card" style="margin:5px 0; padding:10px;"><b>${o.user}</b>: ${o.srv} <br><small>${o.link}</small></div>`);
-        }
-
-        function deleteUser(u) { if(confirm("Delete " + u + "?")) { delete db[u]; save(); loadAdminUsers(); } }
+        function deleteUser(u) { if(confirm("Delete user?")) { delete db[u]; save(); loadAdminUsers(); } }
 
         function adminAddBal() {
             let u = document.getElementById('admTargetUser').value, a = parseFloat(document.getElementById('admTargetAmt').value);
-            if(db[u]) { db[u].bal += a; save(); loadAdminUsers(); alert("Added!"); } else alert("Not found");
-        }
-
-        function filterTable(input, tableId) {
-            let val = input.value.toLowerCase();
-            Array.from(document.getElementById(tableId).rows).forEach(r => r.style.display = r.innerText.toLowerCase().includes(val) ? "" : "none");
+            if(db[u]) { db[u].bal += a; save(); loadAdminUsers(); alert("Added!"); }
         }
 
         function updateUI() { 
-            document.getElementById('userBalDisplay').innerText = "₹" + db[sessionUser].bal;
+            document.getElementById('userBalDisplay').innerText = "₹" + (db[sessionUser].bal || 0).toFixed(2);
             document.getElementById('displayUser').innerText = sessionUser;
+        }
+
+        function updateQR() {
+            let a = document.getElementById('payAmount').value;
+            document.getElementById('qrBox').style.display = a >= 1 ? "block" : "none";
+            document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=7388720012@fam&am=${a}&cu=INR`;
         }
     </script>
 </body>
 </html>
+
