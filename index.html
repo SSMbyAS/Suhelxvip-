@@ -215,15 +215,16 @@
             });
         }
 
-        function submitPayment() {
-            let amt = document.getElementById('payAmount').value;
-            let txn = document.getElementById('payTxn').value;
-            if(!amt || txn.length < 10) return alert("Enter valid Amount & TXN ID!");
+       function submitPayment() {
+    let amt = document.getElementById('payAmount').value;
+    let txn = document.getElementById('payTxn').value;
+    if(!amt || txn.length < 10) return alert("Sahi Amount aur 12 digit UTR daalein!");
 
-            // Send Fund Request to Sheets
-            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ type: "FUND", user: sessionUser, amount: amt, txn: txn, date: new Date().toLocaleString() }) });
-            alert("Payment Request Sent to Admin!");
-        }
+    let waMsg = `*NEW PAYMENT REQUEST*%0AUser: ${sessionUser}%0AAmount: ₹${amt}%0AUTR: ${txn}`;
+    window.open(`https://wa.me/917388720012?text=${waMsg}`);
+    alert("Request WhatsApp par bhej di gayi hai!");
+       }
+        
 
         function updateUI() { 
             document.getElementById('userBalDisplay').innerText = "₹" + Number(db[sessionUser].bal).toFixed(2);
@@ -238,10 +239,47 @@
             document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=7388720012@fam&am=${a}&cu=INR`;
         }
         
-        function adminAddBal() {
-            let u = document.getElementById('admUser').value, a = Number(document.getElementById('admAmt').value);
-            if(db[u]) { db[u].bal += a; localStorage.setItem('smm_db', JSON.stringify(db)); alert("Balance Added!"); }
-        }
+        <div style="background:#1e293b; color:white; padding:20px; text-align:center;">
+    <h2 style="margin:0;">Admin Control Center</h2>
+    <div style="display:flex; justify-content:space-around; margin-top:15px; font-size:12px;">
+        <div class="stat-item">Total Users: <b id="a-tu">0</b></div>
+        <div class="stat-item">Total Bal: <b id="a-tb">₹0</b></div>
+        <div class="stat-item">Total Spent: <b id="a-ts">₹0</b></div>
+    </div>
+</div>
+
+<div class="card">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+        <i class="fas fa-search" style="color:#64748b"></i>
+        <input type="text" id="admSearch" placeholder="Search User, Email or Password..." onkeyup="adminSearch()" style="margin-bottom:0;">
+    </div>
+    
+    <div style="overflow-x:auto;">
+        <table style="width:100%; font-size:11px; border-collapse: collapse; min-width:600px;">
+            <thead>
+                <tr style="background:#f8fafc; text-align:left; border-bottom:2px solid #e2e8f0;">
+                    <th style="padding:12px;">User</th>
+                    <th style="padding:12px;">Gmail</th>
+                    <th style="padding:12px;">Password</th>
+                    <th style="padding:12px;">Balance</th>
+                    <th style="padding:12px;">Spent</th>
+                    <th style="padding:12px;">Action</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card" style="border-top: 4px solid var(--primary);">
+    <h4>Quick Add Balance</h4>
+    <div style="display:flex; gap:10px;">
+        <input type="text" id="admUser" placeholder="Username" style="margin-bottom:0;">
+        <input type="number" id="admAmt" placeholder="Amount" style="margin-bottom:0;">
+        <button class="btn-main" onclick="adminAddBal()" style="padding:10px; width:120px;">Add</button>
+    </div>
+</div>
+            
     </script>
 </body>
 </html>
