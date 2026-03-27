@@ -3,31 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - Pro Master</title>
+    <title>SMMbyAS - Direct Sheets Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #4f46e5; --secondary: #ec4899; --bg: #f8fafc; --success: #10b981; --warning: #f59e0b; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; padding: 0; color: #1e293b; }
+        :root { --primary: #4f46e5; --bg: #f8fafc; --success: #10b981; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); margin: 0; padding: 0; }
         .screen { display: none; width: 100%; max-width: 500px; margin: 0 auto; min-height: 100vh; background: #fff; padding-bottom: 80px; }
         .active { display: block; }
-
-        /* Announcement & Dash */
-        .news-box { background: #fffbeb; border: 1px solid #fef3c7; color: #92400e; padding: 10px 15px; margin: 15px; border-radius: 12px; font-size: 12px; overflow: hidden; }
-        .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px 15px; }
-        .box { padding: 15px; border-radius: 20px; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .box-full { grid-column: span 2; background: linear-gradient(135deg, #6366f1, #8b5cf6); }
-        .box-bal { background: #10b981; }
-        .box-spent { background: #f59e0b; }
-        
-        /* Cards & UI */
-        .card { background: #fff; margin: 0 15px 15px; padding: 18px; border-radius: 18px; border: 1px solid #f1f5f9; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .card { background: #fff; margin: 15px; padding: 20px; border-radius: 20px; border: 1px solid #f1f5f9; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px; }
+        .box { padding: 15px; border-radius: 18px; color: white; }
+        .box-bal { background: #10b981; } .box-spent { background: #f59e0b; }
         input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; margin-bottom: 12px; box-sizing: border-box; outline: none; }
-        .btn-main { width: 100%; padding: 15px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 800; cursor: pointer; }
-        .btn-main:active { transform: scale(0.98); }
-
-        /* Nav Bar */
-        .bottom-nav { display: flex; background: #fff; padding: 12px 0; border-top: 1px solid #eee; position: fixed; bottom: 0; width: 100%; max-width: 500px; z-index: 100; }
+        .btn-main { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-weight: 800; cursor: pointer; }
+        .news-box { background: #fffbeb; padding: 10px; margin: 15px; border-radius: 12px; font-size: 12px; color: #92400e; }
+        .bottom-nav { display: flex; background: #fff; padding: 12px 0; border-top: 1px solid #eee; position: fixed; bottom: 0; width: 100%; max-width: 500px; }
         .nav-item { flex: 1; text-align: center; font-size: 11px; font-weight: 700; color: #94a3b8; cursor: pointer; }
         .nav-item.active-nav { color: var(--primary); }
         .nav-item i { display: block; font-size: 20px; margin-bottom: 3px; }
@@ -37,118 +28,99 @@
 
     <div id="login-screen" class="screen active">
         <div style="padding: 60px 30px; text-align: center;">
-            <h1 style="color:var(--primary); font-size:40px; margin:0;">SMMbyAS</h1>
-            <p>Cheap & Fast SMM Services</p>
+            <h1 style="color:var(--primary); font-size:38px; margin:0;">SMMbyAS</h1>
             <div class="card" style="margin-top:30px;">
                 <input type="text" id="l-user" placeholder="Username">
                 <input type="password" id="l-pass" placeholder="Password">
                 <button class="btn-main" onclick="doLogin()">Login</button>
-                <p onclick="toggleScreen('signup-screen')" style="margin-top:15px; cursor:pointer; color:var(--primary); font-weight:700;">Create Account</p>
+                <p onclick="toggleScreen('signup-screen')" style="margin-top:15px; cursor:pointer; color:var(--primary); font-weight:700;">Create New Account</p>
             </div>
         </div>
     </div>
 
     <div id="signup-screen" class="screen">
         <div class="card" style="margin-top:50px;">
-            <h2>Create Account</h2>
+            <h2>Register</h2>
             <input type="text" id="s-user" placeholder="Username">
-            <input type="email" id="s-gmail" placeholder="Gmail Address">
-            <input type="text" id="s-phone" placeholder="WhatsApp Number">
+            <input type="email" id="s-gmail" placeholder="Gmail">
+            <input type="text" id="s-phone" placeholder="Phone">
             <input type="password" id="s-pass" placeholder="Password">
-            <button class="btn-main" style="background:var(--success)" onclick="doSignup()">Register</button>
+            <button class="btn-main" style="background:var(--success)" onclick="doSignup()">Create Account</button>
             <p onclick="toggleScreen('login-screen')" style="text-align:center; margin-top:10px; cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
     <div id="user-panel" class="screen">
         <div class="news-box">
-            <marquee id="newsText">📢 SMMbyAS Panel is Live! Lowest Price Guarantee.</marquee>
+            <marquee>🚀 SMMbyAS: Orders are now directly synced with our server. Fastest delivery!</marquee>
         </div>
 
         <div class="dash-grid">
-            <div class="box box-full">
-                <small>Welcome back,</small>
-                <h2 id="displayUser" style="margin:2px 0;">User</h2>
+            <div class="box box-bal" style="grid-column: span 2; background: linear-gradient(135deg, #6366f1, #8b5cf6); margin-bottom:10px;">
+                <small>Welcome,</small>
+                <h2 id="displayUser" style="margin:5px 0;">User</h2>
             </div>
             <div class="box box-bal">
                 <small>Balance</small>
-                <h3 id="userBalDisplay">₹0.00</h3>
+                <h3 id="userBalDisplay" style="margin:5px 0;">₹0.00</h3>
             </div>
             <div class="box box-spent">
                 <small>Spent</small>
-                <h3 id="userSpentDisplay">₹0.00</h3>
+                <h3 id="userSpentDisplay" style="margin:5px 0;">₹0.00</h3>
             </div>
         </div>
 
         <div id="order-tab" class="tab-content">
             <div class="card">
-                <h3><i class="fas fa-cart-plus"></i> New Order</h3>
+                <h3><i class="fas fa-shopping-cart"></i> New Order</h3>
                 <select id="catSelect" onchange="loadServices()">
-                    <option value="">Platform Chunein</option>
+                    <option value="">Platform</option>
                     <option value="insta">📸 Instagram</option>
                     <option value="tele">✈️ Telegram</option>
                     <option value="yt">📺 YouTube</option>
                 </select>
                 <select id="serviceSelect" onchange="updateCost()">
-                    <option value="0">Service Chunein</option>
+                    <option value="0">Service</option>
                 </select>
-                <input type="text" id="orderLink" placeholder="Link Yahan Paste Karein">
-                <div id="costDisplay" style="font-weight:800; color:var(--primary); font-size:18px; margin-bottom:15px; text-align:center;">Cost: ₹0</div>
-                <button class="btn-main" onclick="handlePlaceOrder()">Place Order Now</button>
+                <input type="text" id="orderLink" placeholder="Paste Link Here">
+                <div id="costDisplay" style="font-weight:800; color:var(--primary); font-size:18px; margin-bottom:15px; text-align:center;">Total Cost: ₹0</div>
+                <button class="btn-main" id="placeBtn" onclick="handlePlaceOrder()">Place Order Now</button>
             </div>
 
-            <div class="card" style="background: #f0fdf4; border: 1px dashed #22c55e;">
-                <h4 style="margin:0 0 10px 0;"><i class="fas fa-gift"></i> Share & Earn</h4>
-                <p style="font-size:11px; color:#15803d; margin-bottom:10px;">Dosto ko register karwayein aur cashback payein!</p>
-                <div style="display:flex; gap:5px;">
-                    <input type="text" id="refLink" readonly style="margin-bottom:0; font-size:10px;">
-                    <button onclick="copyRef()" style="background:#22c55e; color:white; border:none; padding:0 15px; border-radius:10px;">Copy</button>
-                </div>
+            <div class="card" style="background:#f0fdf4; border:1px dashed #22c55e; text-align:center;">
+                <h4 style="margin:0 0 5px 0;">Share & Earn</h4>
+                <input type="text" id="refLink" readonly style="font-size:10px; text-align:center; margin-bottom:5px;">
+                <button onclick="copyRef()" style="padding:5px 15px; background:#22c55e; color:white; border:none; border-radius:8px; font-size:11px;">Copy Link</button>
             </div>
         </div>
 
         <div id="funds-tab" class="tab-content" style="display:none;">
             <div class="card">
-                <h3><i class="fas fa-wallet"></i> Add Funds</h3>
-                <input type="number" id="payAmount" placeholder="Amount (Minimum ₹10)" oninput="updateQR()">
-                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px; background:#f8fafc; padding:15px; border-radius:15px;">
-                    <img id="qrImg" style="width:180px;"><br>
-                    <small><b>UPI: 7388720012@fam</b></small>
+                <h3>Add Funds</h3>
+                <input type="number" id="payAmount" placeholder="Amount" oninput="updateQR()">
+                <div id="qrBox" style="display:none; text-align:center; margin-bottom:15px;">
+                    <img id="qrImg" style="width:160px;"><br>
+                    <small>UPI: 7388720012@fam</small>
                 </div>
                 <input type="text" id="payTxn" placeholder="12 Digit Transaction ID">
-                <button class="btn-main" style="background:var(--success)" id="fundBtn" onclick="submitPayment()">Submit Fund Request</button>
-                <p style="font-size:10px; color:red; margin-top:10px; text-align:center;">Galat Transaction ID par balance add nahi hoga.</p>
+                <button class="btn-main" style="background:var(--success)" onclick="submitPayment()">Submit Payment</button>
             </div>
         </div>
 
         <div class="bottom-nav">
             <div class="nav-item active-nav" onclick="showTab('order-tab', this)"><i class="fas fa-home"></i>Home</div>
             <div class="nav-item" onclick="showTab('funds-tab', this)"><i class="fas fa-plus-circle"></i>Add Funds</div>
-            <div class="nav-item" onclick="location.reload()"><i class="fas fa-power-off"></i>Logout</div>
+            <div class="nav-item" onclick="location.reload()"><i class="fas fa-sign-out-alt"></i>Logout</div>
         </div>
     </div>
 
     <div id="admin-panel" class="screen">
-        <div style="background:#1e293b; color:white; padding:25px;">
-            <h3>Admin Master Control</h3>
-            <div id="adminStats" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
-                <span>Total Users: <b id="a-tu">0</b></span>
-                <span>Total Bal: <b id="a-tb">0</b></span>
-            </div>
-            <button onclick="location.reload()" style="margin-top:15px; border:none; padding:8px; border-radius:8px; width:100%;">Exit Admin</button>
+        <div style="background:#1e293b; color:white; padding:25px; text-align:center;">
+            <h3>Admin Panel</h3>
+            <button onclick="location.reload()" style="width:100%; padding:10px; border:none; border-radius:10px;">Logout</button>
         </div>
         <div class="card">
-            <h4>Search User</h4>
-            <input type="text" id="admSearch" placeholder="Name/Email..." onkeyup="adminSearch()">
-            <div style="overflow-x:auto;">
-                <table style="width:100%; font-size:11px;">
-                    <thead><tr><th>User</th><th>Bal</th><th>Action</th></tr></thead>
-                    <tbody id="userTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card">
-            <h4>Manual Add Balance</h4>
+            <h4>Add Balance to User</h4>
             <input type="text" id="admUser" placeholder="Username">
             <input type="number" id="admAmt" placeholder="Amount">
             <button class="btn-main" onclick="adminAddBal()">Add Now</button>
@@ -156,16 +128,16 @@
     </div>
 
     <script>
-        // SHEET URL UPDATED AS REQUESTED
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz20XdCsPYuxVCKlk7BKNr_vQWya2068bopjYW1LPH8g2GI6YEEtT4_DhVGnS1F3e5rCQ/exec";
+        // UPDATED SCRIPT URL - DIRECT SYNC
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSXf_2hF77qbtFkLuqkrGt5qb9HEVtGmQqcesvkM9gdxF_hE_jf5jIBmnmXrQyiwf50A/exec";
         
         let db = JSON.parse(localStorage.getItem('smm_db')) || {};
         let sessionUser = null;
 
         const services = {
-            insta: [ {n: "Insta Views", p: 4}, {n: "Insta Followers", p: 65} ],
-            tele: [ {n: "Telegram Member", p: 30} ],
-            yt: [ {n: "YouTube Subs", p: 130} ]
+            insta: [ {n: "Insta Views", p: 4}, {n: "Insta Followers", p: 60} ],
+            tele: [ {n: "Telegram Member", p: 25} ],
+            yt: [ {n: "YouTube Subs", p: 120} ]
         };
 
         function toggleScreen(id) {
@@ -188,88 +160,89 @@
             updateCost();
         }
 
-        function updateCost() { document.getElementById('costDisplay').innerText = "Cost: ₹" + document.getElementById('serviceSelect').value; }
+        function updateCost() { document.getElementById('costDisplay').innerText = "Total Cost: ₹" + document.getElementById('serviceSelect').value; }
 
-        function copyRef() {
-            let copyText = document.getElementById("refLink");
-            copyText.select();
-            document.execCommand("copy");
-            alert("Referral Link Copied!");
-        }
-
-        // --- AUTH ---
         function doSignup() {
             let u = document.getElementById('s-user').value.trim();
-            if(!u || db[u]) return alert("Username error!");
+            if(!u || db[u]) return alert("Username exists!");
             db[u] = { gmail: document.getElementById('s-gmail').value, phone: document.getElementById('s-phone').value, pass: document.getElementById('s-pass').value, bal: 0, spent: 0 };
             localStorage.setItem('smm_db', JSON.stringify(db)); toggleScreen('login-screen');
         }
 
         function doLogin() {
             let u = document.getElementById('l-user').value.trim(), p = document.getElementById('l-pass').value;
-            if(u === "admin" && p === "suhel7388") { toggleScreen('admin-panel'); loadAdmin(); return; }
-            if(db[u] && db[u].pass === p) { sessionUser = u; updateUI(); toggleScreen('user-panel'); } else alert("Error!");
+            if(u === "admin" && p === "suhel7388") { toggleScreen('admin-panel'); return; }
+            if(db[u] && db[u].pass === p) { sessionUser = u; updateUI(); toggleScreen('user-panel'); } else alert("Wrong details!");
         }
 
-        // --- ORDER (TO SHEETS) ---
+        // --- ORDER FUNCTION (WHATSAPP REMOVED) ---
         async function handlePlaceOrder() {
             let cost = Number(document.getElementById('serviceSelect').value);
             let link = document.getElementById('orderLink').value;
             let srv = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
 
-            if(!link || cost <= 0) return alert("Link missing!");
-            if(Number(db[sessionUser].bal) < cost) return alert("Paisa kam hai bhai!");
+            if(!link || cost <= 0) return alert("Please fill all details!");
+            if(Number(db[sessionUser].bal) < cost) return alert("Insufficient Balance!");
 
+            // Update Database
             db[sessionUser].bal -= cost;
             db[sessionUser].spent = (db[sessionUser].spent || 0) + cost;
-            localStorage.setItem('smm_db', JSON.stringify(db)); updateUI();
+            localStorage.setItem('smm_db', JSON.stringify(db)); 
+            updateUI();
 
-            // SEND TO SHEET
-            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ type: "order", user: sessionUser, service: srv, link: link, date: new Date().toLocaleString() }) });
-            
-            window.open(`https://wa.me/917388720012?text=Order: ${srv}%0AUser: ${sessionUser}%0ALink: ${link}`);
-            alert("Order Success!");
+            // SEND DATA TO GOOGLE SHEETS ONLY
+            let orderData = {
+                type: "ORDER",
+                user: sessionUser,
+                service: srv,
+                link: link,
+                cost: cost,
+                date: new Date().toLocaleString()
+            };
+
+            document.getElementById('placeBtn').innerText = "Processing...";
+            document.getElementById('placeBtn').disabled = true;
+
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: JSON.stringify(orderData) 
+            }).then(() => {
+                alert("Order Placed Successfully! It will be updated in Sheets.");
+                document.getElementById('placeBtn').innerText = "Place Order Now";
+                document.getElementById('placeBtn').disabled = false;
+                document.getElementById('orderLink').value = "";
+            });
         }
 
-        // --- FUNDS FIX ---
         function submitPayment() {
             let amt = document.getElementById('payAmount').value;
             let txn = document.getElementById('payTxn').value;
-            if(!amt || txn.length < 8) return alert("Sahi Amount aur TXN ID daalein!");
+            if(!amt || txn.length < 10) return alert("Enter valid Amount & TXN ID!");
 
-            // Log Fund Request to Sheets
-            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ type: "fund", user: sessionUser, amount: amt, txn: txn, date: new Date().toLocaleString() }) });
-
-            window.open(`https://wa.me/917388720012?text=Fund Request: ₹${amt}%0AUser: ${sessionUser}%0ATXN ID: ${txn}`);
-            alert("Request sent! Admin verify karke balance add kar dega.");
-        }
-
-        // --- ADMIN ---
-        function loadAdmin() {
-            let body = document.getElementById('userTableBody'); body.innerHTML = "";
-            Object.keys(db).forEach(u => {
-                body.innerHTML += `<tr><td>${u}</td><td>₹${db[u].bal}</td><td><button onclick="deleteUser('${u}')">Del</button></td></tr>`;
-            });
-            document.getElementById('a-tu').innerText = Object.keys(db).length;
-        }
-
-        function adminAddBal() {
-            let u = document.getElementById('admUser').value, a = Number(document.getElementById('admAmt').value);
-            if(db[u]) { db[u].bal += a; localStorage.setItem('smm_db', JSON.stringify(db)); loadAdmin(); alert("Added!"); }
+            // Send Fund Request to Sheets
+            fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ type: "FUND", user: sessionUser, amount: amt, txn: txn, date: new Date().toLocaleString() }) });
+            alert("Payment Request Sent to Admin!");
         }
 
         function updateUI() { 
             document.getElementById('userBalDisplay').innerText = "₹" + Number(db[sessionUser].bal).toFixed(2);
             document.getElementById('userSpentDisplay').innerText = "₹" + Number(db[sessionUser].spent || 0).toFixed(2);
             document.getElementById('displayUser').innerText = sessionUser;
-            document.getElementById('refLink').value = "https://smmbyas.github.io/register?ref=" + sessionUser;
+            document.getElementById('refLink').value = "https://smmbyas.github.io/reg?ref=" + sessionUser;
         }
 
         function updateQR() {
             let a = document.getElementById('payAmount').value;
-            document.getElementById('qrBox').style.display = a >= 10 ? "block" : "none";
+            document.getElementById('qrBox').style.display = a >= 1 ? "block" : "none";
             document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=7388720012@fam&am=${a}&cu=INR`;
+        }
+        
+        function adminAddBal() {
+            let u = document.getElementById('admUser').value, a = Number(document.getElementById('admAmt').value);
+            if(db[u]) { db[u].bal += a; localStorage.setItem('smm_db', JSON.stringify(db)); alert("Balance Added!"); }
         }
     </script>
 </body>
 </html>
+
