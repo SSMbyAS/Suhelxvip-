@@ -3,150 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSMBYAS | Ultimate SMM Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>SSMBYAS V10 | Anti-Duplicate & Ref Link</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #2ea44f; --bg: #f6f8fa; --card: #ffffff; --text: #24292e; --border: #d0d7de; --link: #0969da; --danger: #cf222e; --warning: #9a6700; }
+        :root { --primary: #2ea44f; --bg: #f6f8fa; --card: #ffffff; --text: #24292e; --border: #d0d7de; --link: #0969da; --danger: #cf222e; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg); color: var(--text); padding-bottom: 80px; }
 
-        /* HEADER */
         .header { background: #24292e; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 20px; font-weight: 800; letter-spacing: -1px; }
+        .logo { font-size: 20px; font-weight: 800; }
 
-        /* AUTH BOX */
-        .auth-container { min-height: 90vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .auth-card { background: var(--card); padding: 30px; border-radius: 12px; width: 100%; max-width: 400px; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(140,149,159,0.2); }
-        
-        /* COMMON UI */
-        .screen { display: none; padding: 15px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s; }
+        .screen { display: none; padding: 15px; max-width: 600px; margin: 0 auto; animation: fadeIn 0.3s; }
         .active { display: block; }
         .card { background: var(--card); padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 15px; }
-        .inp { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px; font-size: 14px; background: #fff; }
-        .btn { width: 100%; padding: 12px; border-radius: 6px; border: none; background: var(--primary); color: white; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn:hover { opacity: 0.9; }
         
-        /* ADMIN STATS GRID */
-        .adm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
-        .adm-box { background: #fff; padding: 15px; border: 1px solid var(--border); border-radius: 8px; text-align: left; }
-        .adm-box h4 { font-size: 18px; color: var(--link); margin-top: 5px; }
-        .adm-box small { font-size: 10px; font-weight: 700; color: #57606a; text-transform: uppercase; }
+        .inp { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 12px; font-size: 14px; }
+        .btn { width: 100%; padding: 12px; border-radius: 6px; border: none; background: var(--primary); color: white; font-weight: 600; cursor: pointer; }
+        
+        /* REFERRAL LINK BOX */
+        .ref-link-box { background: #f1f8ff; border: 1px dashed var(--link); padding: 12px; border-radius: 6px; margin: 15px 0; word-break: break-all; font-size: 12px; position: relative; }
+        .copy-btn { position: absolute; right: 5px; top: 5px; background: var(--link); color: #fff; border: none; padding: 2px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; }
 
-        /* NAVIGATION */
-        .nav { position: fixed; bottom: 0; width: 100%; max-width: 800px; left: 50%; transform: translateX(-50%); background: #fff; display: flex; border-top: 1px solid var(--border); padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
-        .nav-item { flex: 1; text-align: center; color: #57606a; font-size: 11px; cursor: pointer; font-weight: 500; }
-        .nav-item.active { color: var(--link); }
+        .nav { position: fixed; bottom: 0; width: 100%; max-width: 600px; left: 50%; transform: translateX(-50%); background: #fff; display: flex; border-top: 1px solid var(--border); padding: 10px 0; }
+        .nav-item { flex: 1; text-align: center; color: #57606a; font-size: 11px; cursor: pointer; }
+        .nav-item.active { color: var(--link); font-weight: 700; }
         .nav-item i { font-size: 20px; margin-bottom: 4px; display: block; }
 
-        /* BADGES */
-        .badge { padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; color: #fff; float: right; }
-        .bg-pending { background: var(--warning); }
-        .bg-completed { background: var(--primary); }
-        .bg-progress { background: var(--link); }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="auth-screen" class="auth-container">
-        <div class="auth-card" id="login-box">
-            <h2 style="text-align:center; margin-bottom:20px;">Sign in to SSMBYAS</h2>
+    <div id="auth-screen" style="padding:50px 20px; text-align:center;">
+        <h1 style="margin-bottom:30px;">SSMBYAS</h1>
+        <div class="card" style="max-width:360px; margin:auto;">
             <input type="text" id="l-user" class="inp" placeholder="Username">
             <input type="password" id="l-pass" class="inp" placeholder="Password">
             <button class="btn" onclick="login()">Login</button>
-            <p onclick="toggleAuth(true)" style="text-align:center; margin-top:20px; font-size:13px; color:var(--link); cursor:pointer;">Create an account</p>
-        </div>
-
-        <div class="auth-card" id="reg-box" style="display:none;">
-            <h2 style="text-align:center; margin-bottom:20px;">Join SSMBYAS</h2>
-            <input type="text" id="r-user" class="inp" placeholder="Username">
-            <input type="email" id="r-email" class="inp" placeholder="Email Address">
-            <input type="number" id="r-mobile" class="inp" placeholder="Mobile Number">
-            <input type="password" id="r-pass" class="inp" placeholder="Password">
-            <input type="text" id="r-ref" class="inp" placeholder="Referral Code (Optional)">
-            <button class="btn" onclick="register()">Register</button>
-            <p onclick="toggleAuth(false)" style="text-align:center; margin-top:20px; font-size:13px; color:var(--link); cursor:pointer;">Back to Login</p>
         </div>
     </div>
 
     <div id="main-app" style="display:none;">
         <div class="header">
             <div class="logo">SSMBYAS</div>
-            <div id="u-top" style="font-size:12px; font-weight:600; opacity:0.9;">User</div>
+            <div id="u-top" style="font-size:12px;">User</div>
         </div>
 
         <div id="dash-screen" class="screen active">
-            <div class="adm-grid">
-                <div class="adm-box"><small>Wallet</small><h4 id="u-bal">₹0</h4></div>
-                <div class="adm-box"><small>Spent</small><h4 id="u-spent">₹0</h4></div>
-            </div>
-            
             <div class="card">
-                <h3 style="margin-bottom:15px;"><i class="fa-solid fa-cart-plus"></i> New Order</h3>
-                <label style="font-size:12px; font-weight:600;">Platform Category</label>
+                <h3>New Order</h3>
                 <select id="cat-select" class="inp" onchange="loadServices()"></select>
-                <label style="font-size:12px; font-weight:600;">Select Service</label>
-                <select id="srv-select" class="inp" onchange="calcPrice()"></select>
-                <input type="text" id="o-link" class="inp" placeholder="Profile or Post Link">
-                <input type="number" id="o-qty" class="inp" placeholder="Quantity (Min 100)" oninput="calcPrice()">
-                <div style="background:#f1f8ff; padding:15px; border-radius:6px; text-align:center; border:1px solid #0969da22;">
-                    <span style="font-size:12px; color:#57606a;">Total Charge:</span>
-                    <h2 id="o-charge">₹0.00</h2>
-                </div>
-                <button class="btn" onclick="placeOrder()" style="margin-top:15px;">Confirm Order</button>
+                <select id="srv-select" class="inp"></select>
+                <input type="text" id="o-link" class="inp" placeholder="Paste Link Here">
+                <input type="number" id="o-qty" class="inp" placeholder="Quantity">
+                <button class="btn" onclick="placeOrder()">Place Order</button>
             </div>
-        </div>
-
-        <div id="hist-screen" class="screen">
-            <h3><i class="fa-solid fa-clock-rotate-left"></i> Order History</h3>
-            <div id="u-order-list" style="margin-top:15px;"></div>
+            <h4>My Orders</h4>
+            <div id="u-orders"></div>
         </div>
 
         <div id="refer-screen" class="screen">
             <div class="card" style="text-align:center;">
-                <i class="fa-solid fa-gift" style="font-size:40px; color:var(--primary); margin-bottom:15px;"></i>
-                <h2>Refer & Earn 5%</h2>
-                <p style="font-size:13px; color:#57606a; margin:10px 0;">Apne doston ko invite karein aur unke har deposit par cash payein!</p>
-                <div style="background:#f6f8fa; padding:15px; border:1px dashed var(--link); border-radius:8px; margin:20px 0;">
-                    <small>Referral Code:</small>
-                    <h3 id="u-mycode" style="color:var(--link); letter-spacing:2px;">CODE</h3>
+                <i class="fa-solid fa-link" style="font-size:30px; color:var(--link);"></i>
+                <h3 style="margin-top:10px;">Refer & Earn Link</h3>
+                <p style="font-size:12px; color:#666;">Is link ko share karein aur 5% commission payein.</p>
+                
+                <div class="ref-link-box">
+                    <span id="display-ref-link">https://ssmbyas.github.io/?ref=user</span>
+                    <button class="copy-btn" onclick="copyLink()">COPY</button>
                 </div>
-                <div class="adm-grid">
-                    <div class="adm-box"><small>Referrals</small><h4 id="u-ref-count">0</h4></div>
-                    <div class="adm-box"><small>Earnings</small><h4 id="u-ref-earn">₹0</h4></div>
+                
+                <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                    <div class="card" style="flex:1; margin-right:5px;">Ref: <b id="u-ref-count">0</b></div>
+                    <div class="card" style="flex:1; margin-left:5px;">Earned: <b id="u-ref-earn">₹0</b></div>
                 </div>
             </div>
         </div>
 
         <div id="admin-screen" class="screen">
-            <div class="card" style="border-top:5px solid var(--danger);">
-                <h2 style="color:var(--danger); margin-bottom:15px;"><i class="fa-solid fa-user-shield"></i> Master Admin</h2>
-                
-                <div class="adm-grid">
-                    <div class="adm-box"><small>Total Users</small><h4 id="adm-total-u">0</h4></div>
-                    <div class="adm-box"><small>Today Joins</small><h4 id="adm-today-u">0</h4></div>
-                    <div class="adm-box"><small>Total System Bal</small><h4 id="adm-total-bal">₹0</h4></div>
-                    <div class="adm-box"><small>API Balance</small><h4>₹Syncing...</h4></div>
-                </div>
-
-                <button class="btn" onclick="syncAllOrders()" style="background:var(--link); margin-bottom:15px;">🔄 Refresh All Order Status</button>
-                
-                <h4>Pending Deposits</h4>
-                <div id="adm-pending-deposits" style="margin-bottom:20px;"></div>
-
-                <h4>Detailed User List</h4>
-                <div id="adm-user-list"></div>
+            <div class="card">
+                <h3 style="color:var(--danger)">Admin Master</h3>
+                <div id="adm-user-data"></div>
             </div>
         </div>
 
         <div class="nav">
-            <div class="nav-item active" onclick="showScreen('dash-screen', this)"><i class="fa-solid fa-house"></i>Dash</div>
-            <div class="nav-item" onclick="showScreen('hist-screen', this)"><i class="fa-solid fa-list"></i>Orders</div>
-            <div class="nav-item" onclick="showScreen('refer-screen', this)"><i class="fa-solid fa-share-nodes"></i>Refer</div>
-            <div id="adm-nav" class="nav-item" style="display:none;" onclick="showScreen('admin-screen', this)"><i class="fa-solid fa-gear"></i>Admin</div>
-            <div class="nav-item" onclick="location.reload()"><i class="fa-solid fa-power-off"></i>Exit</div>
+            <div class="nav-item active" onclick="showScreen('dash-screen', this)"><i class="fa-solid fa-home"></i>Home</div>
+            <div class="nav-item" onclick="showScreen('refer-screen', this)"><i class="fa-solid fa-users"></i>Refer</div>
+            <div id="adm-nav" class="nav-item" style="display:none;" onclick="showScreen('admin-screen', this)"><i class="fa-solid fa-shield"></i>Admin</div>
+            <div class="nav-item" onclick="location.reload()"><i class="fa-solid fa-sign-out"></i>Exit</div>
         </div>
     </div>
 
@@ -155,155 +101,111 @@
         const API_URL = "https://starofsmm.com/api/v2";
         const PROXY = "https://corsproxy.io/?";
 
-        let db = JSON.parse(localStorage.getItem('ssmbyas_v9_pro')) || {
-            users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', mobile:'7388720018', bal:10000, spent:0, orders:[], refCount:0, refEarn:0, date: new Date().toLocaleDateString()} },
-            pendingFunds: [],
-            config: { margin: 2.5 }
+        let db = JSON.parse(localStorage.getItem('ssmbyas_v10')) || {
+            users: { 'suhel': {pass:'7388', email:'suhel@admin.com', mobile:'7388720018', bal:5000, orders:[], refCount:0, refEarn:0} }
         };
 
         let currentUser = null;
-
-        function toggleAuth(r) {
-            document.getElementById('login-box').style.display = r ? 'none' : 'block';
-            document.getElementById('reg-box').style.display = r ? 'block' : 'none';
-        }
-
-        function register() {
-            let u = document.getElementById('r-user').value.toLowerCase().trim();
-            let e = document.getElementById('r-email').value;
-            let m = document.getElementById('r-mobile').value;
-            let p = document.getElementById('r-pass').value;
-            let r = document.getElementById('r-ref').value.toLowerCase().trim();
-
-            if(!u || !p || !e) return alert("All fields are mandatory!");
-            if(db.users[u]) return alert("Username taken!");
-
-            let refBy = (r && db.users[r]) ? r : null;
-            if(refBy) db.users[refBy].refCount++;
-
-            db.users[u] = { pass:p, email:e, mobile:m, bal:0, spent:0, orders:[], refBy:refBy, refCount:0, refEarn:0, date: new Date().toLocaleDateString() };
-            save(); alert("Registration Success!"); toggleAuth(false);
-        }
 
         function login() {
             let u = document.getElementById('l-user').value.toLowerCase().trim();
             let p = document.getElementById('l-pass').value;
             if(db.users[u] && db.users[u].pass === p) { currentUser = u; launch(); }
-            else alert("Invalid Credentials!");
+            else alert("Invalid Login!");
         }
 
         function launch() {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             document.getElementById('u-top').innerText = currentUser;
-            document.getElementById('u-mycode').innerText = currentUser.toUpperCase();
+            
+            // Generate Referral Link based on current URL
+            let currentUrl = window.location.href.split('?')[0];
+            document.getElementById('display-ref-link').innerText = currentUrl + "?ref=" + currentUser;
+
             if(currentUser === 'suhel') document.getElementById('adm-nav').style.display = 'block';
-            loadCats(); updateUI(); syncMyOrders();
+            loadCats(); updateUI();
         }
 
         function loadCats() {
-            const categories = {
-                "Instagram": [ {id:9259, name:"Insta Views [High Quality]", rate:0.08}, {id:9260, name:"Insta Followers [Real]", rate:45} ],
-                "YouTube": [ {id:221, name:"YT Subscribers", rate:190}, {id:222, name:"YT Watchtime", rate:450} ],
-                "Facebook": [ {id:501, name:"FB Page Likes", rate:80} ],
-                "Twitter (X)": [ {id:601, name:"Twitter Followers", rate:120} ]
-            };
-            document.getElementById('cat-select').innerHTML = Object.keys(categories).map(c => `<option value='${c}'>${c}</option>`).join('');
-            window.allServices = categories;
+            const cats = { "Instagram": [{id:9259, name:"Insta Views", rate:0.10}] };
+            document.getElementById('cat-select').innerHTML = Object.keys(cats).map(c => `<option value='${c}'>${c}</option>`).join('');
             loadServices();
         }
 
         function loadServices() {
-            let cat = document.getElementById('cat-select').value;
-            let services = window.allServices[cat];
-            let margin = db.config.margin;
-            document.getElementById('srv-select').innerHTML = services.map(s => `<option value='${s.id}|${s.rate+margin}'>${s.name} - ₹${(s.rate+margin).toFixed(2)}</option>`).join('');
-            calcPrice();
-        }
-
-        function calcPrice() {
-            let v = document.getElementById('srv-select').value.split('|');
-            let q = document.getElementById('o-qty').value || 0;
-            let total = (parseFloat(v[1])/1000) * q;
-            document.getElementById('o-charge').innerText = "₹" + total.toFixed(2);
+            document.getElementById('srv-select').innerHTML = `<option value="9259|0.15">Insta Views - ₹0.15</option>`;
         }
 
         async function placeOrder() {
-            let v = document.getElementById('srv-select').value.split('|');
+            let l = document.getElementById('o-link').value.trim();
             let q = document.getElementById('o-qty').value;
-            let l = document.getElementById('o-link').value;
+            let v = document.getElementById('srv-select').value.split('|');
             let cost = (parseFloat(v[1])/1000) * q;
 
-            if(!l || q < 100) return alert("Check Link or Min Quantity!");
-            if(db.users[currentUser].bal < cost) return alert("Low Balance! Please add funds.");
+            if(!l || !q) return alert("Details bharein!");
+
+            // --- DUPLICATE LINK PROTECTION ---
+            let activeOrder = db.users[currentUser].orders.find(o => 
+                o.link === l && (o.status === 'Pending' || o.status === 'In progress' || o.status === 'Processing')
+            );
+
+            if(activeOrder) {
+                return alert("Is link par pehle se ek order 'In-Progress' hai. Wo complete hone tak naya order nahi lag sakta!");
+            }
+            // ---------------------------------
+
+            if(db.users[currentUser].bal < cost) return alert("Paisa kam hai!");
 
             try {
                 const res = await fetch(PROXY + API_URL + `?key=${API_KEY}&action=add&service=${v[0]}&link=${l}&quantity=${q}`);
                 const data = await res.json();
                 if(data.order) {
                     db.users[currentUser].bal -= cost;
-                    db.users[currentUser].spent += cost;
-                    db.users[currentUser].orders.push({ api_id: data.order, amt: cost, srv: v[0], status: 'Pending', date: new Date().toLocaleString() });
-                    save(); updateUI(); alert("Order Success! ID: " + data.order);
-                } else alert("API Error: " + data.error);
-            } catch(e) { alert("API Connection Failed!"); }
+                    db.users[currentUser].orders.push({ 
+                        api_id: data.order, 
+                        link: l, 
+                        status: 'Pending', 
+                        amt: cost, 
+                        date: new Date().toLocaleString() 
+                    });
+                    save(); updateUI(); alert("Order Successful!");
+                }
+            } catch(e) { alert("API Error!"); }
         }
 
-        async function syncMyOrders() {
-            let usr = db.users[currentUser];
-            for(let o of usr.orders) {
-                if(o.status !== 'Completed' && o.status !== 'Canceled') {
-                    try {
-                        let res = await fetch(PROXY + API_URL + `?key=${API_KEY}&action=status&order=${o.api_id}`);
-                        let data = await res.json();
-                        if(data.status) o.status = data.status;
-                    } catch(e) {}
-                }
-            }
-            save(); updateUI();
+        function copyLink() {
+            let link = document.getElementById('display-ref-link').innerText;
+            navigator.clipboard.writeText(link);
+            alert("Referral Link Copied!");
         }
 
         function updateUI() {
             let usr = db.users[currentUser];
-            document.getElementById('u-bal').innerText = "₹" + usr.bal.toFixed(2);
-            document.getElementById('u-spent').innerText = "₹" + usr.spent.toFixed(2);
             document.getElementById('u-ref-count').innerText = usr.refCount;
-            document.getElementById('u-ref-earn').innerText = "₹" + usr.refEarn.toFixed(2);
+            document.getElementById('u-ref-earn').innerText = "₹" + usr.refEarn;
 
             let oHtml = usr.orders.map(o => `
-                <div class="card" style="font-size:12px; border-left:4px solid var(--link);">
-                    <span class="badge bg-${o.status.toLowerCase().replace(' ', '')}">${o.status}</span>
-                    <b>ID:</b> ${o.api_id} | <b>Cost:</b> ₹${o.amt.toFixed(2)}<br>
-                    <small style="color:#666">${o.date}</small>
+                <div class="card" style="font-size:11px;">
+                    <b>ID:</b> ${o.api_id} | <b>Status:</b> ${o.status} <br>
+                    <b>Link:</b> ${o.link.substring(0,30)}...
                 </div>
             `).reverse().join('');
-            document.getElementById('u-order-list').innerHTML = oHtml || "No orders found.";
+            document.getElementById('u-orders').innerHTML = oHtml || "No orders.";
         }
 
         function loadAdmin() {
-            let totalUsers = Object.keys(db.users).length;
-            let totalSystemBal = Object.values(db.users).reduce((acc, u) => acc + u.bal, 0);
-            let today = new Date().toLocaleDateString();
-            let todayJoins = Object.values(db.users).filter(u => u.date === today).length;
-
-            document.getElementById('adm-total-u').innerText = totalUsers;
-            document.getElementById('adm-today-u').innerText = todayJoins;
-            document.getElementById('adm-total-bal').innerText = "₹" + totalSystemBal.toFixed(2);
-
             let uHtml = "";
             for(let u in db.users) {
                 let usr = db.users[u];
-                uHtml += `<div class="card" style="font-size:11px; background:#fff;">
-                    <b>ID:</b> ${u} | <b>Pass:</b> <span style="color:var(--danger)">${usr.pass}</span> <br>
-                    <b>E:</b> ${usr.email} | <b>M:</b> ${usr.mobile} <br>
-                    <b>Wallet:</b> ₹${usr.bal.toFixed(2)} | <b>Spent:</b> ₹${usr.spent.toFixed(2)} <br>
-                    <button onclick="addBal('${u}')" style="margin-top:5px; font-size:10px; padding:2px 5px;">+ Add 100</button>
+                uHtml += `<div class="card" style="font-size:11px;">
+                    <b>User:</b> ${u} | <b>Pass:</b> ${usr.pass} <br>
+                    <b>Email:</b> ${usr.email} | <b>Mob:</b> ${usr.mobile} <br>
+                    <b>Bal:</b> ₹${usr.bal.toFixed(2)}
                 </div>`;
             }
-            document.getElementById('adm-user-list').innerHTML = uHtml;
+            document.getElementById('adm-user-data').innerHTML = uHtml;
         }
-
-        function addBal(u) { db.users[u].bal += 100; save(); loadAdmin(); alert("Added 100 to " + u); }
 
         function showScreen(id, el) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -313,7 +215,8 @@
             if(id === 'admin-screen') loadAdmin();
         }
 
-        function save() { localStorage.setItem('ssmbyas_v9_pro', JSON.stringify(db)); }
+        function save() { localStorage.setItem('ssmbyas_v10', JSON.stringify(db)); }
     </script>
 </body>
 </html>
+
