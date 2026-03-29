@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSMBYAS V19 | Official Panel</title>
+    <title>SSMBYAS V20 | Final Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -26,7 +26,7 @@
         
         .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px; border-radius: 10px; color: white; text-decoration: none; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
 
-        .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: #fff; display: flex; border-top: 1px solid #ddd; padding: 10px 0; }
+        .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(0); background: #fff; display: flex; border-top: 1px solid #ddd; padding: 10px 0; left: 50%; transform: translateX(-50%); }
         .nav-item { flex: 1; text-align: center; color: #65676b; font-size: 11px; cursor: pointer; }
         .nav-item.active { color: var(--accent); font-weight: 700; }
         .nav-item i { font-size: 20px; margin-bottom: 3px; display: block; }
@@ -68,10 +68,13 @@
             <div class="card">
                 <h4>Place Order</h4>
                 <select id="srv-select" class="inp">
-                    <option value="1798|0.17">Instagram Views (10k) - ₹1.70</option>
+                    <option value="1798|0.20">Instagram Views (10k) - ₹2.00</option>
                     <option value="3274|22.00">Instagram Followers (1k) - ₹22.00</option>
+                    <option value="3276|60.00">Insta Followers Refill (1k) - ₹60.00</option>
+                    <option value="3277|30.00">Instagram Comments (1k) - ₹30.00</option>
+                    <option value="3278|20.00">Instagram Likes (1k) - ₹20.00</option>
                 </select>
-                <input type="text" id="o-link" class="inp" placeholder="Post Link">
+                <input type="text" id="o-link" class="inp" placeholder="Link">
                 <input type="number" id="o-qty" class="inp" placeholder="Quantity">
                 <button class="btn" onclick="placeOrder()">Order Now</button>
             </div>
@@ -93,7 +96,10 @@
         <div id="ref-screen" class="screen">
             <div class="card" style="background:var(--accent); color:white;">
                 <h3>Refer & Earn (1%)</h3>
-                <p id="ref-link-val" style="font-size:11px; margin-top:10px; background:rgba(255,255,255,0.2); padding:10px; border-radius:5px;"></p>
+                <div style="display:flex; gap:5px; margin-top:10px;">
+                    <input type="text" id="ref-link-input" readonly style="width:100%; padding:8px; border-radius:5px; border:none; font-size:11px; background:rgba(255,255,255,0.2); color:white;">
+                    <button onclick="copyRefLink()" style="padding:0 10px; border-radius:5px; border:none; background:white; color:var(--accent); font-weight:700; cursor:pointer;">Copy</button>
+                </div>
                 <div class="stat-grid" style="margin-top:15px; color:black;">
                     <div class="stat-item"><small>Referred</small><br><b id="ref-count">0</b></div>
                     <div class="stat-item"><small>Earned</small><br><b id="ref-earned">₹0</b></div>
@@ -134,7 +140,7 @@
     </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('ssmbyas_v19')) || {
+        let db = JSON.parse(localStorage.getItem('ssmbyas_v20')) || {
             users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', bal:5000, spent:0, orders:[], refBy:null, refList:[], earnings:0, funds:[]} },
             pendingFunds: [], session: null
         };
@@ -170,9 +176,17 @@
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             document.getElementById('top-user').innerText = currentUser.toUpperCase();
-            document.getElementById('ref-link-val').innerText = "Link: " + window.location.origin + "?ref=" + currentUser;
+            document.getElementById('ref-link-input').value = window.location.origin + "?ref=" + currentUser;
             if(currentUser === 'suhel') document.getElementById('adm-nav').style.display = 'block';
             updateUI();
+        }
+
+        function copyRefLink() {
+            let copyText = document.getElementById("ref-link-input");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Referral Link Copied!");
         }
 
         function placeOrder() {
@@ -182,7 +196,6 @@
             if(db.users[currentUser].bal < cost) return alert("Add Funds First!");
             db.users[currentUser].bal -= cost;
             db.users[currentUser].spent += cost;
-            // 1% Referral Comm
             let boss = db.users[currentUser].refBy;
             if(boss && db.users[boss]) { db.users[boss].bal += (cost*0.01); db.users[boss].earnings += (cost*0.01); }
             db.users[currentUser].orders.push({id: Math.floor(Math.random()*9999), cost: cost});
@@ -196,7 +209,7 @@
             let req = { user: currentUser, amt: a, utr: t, status: 'Pending' };
             db.pendingFunds.push(req);
             db.users[currentUser].funds.push(req);
-            save(); updateUI(); alert("SUCCESS WAIT FOR ADMIN CHECK");
+            save(); updateUI(); alert("SUBMITTED! WAIT FOR ADMIN.");
         }
 
         function updateUI() {
@@ -233,7 +246,7 @@
             if(el) el.classList.add('active');
             if(id === 'admin-screen') loadAdmin();
         }
-        function save() { localStorage.setItem('ssmbyas_v19', JSON.stringify(db)); }
+        function save() { localStorage.setItem('ssmbyas_v20', JSON.stringify(db)); }
     </script>
 </body>
 </html>
