@@ -3,119 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSMBYAS V21 | Official Panel</title>
+    <title>SSMBYAS V22 | Official Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #00c853; --bg: #f4f7f6; --card: #ffffff; --text: #1c1e21; --accent: #1877f2; --danger: #ff5252; }
+        :root { --primary: #00c853; --bg: #f0f2f5; --card: #ffffff; --text: #1c1e21; --accent: #1877f2; --danger: #ff5252; --gold: #ffd700; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 80px; }
-        .header { background: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 20px; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-        .screen { display: none; padding: 15px; max-width: 500px; margin: 0 auto; animation: fadeIn 0.3s; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 90px; }
+        
+        /* Design Elements */
+        .header { background: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 22px; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
+        .screen { display: none; padding: 15px; max-width: 500px; margin: 0 auto; animation: fadeIn 0.4s; }
         .active { display: block; }
-        .card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-item { background: #fff; padding: 12px; border-radius: 12px; border: 1px solid #eee; text-align: center; }
-        .inp, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; font-size: 14px; outline: none; background: #fafafa; }
-        .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; }
-        .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: #fff; display: flex; border-top: 1px solid #ddd; padding: 10px 0; }
-        .nav-item { flex: 1; text-align: center; color: #65676b; font-size: 11px; cursor: pointer; }
-        .nav-item.active { color: var(--accent); font-weight: 700; }
-        .nav-item i { font-size: 20px; margin-bottom: 3px; display: block; }
-        .badge { padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; }
-        .pending { background: #fff3cd; color: #856404; }
-        .success { background: #d4edda; color: #155724; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card { background: var(--card); padding: 18px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        
+        /* Forms & Buttons */
+        .inp, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 12px; font-size: 14px; outline: none; transition: 0.3s; }
+        .inp:focus { border-color: var(--accent); }
+        .btn { width: 100%; padding: 14px; border-radius: 12px; border: none; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; font-size: 15px; transition: 0.2s; }
+        .btn:active { transform: scale(0.98); }
+
+        /* Referral & Stats */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
+        .stat-item { background: #fff; padding: 15px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--accent); }
+        
+        /* Notice Box */
+        .notice-box { background: linear-gradient(45deg, #1877f2, #00c853); color: white; padding: 15px; border-radius: 15px; font-size: 12px; margin-top: 20px; text-align: left; line-height: 1.6; box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3); }
+
+        /* Order List */
+        .order-item { border-left: 4px solid var(--primary); padding: 10px; background: #f9f9f9; border-radius: 8px; margin-bottom: 8px; font-size: 12px; }
+        
+        /* Support Buttons */
+        .sup-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; color: white; text-decoration: none; margin-bottom: 10px; font-weight: 600; }
+
+        /* Nav Bar */
+        .nav { position: fixed; bottom: 15px; width: 90%; max-width: 450px; left: 50%; transform: translateX(-50%); background: #1c1e21; display: flex; border-radius: 25px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .nav-item { flex: 1; text-align: center; color: #bbb; font-size: 10px; cursor: pointer; }
+        .nav-item.active { color: #fff; }
+        .nav-item i { font-size: 18px; display: block; margin-bottom: 2px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="auth-screen" style="padding: 20px; text-align: center;">
-        <div class="logo" style="justify-content: center; margin-bottom: 20px;"><i class="fa-solid fa-rocket"></i> SSMBYAS</div>
+    <div id="auth-screen" class="screen active" style="padding-top: 50px; text-align: center;">
+        <h1 class="logo" style="font-size: 35px; margin-bottom: 10px;">SSMBYAS</h1>
+        <p style="color: #666; font-size: 14px; margin-bottom: 30px;">Premium SMM Services Panel</p>
+        
         <div class="card" id="login-box">
             <input type="text" id="l-user" class="inp" placeholder="Username">
             <input type="password" id="l-pass" class="inp" placeholder="Password">
-            <button class="btn" style="background: var(--accent);" onclick="login()">Sign In</button>
-            <p onclick="toggleAuth(true)" style="margin-top:15px; font-size:13px; color:var(--accent); cursor:pointer;">Create Account</p>
+            <button class="btn" style="background: var(--accent);" onclick="login()">Log In</button>
+            <p onclick="toggleAuth(true)" style="margin-top:20px; font-size:13px; color:var(--accent); cursor:pointer; font-weight: 600;">Naya Account Banayein</p>
         </div>
+
         <div class="card" id="reg-box" style="display:none;">
-            <input type="text" id="r-user" class="inp" placeholder="Username">
-            <input type="email" id="r-email" class="inp" placeholder="Correct Gmail Address">
-            <input type="password" id="r-pass" class="inp" placeholder="Password">
-            <input type="text" id="r-ref" class="inp" placeholder="Referral Code">
-            <button class="btn" onclick="register()">Register</button>
-            <p style="font-size:11px; margin-top:10px; color:#666;">* Apna sahi Gmail dalein ham api support ke liye karege.</p>
-            <p onclick="toggleAuth(false)" style="margin-top:15px; font-size:13px; color:var(--accent); cursor:pointer;">Back to Login</p>
+            <input type="text" id="r-user" class="inp" placeholder="Set Username">
+            <input type="email" id="r-email" class="inp" placeholder="Correct Gmail (For API Support)">
+            <input type="password" id="r-pass" class="inp" placeholder="Set Password">
+            <input type="text" id="r-ref" class="inp" placeholder="Referral Code (Optional)">
+            <button class="btn" onclick="register()">Create Account</button>
+            <p onclick="toggleAuth(false)" style="margin-top:20px; font-size:13px; color:var(--accent); cursor:pointer;">Pehle se account hai? Login</p>
+        </div>
+
+        <div class="notice-box">
+            <i class="fa-solid fa-shield-halved"></i> <b>IMPORTANT NOTICE:</b><br>
+            Hamara panel 100% safe aur encrypted hai. Sahi Gmail hi use karein taaki API connect karne mein asani ho. Hum daily services update karte hain.
         </div>
     </div>
 
     <div id="main-app" style="display:none;">
         <div class="header">
             <div class="logo">SSMBYAS</div>
-            <div id="top-user" style="font-weight: 700; color: var(--accent); font-size: 12px;"></div>
+            <div id="top-user" style="font-size: 12px; font-weight: 700; background: #e7f3ff; padding: 5px 12px; border-radius: 20px; color: var(--accent);"></div>
         </div>
 
         <div id="dash-screen" class="screen active">
             <div class="stat-grid">
-                <div class="stat-item"><small>Wallet</small><br><b id="u-bal" style="color:var(--primary);">₹0.00</b></div>
-                <div class="stat-item"><small>Spent</small><br><b id="u-spent">₹0.00</b></div>
+                <div class="stat-item"><small>Your Balance</small><br><b id="u-bal" style="color:var(--primary); font-size: 18px;">₹0.00</b></div>
+                <div class="stat-item"><small>Total Spent</small><br><b id="u-spent" style="font-size: 18px;">₹0.00</b></div>
             </div>
+
             <div class="card">
-                <h4>Place Order</h4>
+                <h4 style="margin-bottom: 12px;"><i class="fa-solid fa-cart-plus"></i> New Order</h4>
                 <select id="srv-select" class="inp">
-                    <option value="Views|0.20">Instagram Views (10k) - ₹2.00</option>
+                    <option value="Views|2.00">Instagram Views (10k) - ₹2.00</option>
                     <option value="Followers|22.00">Instagram Followers (1k) - ₹22.00</option>
                     <option value="Refill|60.00">Insta Followers Refill (1k) - ₹60.00</option>
                     <option value="Comments|30.00">Instagram Comments (1k) - ₹30.00</option>
                     <option value="Likes|20.00">Instagram Likes (1k) - ₹20.00</option>
                 </select>
-                <input type="text" id="o-link" class="inp" placeholder="Link">
+                <input type="text" id="o-link" class="inp" placeholder="Post / Profile Link">
                 <input type="number" id="o-qty" class="inp" placeholder="Quantity">
-                <button class="btn" onclick="placeOrder()">Order Now</button>
+                <button class="btn" onclick="placeOrder()">Place Order Now</button>
             </div>
+
+            <h4>Order History</h4>
+            <div id="u-orders"></div>
         </div>
 
         <div id="fund-screen" class="screen">
             <div class="card" style="text-align:center;">
-                <h4>Add Funds (UPI)</h4>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7388720013@upi&pn=SSMBYAS" style="margin:15px 0; border:2px solid var(--accent); padding:5px; border-radius:10px;">
+                <h4>Add Money (UPI)</h4>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7388720013@upi&pn=SSMBYAS" style="margin:15px 0; border:4px solid var(--accent); border-radius:15px; padding: 5px;">
                 <p style="font-size:12px; color:red; font-weight:700;">Scan & Pay Min ₹1</p>
-                <input type="number" id="f-amt" class="inp" placeholder="Amount Paid">
-                <input type="text" id="f-utr" class="inp" placeholder="UTR ID">
-                <button class="btn" onclick="submitFund()">Submit Payment</button>
+                <input type="number" id="f-amt" class="inp" placeholder="Kitna Paisa Bheja?">
+                <input type="text" id="f-utr" class="inp" placeholder="UTR / Transaction ID">
+                <button class="btn" onclick="submitFund()">Verify Payment</button>
             </div>
-            <h4>History</h4>
             <div id="u-funds"></div>
         </div>
 
-        <div id="admin-screen" class="screen">
-            <div class="card" style="border-top:5px solid red;">
-                <h3 style="color:red">Admin Panel</h3>
-                <div class="stat-grid">
-                    <div class="stat-item"><small>Total Bal</small><br><b id="adm-t-bal">₹0</b></div>
-                    <div class="stat-item"><small>Pending Req</small><br><b id="adm-p-count">0</b></div>
+        <div id="ref-screen" class="screen">
+            <div class="card" style="background: linear-gradient(45deg, #ffd700, #ff8c00); color: white;">
+                <h3>Refer & Earn 1%</h3>
+                <p style="font-size: 11px;">Jab aapka dost ₹100 add karega, aapko ₹1 milega!</p>
+                <div style="display:flex; gap:5px; margin-top:10px;">
+                    <input type="text" id="ref-link-input" readonly style="width:100%; padding:10px; border-radius:10px; border:none; background:rgba(255,255,255,0.3); color:white; font-size: 11px;">
+                    <button onclick="copyLink()" style="background:white; color:orange; border:none; padding:10px; border-radius:10px; font-weight:bold;">Copy</button>
                 </div>
-                <h4>Deposit Requests</h4>
-                <div id="adm-requests"></div>
-                <hr style="margin:15px 0; opacity:0.2;">
-                <h4>Manage Users</h4>
-                <div id="adm-users"></div>
+            </div>
+            <div class="stat-grid" style="margin-top:10px;">
+                <div class="stat-item"><small>Referrals</small><br><b id="ref-count">0</b></div>
+                <div class="stat-item"><small>Total Commission</small><br><b id="ref-earned">₹0.00</b></div>
+            </div>
+        </div>
+
+        <div id="supp-screen" class="screen">
+            <div class="card">
+                <h4 style="margin-bottom: 20px; text-align: center;">Customer Support</h4>
+                <a href="https://wa.me/917388720013" class="sup-btn" style="background:#25D366;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
+                <a href="https://t.me/Suheloowner" class="sup-btn" style="background:#0088cc;"><i class="fa-brands fa-telegram"></i> Telegram Channel</a>
+                <a href="https://www.instagram.com/ssmbyas?igsh=MWRibG40YWw4eHNt" class="sup-btn" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);"><i class="fa-brands fa-instagram"></i> Instagram Official</a>
+            </div>
+        </div>
+
+        <div id="admin-screen" class="screen">
+            <div class="card" style="border-top: 5px solid red;">
+                <h3 style="color:red">Master Admin</h3>
+                <div id="adm-requests" style="margin-top:15px;"></div>
+                <hr style="margin:20px 0; opacity: 0.2;">
+                <h4>Manage All Users</h4>
+                <div id="adm-users-list"></div>
             </div>
         </div>
 
         <div class="nav">
             <div class="nav-item active" onclick="showScreen('dash-screen', this)"><i class="fa-solid fa-home"></i>Home</div>
             <div class="nav-item" onclick="showScreen('fund-screen', this)"><i class="fa-solid fa-wallet"></i>Funds</div>
-            <div id="adm-nav" class="nav-item" style="display:none;" onclick="showScreen('admin-screen', this)"><i class="fa-solid fa-user-shield"></i>Admin</div>
-            <div class="nav-item" onclick="window.location.href='https://wa.me/917388720013'"><i class="fa-brands fa-whatsapp"></i>Support</div>
+            <div class="nav-item" onclick="showScreen('ref-screen', this)"><i class="fa-solid fa-gift"></i>Refer</div>
+            <div class="nav-item" onclick="showScreen('supp-screen', this)"><i class="fa-solid fa-headset"></i>Support</div>
+            <div id="adm-nav" class="nav-item" style="display:none;" onclick="showScreen('admin-screen', this)"><i class="fa-solid fa-user-gear"></i>Admin</div>
         </div>
     </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('ssmbyas_v21')) || {
-            users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', bal:5000, spent:0, refBy:null, funds:[]} },
-            allFunds: [], session: null
+        // Database Setup
+        let db = JSON.parse(localStorage.getItem('ssmbyas_v22')) || {
+            users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', bal:9999, spent:0, refCount:0, earnings:0, refBy:null, orders:[], funds:[]} },
+            allRequests: [],
+            session: null
         };
         let currentUser = null;
 
@@ -137,88 +186,119 @@
             let u = document.getElementById('r-user').value.toLowerCase().trim();
             let p = document.getElementById('r-pass').value;
             let e = document.getElementById('r-email').value;
-            if(!u || !p || !e) return alert("Fill all details!");
-            db.users[u] = { pass:p, email:e, bal:0, spent:0, refBy:null, funds:[] };
-            save(); alert("Success! Please Login."); toggleAuth(false);
+            let r = document.getElementById('r-ref').value.toLowerCase().trim();
+            if(!u || !p || !e) return alert("All fields are required!");
+            if(db.users[u]) return alert("Username taken!");
+            
+            let refOwner = (r && db.users[r]) ? r : null;
+            db.users[u] = { pass:p, email:e, bal:0, spent:0, refCount:0, earnings:0, refBy:refOwner, orders:[], funds:[] };
+            if(refOwner) db.users[refOwner].refCount++;
+            
+            save(); alert("Registered Successfully!"); toggleAuth(false);
         }
 
         function launch() {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
-            document.getElementById('top-user').innerText = currentUser.toUpperCase();
+            document.getElementById('top-user').innerText = "Hi, " + currentUser.toUpperCase();
+            document.getElementById('ref-link-input').value = window.location.origin + "?ref=" + currentUser;
             if(currentUser === 'suhel') document.getElementById('adm-nav').style.display = 'block';
             updateUI();
+        }
+
+        function placeOrder() {
+            let s = document.getElementById('srv-select').value.split('|');
+            let q = parseInt(document.getElementById('o-qty').value);
+            if(!q || q <= 0) return alert("Quantity sahi dalein!");
+            
+            let cost = (parseFloat(s[1])/1000)*q;
+            if(db.users[currentUser].bal < cost) return alert("Insufficient Balance!");
+
+            db.users[currentUser].bal -= cost;
+            db.users[currentUser].spent += cost;
+            db.users[currentUser].orders.push({ service: s[0], qty: q, cost: cost.toFixed(2), status: 'Processing', date: new Date().toLocaleString() });
+            
+            save(); updateUI(); alert("Order Placed! Check History.");
         }
 
         function submitFund() {
             let a = parseFloat(document.getElementById('f-amt').value);
             let t = document.getElementById('f-utr').value;
-            if(!a || !t) return alert("Details bharein!");
+            if(!a || !t) return alert("Fill Payment Details!");
+            
             let req = { id: Date.now(), user: currentUser, amt: a, utr: t, status: 'Pending' };
-            db.allFunds.push(req);
+            db.allRequests.push(req);
             db.users[currentUser].funds.push(req);
-            save(); updateUI(); alert("Submitted! Admin will approve soon.");
+            save(); updateUI(); alert("Payment Submitted! Admin will verify.");
         }
 
         function updateUI() {
             let u = db.users[currentUser];
             document.getElementById('u-bal').innerText = "₹" + u.bal.toFixed(2);
             document.getElementById('u-spent').innerText = "₹" + u.spent.toFixed(2);
-            let fH = u.funds.map(f => `<div class="card" style="font-size:12px;">₹${f.amt} | UTR: ${f.utr} | <span class="badge ${f.status.toLowerCase()}">${f.status}</span></div>`).reverse().join('');
-            document.getElementById('u-funds').innerHTML = fH || "No history.";
+            document.getElementById('ref-count').innerText = u.refCount;
+            document.getElementById('ref-earned').innerText = "₹" + u.earnings.toFixed(2);
+
+            let ordH = u.orders.map(o => `<div class="order-item"><b>${o.service}</b> (${o.qty})<br>Cost: ₹${o.cost} | Status: <span style="color:blue">${o.status}</span></div>`).reverse().join('');
+            document.getElementById('u-orders').innerHTML = ordH || "No orders yet.";
+
+            let fndH = u.funds.map(f => `<div class="card" style="font-size:11px;">₹${f.amt} | UTR: ${f.utr} | <b>${f.status}</b></div>`).reverse().join('');
+            document.getElementById('u-funds').innerHTML = fndH;
         }
 
         function loadAdmin() {
-            document.getElementById('adm-t-bal').innerText = "₹" + Object.values(db.users).reduce((a,b)=>a+b.bal,0).toFixed(2);
-            let pending = db.allFunds.filter(f => f.status === 'Pending');
-            document.getElementById('adm-p-count').innerText = pending.length;
-
-            let reqH = pending.map(f => `
+            let pending = db.allRequests.filter(r => r.status === 'Pending');
+            let reqH = pending.map(r => `
                 <div class="card" style="font-size:12px;">
-                    <b>User:</b> ${f.user} | <b>Amt:</b> ₹${f.amt}<br>
-                    <b>UTR:</b> ${f.utr}<br>
-                    <div style="display:flex; gap:5px; margin-top:5px;">
-                        <button onclick="approveFund(${f.id})" style="flex:1; background:var(--primary); color:white; border:none; padding:5px; border-radius:5px;">Approve</button>
-                        <button onclick="rejectFund(${f.id})" style="flex:1; background:var(--danger); color:white; border:none; padding:5px; border-radius:5px;">Reject</button>
-                    </div>
+                    <b>${r.user}</b> sent ₹${r.amt}<br>UTR: ${r.utr}<br>
+                    <button onclick="approvePay(${r.id})" style="background:green; color:white; border:none; padding:5px; border-radius:5px; margin-top:5px; width:48%;">Approve</button>
+                    <button onclick="rejectPay(${r.id})" style="background:red; color:white; border:none; padding:5px; border-radius:5px; margin-top:5px; width:48%;">Reject</button>
                 </div>
-            `).join('') || "No pending requests.";
+            `).join('') || "No Pending Payments.";
             document.getElementById('adm-requests').innerHTML = reqH;
 
-            let uH = "";
-            for(let u in db.users) {
-                uH += `<div class="card" style="font-size:12px;"><b>${u}</b> (₹${db.users[u].bal.toFixed(2)}) <button onclick="add100('${u}')" style="float:right; background:var(--accent); color:white; border:none; padding:2px 5px; border-radius:3px;">+₹100</button></div>`;
+            let userH = "";
+            for(let usr in db.users) {
+                userH += `
+                    <div class="card" style="font-size:11px;">
+                        <b>${usr}</b> - Bal: ₹${db.users[usr].bal.toFixed(2)}<br>
+                        <input type="number" id="bal-${usr}" placeholder="New Balance" style="width:60%; padding:5px; margin-top:5px;">
+                        <button onclick="setBal('${usr}')" style="background:black; color:white; padding:5px; border-radius:5px;">Set</button>
+                    </div>
+                `;
             }
-            document.getElementById('adm-users').innerHTML = uH;
+            document.getElementById('adm-users-list').innerHTML = userH;
         }
 
-        function approveFund(id) {
-            let f = db.allFunds.find(x => x.id === id);
-            if(f) {
-                f.status = 'Success';
-                db.users[f.user].bal += f.amt;
-                // Update user's personal history too
-                let userF = db.users[f.user].funds.find(x => x.id === id);
-                if(userF) userF.status = 'Success';
+        function approvePay(id) {
+            let r = db.allRequests.find(x => x.id === id);
+            if(r) {
+                r.status = 'Success';
+                db.users[r.user].bal += r.amt;
+                // Referral Commission (1%)
+                let boss = db.users[r.user].refBy;
+                if(boss && db.users[boss]) {
+                    let comm = r.amt * 0.01;
+                    db.users[boss].bal += comm;
+                    db.users[boss].earnings += comm;
+                }
+                // Update User History
+                let uReq = db.users[r.user].funds.find(x => x.id === id);
+                if(uReq) uReq.status = 'Success';
                 save(); loadAdmin(); alert("Payment Approved!");
             }
         }
 
-        function rejectFund(id) {
-            let f = db.allFunds.find(x => x.id === id);
-            if(f) { f.status = 'Rejected'; let userF = db.users[f.user].funds.find(x => x.id === id); if(userF) userF.status = 'Rejected'; save(); loadAdmin(); }
+        function setBal(usr) {
+            let val = parseFloat(document.getElementById('bal-'+usr).value);
+            if(!isNaN(val)) { db.users[usr].bal = val; save(); loadAdmin(); alert("Balance Updated for " + usr); }
         }
 
-        function add100(u) { db.users[u].bal += 100; save(); loadAdmin(); }
-
-        function placeOrder() {
-            let s = document.getElementById('srv-select').value.split('|');
-            let q = document.getElementById('o-qty').value;
-            let cost = (parseFloat(s[1])/1000)*q;
-            if(db.users[currentUser].bal < cost) return alert("Paisa kam hai!");
-            db.users[currentUser].bal -= cost;
-            db.users[currentUser].spent += cost;
-            save(); updateUI(); alert("Order Placed!");
+        function copyLink() {
+            let copyText = document.getElementById("ref-link-input");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Referral Link Copied!");
         }
 
         function showScreen(id, el) {
@@ -228,7 +308,7 @@
             if(el) el.classList.add('active');
             if(id === 'admin-screen') loadAdmin();
         }
-        function save() { localStorage.setItem('ssmbyas_v21', JSON.stringify(db)); }
+        function save() { localStorage.setItem('ssmbyas_v22', JSON.stringify(db)); }
     </script>
 </body>
 </html>
