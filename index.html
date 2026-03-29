@@ -3,41 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSMBYAS V20 | Final Panel</title>
+    <title>SSMBYAS V21 | Official Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --primary: #00c853; --bg: #f4f7f6; --card: #ffffff; --text: #1c1e21; --accent: #1877f2; --danger: #ff5252; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background: var(--bg); color: var(--text); padding-bottom: 80px; }
-
         .header { background: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
         .logo { font-size: 20px; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 8px; }
-        
         .screen { display: none; padding: 15px; max-width: 500px; margin: 0 auto; animation: fadeIn 0.3s; }
         .active { display: block; }
         .card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .stat-item { background: #fff; padding: 12px; border-radius: 12px; border: 1px solid #eee; text-align: center; }
-
         .inp, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; font-size: 14px; outline: none; background: #fafafa; }
         .btn { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; }
-        
-        .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px; border-radius: 10px; color: white; text-decoration: none; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
-
-        .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(0); background: #fff; display: flex; border-top: 1px solid #ddd; padding: 10px 0; left: 50%; transform: translateX(-50%); }
+        .nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: #fff; display: flex; border-top: 1px solid #ddd; padding: 10px 0; }
         .nav-item { flex: 1; text-align: center; color: #65676b; font-size: 11px; cursor: pointer; }
         .nav-item.active { color: var(--accent); font-weight: 700; }
         .nav-item i { font-size: 20px; margin-bottom: 3px; display: block; }
-
+        .badge { padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; }
+        .pending { background: #fff3cd; color: #856404; }
+        .success { background: #d4edda; color: #155724; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="auth-screen" style="padding: 40px 20px; text-align: center;">
-        <div class="logo" style="justify-content: center; margin-bottom: 30px;"><i class="fa-solid fa-rocket"></i> SSMBYAS</div>
+    <div id="auth-screen" style="padding: 20px; text-align: center;">
+        <div class="logo" style="justify-content: center; margin-bottom: 20px;"><i class="fa-solid fa-rocket"></i> SSMBYAS</div>
         <div class="card" id="login-box">
             <input type="text" id="l-user" class="inp" placeholder="Username">
             <input type="password" id="l-pass" class="inp" placeholder="Password">
@@ -46,10 +41,11 @@
         </div>
         <div class="card" id="reg-box" style="display:none;">
             <input type="text" id="r-user" class="inp" placeholder="Username">
-            <input type="email" id="r-email" class="inp" placeholder="Gmail">
+            <input type="email" id="r-email" class="inp" placeholder="Correct Gmail Address">
             <input type="password" id="r-pass" class="inp" placeholder="Password">
             <input type="text" id="r-ref" class="inp" placeholder="Referral Code">
             <button class="btn" onclick="register()">Register</button>
+            <p style="font-size:11px; margin-top:10px; color:#666;">* Apna sahi Gmail dalein ham api support ke liye karege.</p>
             <p onclick="toggleAuth(false)" style="margin-top:15px; font-size:13px; color:var(--accent); cursor:pointer;">Back to Login</p>
         </div>
     </div>
@@ -68,11 +64,11 @@
             <div class="card">
                 <h4>Place Order</h4>
                 <select id="srv-select" class="inp">
-                    <option value="1798|0.20">Instagram Views (10k) - ₹2.00</option>
-                    <option value="3274|22.00">Instagram Followers (1k) - ₹22.00</option>
-                    <option value="3276|60.00">Insta Followers Refill (1k) - ₹60.00</option>
-                    <option value="3277|30.00">Instagram Comments (1k) - ₹30.00</option>
-                    <option value="3278|20.00">Instagram Likes (1k) - ₹20.00</option>
+                    <option value="Views|0.20">Instagram Views (10k) - ₹2.00</option>
+                    <option value="Followers|22.00">Instagram Followers (1k) - ₹22.00</option>
+                    <option value="Refill|60.00">Insta Followers Refill (1k) - ₹60.00</option>
+                    <option value="Comments|30.00">Instagram Comments (1k) - ₹30.00</option>
+                    <option value="Likes|20.00">Instagram Likes (1k) - ₹20.00</option>
                 </select>
                 <input type="text" id="o-link" class="inp" placeholder="Link">
                 <input type="number" id="o-qty" class="inp" placeholder="Quantity">
@@ -86,46 +82,24 @@
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7388720013@upi&pn=SSMBYAS" style="margin:15px 0; border:2px solid var(--accent); padding:5px; border-radius:10px;">
                 <p style="font-size:12px; color:red; font-weight:700;">Scan & Pay Min ₹1</p>
                 <input type="number" id="f-amt" class="inp" placeholder="Amount Paid">
-                <input type="text" id="f-utr" class="inp" placeholder="UTR/Transaction ID">
+                <input type="text" id="f-utr" class="inp" placeholder="UTR ID">
                 <button class="btn" onclick="submitFund()">Submit Payment</button>
             </div>
-            <h4>Fund History</h4>
+            <h4>History</h4>
             <div id="u-funds"></div>
-        </div>
-
-        <div id="ref-screen" class="screen">
-            <div class="card" style="background:var(--accent); color:white;">
-                <h3>Refer & Earn (1%)</h3>
-                <div style="display:flex; gap:5px; margin-top:10px;">
-                    <input type="text" id="ref-link-input" readonly style="width:100%; padding:8px; border-radius:5px; border:none; font-size:11px; background:rgba(255,255,255,0.2); color:white;">
-                    <button onclick="copyRefLink()" style="padding:0 10px; border-radius:5px; border:none; background:white; color:var(--accent); font-weight:700; cursor:pointer;">Copy</button>
-                </div>
-                <div class="stat-grid" style="margin-top:15px; color:black;">
-                    <div class="stat-item"><small>Referred</small><br><b id="ref-count">0</b></div>
-                    <div class="stat-item"><small>Earned</small><br><b id="ref-earned">₹0</b></div>
-                </div>
-            </div>
-            <h4>Referral Users</h4>
-            <div id="ref-list" class="card" style="font-size:12px;"></div>
-        </div>
-
-        <div id="supp-screen" class="screen">
-            <div class="card">
-                <h4 style="margin-bottom:15px;">24/7 Customer Support</h4>
-                <a href="https://wa.me/917388720013" class="social-btn" style="background:#25D366;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Support</a>
-                <a href="https://t.me/Suheloowner" class="social-btn" style="background:#0088cc;"><i class="fa-brands fa-telegram"></i> Telegram Channel</a>
-                <a href="https://www.instagram.com/ssmbyas?igsh=MWRibG40YWw4eHNt" class="social-btn" style="background:#E1306C;"><i class="fa-brands fa-instagram"></i> Instagram Official</a>
-            </div>
         </div>
 
         <div id="admin-screen" class="screen">
             <div class="card" style="border-top:5px solid red;">
-                <h3 style="color:red">Admin Mastery</h3>
+                <h3 style="color:red">Admin Panel</h3>
                 <div class="stat-grid">
                     <div class="stat-item"><small>Total Bal</small><br><b id="adm-t-bal">₹0</b></div>
-                    <div class="stat-item"><small>Total Spent</small><br><b id="adm-t-spent">₹0</b></div>
+                    <div class="stat-item"><small>Pending Req</small><br><b id="adm-p-count">0</b></div>
                 </div>
-                <h4>Manage Users & Add Balance</h4>
+                <h4>Deposit Requests</h4>
+                <div id="adm-requests"></div>
+                <hr style="margin:15px 0; opacity:0.2;">
+                <h4>Manage Users</h4>
                 <div id="adm-users"></div>
             </div>
         </div>
@@ -133,18 +107,18 @@
         <div class="nav">
             <div class="nav-item active" onclick="showScreen('dash-screen', this)"><i class="fa-solid fa-home"></i>Home</div>
             <div class="nav-item" onclick="showScreen('fund-screen', this)"><i class="fa-solid fa-wallet"></i>Funds</div>
-            <div class="nav-item" onclick="showScreen('ref-screen', this)"><i class="fa-solid fa-users"></i>Refer</div>
-            <div class="nav-item" onclick="showScreen('supp-screen', this)"><i class="fa-solid fa-headset"></i>Support</div>
             <div id="adm-nav" class="nav-item" style="display:none;" onclick="showScreen('admin-screen', this)"><i class="fa-solid fa-user-shield"></i>Admin</div>
+            <div class="nav-item" onclick="window.location.href='https://wa.me/917388720013'"><i class="fa-brands fa-whatsapp"></i>Support</div>
         </div>
     </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('ssmbyas_v20')) || {
-            users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', bal:5000, spent:0, orders:[], refBy:null, refList:[], earnings:0, funds:[]} },
-            pendingFunds: [], session: null
+        let db = JSON.parse(localStorage.getItem('ssmbyas_v21')) || {
+            users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', bal:5000, spent:0, refBy:null, funds:[]} },
+            allFunds: [], session: null
         };
         let currentUser = null;
+
         window.onload = () => { if(db.session) { currentUser = db.session; launch(); } };
 
         function toggleAuth(r) {
@@ -156,89 +130,97 @@
             let u = document.getElementById('l-user').value.toLowerCase().trim();
             let p = document.getElementById('l-pass').value;
             if(db.users[u] && db.users[u].pass === p) { db.session = u; currentUser = u; save(); launch(); }
-            else alert("Ghalat Password!");
+            else alert("Invalid Details!");
         }
 
         function register() {
             let u = document.getElementById('r-user').value.toLowerCase().trim();
             let p = document.getElementById('r-pass').value;
             let e = document.getElementById('r-email').value;
-            let r = document.getElementById('r-ref').value.toLowerCase().trim();
-            if(!u || !p || !e) return alert("Fill all!");
-            if(db.users[u]) return alert("Username taken!");
-            let refBy = (r && db.users[r]) ? r : null;
-            db.users[u] = { pass:p, email:e, bal:0, spent:0, orders:[], refBy:refBy, refList:[], earnings:0, funds:[] };
-            if(refBy) db.users[refBy].refList.push({name:u, email:e});
-            save(); alert("Registered!"); toggleAuth(false);
+            if(!u || !p || !e) return alert("Fill all details!");
+            db.users[u] = { pass:p, email:e, bal:0, spent:0, refBy:null, funds:[] };
+            save(); alert("Success! Please Login."); toggleAuth(false);
         }
 
         function launch() {
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('main-app').style.display = 'block';
             document.getElementById('top-user').innerText = currentUser.toUpperCase();
-            document.getElementById('ref-link-input').value = window.location.origin + "?ref=" + currentUser;
             if(currentUser === 'suhel') document.getElementById('adm-nav').style.display = 'block';
             updateUI();
-        }
-
-        function copyRefLink() {
-            let copyText = document.getElementById("ref-link-input");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-            alert("Referral Link Copied!");
-        }
-
-        function placeOrder() {
-            let s = document.getElementById('srv-select').value.split('|');
-            let q = document.getElementById('o-qty').value;
-            let cost = (parseFloat(s[1])/1000)*q;
-            if(db.users[currentUser].bal < cost) return alert("Add Funds First!");
-            db.users[currentUser].bal -= cost;
-            db.users[currentUser].spent += cost;
-            let boss = db.users[currentUser].refBy;
-            if(boss && db.users[boss]) { db.users[boss].bal += (cost*0.01); db.users[boss].earnings += (cost*0.01); }
-            db.users[currentUser].orders.push({id: Math.floor(Math.random()*9999), cost: cost});
-            save(); updateUI(); alert("Order Placed!");
         }
 
         function submitFund() {
             let a = parseFloat(document.getElementById('f-amt').value);
             let t = document.getElementById('f-utr').value;
             if(!a || !t) return alert("Details bharein!");
-            let req = { user: currentUser, amt: a, utr: t, status: 'Pending' };
-            db.pendingFunds.push(req);
+            let req = { id: Date.now(), user: currentUser, amt: a, utr: t, status: 'Pending' };
+            db.allFunds.push(req);
             db.users[currentUser].funds.push(req);
-            save(); updateUI(); alert("SUBMITTED! WAIT FOR ADMIN.");
+            save(); updateUI(); alert("Submitted! Admin will approve soon.");
         }
 
         function updateUI() {
             let u = db.users[currentUser];
             document.getElementById('u-bal').innerText = "₹" + u.bal.toFixed(2);
             document.getElementById('u-spent').innerText = "₹" + u.spent.toFixed(2);
-            document.getElementById('ref-count').innerText = u.refList.length;
-            document.getElementById('ref-earned').innerText = "₹" + u.earnings.toFixed(2);
-            let rL = u.refList.map(r => `<div>👤 ${r.name} (${r.email})</div>`).join('') || "No referrals.";
-            document.getElementById('ref-list').innerHTML = rL;
-            let fH = u.funds.map(f => `<div class="card" style="font-size:12px;">₹${f.amt} | UTR: ${f.utr} | <b>${f.status}</b></div>`).reverse().join('');
-            document.getElementById('u-funds').innerHTML = fH || "No fund history.";
+            let fH = u.funds.map(f => `<div class="card" style="font-size:12px;">₹${f.amt} | UTR: ${f.utr} | <span class="badge ${f.status.toLowerCase()}">${f.status}</span></div>`).reverse().join('');
+            document.getElementById('u-funds').innerHTML = fH || "No history.";
         }
 
         function loadAdmin() {
-            let all = Object.values(db.users);
-            document.getElementById('adm-t-bal').innerText = "₹" + all.reduce((a,b)=>a+b.bal,0).toFixed(2);
-            document.getElementById('adm-t-spent').innerText = "₹" + all.reduce((a,b)=>a+b.spent,0).toFixed(2);
+            document.getElementById('adm-t-bal').innerText = "₹" + Object.values(db.users).reduce((a,b)=>a+b.bal,0).toFixed(2);
+            let pending = db.allFunds.filter(f => f.status === 'Pending');
+            document.getElementById('adm-p-count').innerText = pending.length;
+
+            let reqH = pending.map(f => `
+                <div class="card" style="font-size:12px;">
+                    <b>User:</b> ${f.user} | <b>Amt:</b> ₹${f.amt}<br>
+                    <b>UTR:</b> ${f.utr}<br>
+                    <div style="display:flex; gap:5px; margin-top:5px;">
+                        <button onclick="approveFund(${f.id})" style="flex:1; background:var(--primary); color:white; border:none; padding:5px; border-radius:5px;">Approve</button>
+                        <button onclick="rejectFund(${f.id})" style="flex:1; background:var(--danger); color:white; border:none; padding:5px; border-radius:5px;">Reject</button>
+                    </div>
+                </div>
+            `).join('') || "No pending requests.";
+            document.getElementById('adm-requests').innerHTML = reqH;
+
             let uH = "";
             for(let u in db.users) {
-                uH += `<div class="card">
-                    <b>${u}</b> (Bal: ₹${db.users[u].bal})<br>
-                    <button onclick="addAdmBal('${u}')" style="background:var(--accent); color:white; border:none; padding:5px; border-radius:5px; margin-top:5px; width:100%;">Add ₹100</button>
-                </div>`;
+                uH += `<div class="card" style="font-size:12px;"><b>${u}</b> (₹${db.users[u].bal.toFixed(2)}) <button onclick="add100('${u}')" style="float:right; background:var(--accent); color:white; border:none; padding:2px 5px; border-radius:3px;">+₹100</button></div>`;
             }
             document.getElementById('adm-users').innerHTML = uH;
         }
 
-        function addAdmBal(u) { db.users[u].bal += 100; save(); loadAdmin(); alert("₹100 Added to " + u); }
+        function approveFund(id) {
+            let f = db.allFunds.find(x => x.id === id);
+            if(f) {
+                f.status = 'Success';
+                db.users[f.user].bal += f.amt;
+                // Update user's personal history too
+                let userF = db.users[f.user].funds.find(x => x.id === id);
+                if(userF) userF.status = 'Success';
+                save(); loadAdmin(); alert("Payment Approved!");
+            }
+        }
+
+        function rejectFund(id) {
+            let f = db.allFunds.find(x => x.id === id);
+            if(f) { f.status = 'Rejected'; let userF = db.users[f.user].funds.find(x => x.id === id); if(userF) userF.status = 'Rejected'; save(); loadAdmin(); }
+        }
+
+        function add100(u) { db.users[u].bal += 100; save(); loadAdmin(); }
+
+        function placeOrder() {
+            let s = document.getElementById('srv-select').value.split('|');
+            let q = document.getElementById('o-qty').value;
+            let cost = (parseFloat(s[1])/1000)*q;
+            if(db.users[currentUser].bal < cost) return alert("Paisa kam hai!");
+            db.users[currentUser].bal -= cost;
+            db.users[currentUser].spent += cost;
+            save(); updateUI(); alert("Order Placed!");
+        }
+
         function showScreen(id, el) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -246,7 +228,7 @@
             if(el) el.classList.add('active');
             if(id === 'admin-screen') loadAdmin();
         }
-        function save() { localStorage.setItem('ssmbyas_v20', JSON.stringify(db)); }
+        function save() { localStorage.setItem('ssmbyas_v21', JSON.stringify(db)); }
     </script>
 </body>
 </html>
