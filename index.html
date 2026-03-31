@@ -3,155 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM_Safwan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bungee+Inline&family=Poppins:wght@900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>FATAL_ERROR_ACCESS_DENIED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Archivo+Black&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; overflow: hidden; font-family: 'Share Tech Mono', monospace; color: #0f0; }
+        body { background: #000; color: #0f0; font-family: 'Share Tech Mono', monospace; overflow: hidden; height: 100vh; cursor: crosshair; }
 
-        /* Matrix Background */
-        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
+        /* Background Matrix */
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
 
-        .screen { height: 100vh; width: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding: 20px; }
+        /* Terminal Styling */
+        #terminal { padding: 20px; font-size: 14px; line-height: 1.8; height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; }
+        .red { color: #ff0000; font-weight: bold; }
+        .cyan { color: #00ffff; }
+        .blink { animation: blinker 0.1s infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
 
-        /* STEP 1: The Scary Alert */
-        #hacker-alert { display: flex; color: #ff0000; }
-        .warning-box { border: 4px solid #ff0000; padding: 20px; animation: flash 0.3s infinite; }
-        .warning-text { font-size: 35px; font-weight: 900; font-family: 'Poppins'; }
+        /* THE FINAL HACKED SCREEN */
+        #hacked-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #ff0000;
+            color: #fff;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 9999;
+            animation: flash-bg 0.1s infinite;
+        }
 
-        /* STEP 2: Console Log */
-        #console-log { display: none; text-align: left; width: 90%; font-size: 13px; line-height: 1.6; }
-        .red { color: #ff0000; }
+        .hacked-title {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 40px;
+            text-transform: uppercase;
+            text-shadow: 4px 4px #000;
+            padding: 15px;
+            animation: shake 0.1s infinite;
+        }
 
-        /* STEP 3: Birthday Wish */
-        #page1 { padding: 20px; }
-        .letter { display: inline-block; font-family: 'Bungee Inline'; font-size: 40px; color: #fff; text-shadow: 0 0 15px #0f0; opacity: 0; transform: translateY(-600px); }
-        .fall { animation: drop 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        
-        #happy-msg { display: none; font-family: 'Bungee Inline'; font-size: 34px; color: #ffd700; text-shadow: 0 0 25px #ff0000; margin: 15px 0; animation: zoomIn 0.6s forwards; }
-        .cake-wrap { font-size: 90px; margin: 10px 0; position: relative; display: none; }
-        .cake-name { position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%); font-size: 20px; color: #ff00ea; font-family: 'Poppins'; font-weight: 900; text-shadow: 0 0 5px #fff; }
+        .skull { font-size: 70px; margin-bottom: 15px; }
 
-        /* STEP 4: Party Address */
-        #page2 { background: rgba(0, 0, 0, 0.95); }
-        .final-box { border: 3px solid #ff0000; padding: 25px; background: rgba(255, 0, 0, 0.1); box-shadow: 0 0 40px #ff0000; border-radius: 15px; }
+        @keyframes flash-bg {
+            0%, 100% { background: #ff0000; }
+            50% { background: #000; }
+        }
 
-        /* Animations */
-        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        @keyframes drop { to { transform: translateY(0); opacity: 1; } }
-        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .shake-body { animation: heavyShake 0.1s infinite; }
-        @keyframes heavyShake { 0% { transform: translate(5px, 5px); } 50% { transform: translate(-5px, -5px); } }
+        @keyframes shake {
+            0% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, -2px); }
+        }
 
-        .btn { margin-top: 30px; padding: 12px 35px; border: 2px solid #0f0; background: #000; color: #0f0; cursor: pointer; font-family: 'Share Tech Mono'; box-shadow: 0 0 15px #0f0; font-weight: bold; }
-        #footer { position: fixed; bottom: 15px; width: 100%; text-align: center; color: #0f0; opacity: 0; transition: 1s; }
+        #click-to-start {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 10000;
+        }
     </style>
 </head>
-<body onclick="startHacking()">
+<body>
 
-    <canvas id="matrix"></canvas>
-
-    <div id="tap-msg" class="screen" style="display:flex;">
-        <p style="font-size: 20px;">> CONNECTING_TO_SERVER...</p>
-        <p style="font-size: 12px; color: #fff; margin-top: 10px;">[TAP TO ENTER VLOG]</p>
+    <div id="click-to-start" onclick="initiateHacking()">
+        <p style="font-size: 20px; color: #0f0;">> [LINK_SECURE_ENCRYPTED]</p>
+        <p style="font-size: 12px; color: #fff; margin-top: 10px;">TAP TO VIEW PRIVATE VLOG</p>
     </div>
 
-    <div id="hacker-alert" class="screen">
-        <div class="warning-box">
-            <p class="warning-text">SYSTEM HACKED</p>
-            <p style="font-size: 14px;">ALL DATA EXPOSED</p>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div id="terminal">
+        <p id="t1" style="display:none;">> INITIALIZING_REMOTE_EXPLOIT...</p>
+        <p id="t2" style="display:none;">> TARGETING_USER: <span class="red">AFTAB</span></p>
+        <p id="t3" style="display:none;">> STATUS: <span class="cyan">BYPASSING_FIREWALL...</span> [OK]</p>
+        <p id="t4" style="display:none;">> EXTRACTING_METADATA...</p>
+        <div id="leak" style="display:none; color: #00ffff; border-left: 2px solid #00ffff; padding-left: 10px; margin: 10px 0;">
+            <p id="p-os"></p>
+            <p id="p-batt"></p>
+            <p id="p-res"></p>
         </div>
+        <p id="t5" style="display:none;">> ACCESSING_GALLERY: <span class="red">ROOT_ACCESS_GRANTED</span></p>
+        <p id="t6" style="display:none;">> UPLOADING_TO_SERVER: 4.2GB / 12.8GB...</p>
+        <p id="t7" style="display:none; margin-top: 20px;" class="red blink">> CRITICAL ERROR: SYSTEM OVERRIDE BY SUHEL_MODS</p>
     </div>
 
-    <div id="console-log" class="screen">
-        <p>> TARGET: Safwan</p>
-        <p id="c1" style="display:none;">> ACCESSING GALLERY... <span class="red">[100%]</span></p>
-        <p id="c2" style="display:none;">> DOWNLOADING PRIVATE VIDEOS...</p>
-        <p id="c3" style="display:none;">> SENDING DATA TO CLOUD...</p>
-        <p id="c4" style="display:none; font-weight:bold;">> <span class="red">SYSTEM OVERRIDE DETECTED!</span></p>
-    </div>
-
-    <div id="page1" class="screen">
-        <div id="letters-wrap"></div>
-        <h2 id="happy-msg">end-</h2>
-        <div id="cake-area" class="cake-wrap">
-            🎂<span class="cake-name">test</span>
-        </div>
-        <button id="next-btn" class="btn" style="display:none;" onclick="showLastPage()">DECRYPT ADDRESS ➔</button>
-    </div>
-
-    <div id="page2" class="screen">
-        <div class="final-box">
-            <p style="color: #ff0000; font-size: 28px; font-weight: 900;">PRTY KHA HAI? 🔥</p>
-            <p style="color: #fff; margin-top: 10px; font-size: 18px;">ADDRESS BHEJ BADHU! 📍</p>
-        </div>
-    </div>
-
-    <div id="footer">
-        <p style="font-size: 25px;">☠️</p>
-        <p>DEVELOPED BY SUHEL </p>
+    <div id="hacked-screen">
+        <div class="skull">☠️</div>
+        <h1 class="hacked-title">YOUR DEVICE HACKED BY SUHEL</h1>
+        <p style="font-weight: bold; font-size: 18px;">ALL DATA HAS BEEN LEAKED</p>
+        <p style="margin-top: 20px; font-size: 12px; letter-spacing: 2px;">LOG_ID: UP51AT6552-X</p>
     </div>
 
     <script>
-        // Matrix Background Logic
-        const canvas = document.getElementById('matrix');
+        // Matrix Background
+        const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const matrixChars = "01SYSTEMHACKED SAFWAN";
-        const fontSize = 16; const columns = canvas.width / fontSize;
+        const alphabet = "01SUHELMODSHACKED777";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
-        function drawMatrix() { ctx.fillStyle = "rgba(0, 0, 0, 0.08)"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px arial"; for (let i = 0; i < drops.length; i++) { const text = matrixChars[Math.floor(Math.random() * matrixChars.length)]; ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; } }
-        setInterval(drawMatrix, 35);
 
-        let sequence = false;
-        function startHacking() {
-            if(sequence) return; sequence = true;
-            document.getElementById('tap-msg').style.display = 'none';
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0F0";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        function initiateHacking() {
+            document.getElementById('click-to-start').style.display = 'none';
             
-            // Step 1: Alert Flash
-            document.getElementById('hacker-alert').style.display = 'flex';
+            // Start Terminal Sequence
+            setTimeout(() => { document.getElementById('t1').style.display = 'block'; }, 500);
+            setTimeout(() => { document.getElementById('t2').style.display = 'block'; }, 1200);
+            setTimeout(() => { document.getElementById('t3').style.display = 'block'; }, 2000);
+            setTimeout(() => { 
+                document.getElementById('t4').style.display = 'block';
+                document.getElementById('leak').style.display = 'block';
+                document.getElementById('p-os').innerText = "> Device_OS: " + navigator.platform;
+                document.getElementById('p-res').innerText = "> Screen_Res: " + window.screen.width + "x" + window.screen.height;
+                
+                // Get Battery
+                if(navigator.getBattery) {
+                    navigator.getBattery().then(batt => {
+                        document.getElementById('p-batt').innerText = "> Battery_Level: " + Math.round(batt.level * 100) + "% [STOLEN]";
+                    });
+                }
+            }, 2800);
+
+            setTimeout(() => { document.getElementById('t5').style.display = 'block'; }, 4000);
+            setTimeout(() => { document.getElementById('t6').style.display = 'block'; }, 4800);
+            setTimeout(() => { document.getElementById('t7').style.display = 'block'; }, 5500);
+
+            // THE FINAL REVEAL
             setTimeout(() => {
-                document.getElementById('hacker-alert').style.display = 'none';
-                document.getElementById('console-log').style.display = 'flex';
-                runConsole();
-            }, 2000);
-        }
+                document.getElementById('terminal').style.display = 'none';
+                document.getElementById('hacked-screen').style.display = 'flex';
+                
+                // Vibration & Sound Attack
+                if ("vibrate" in navigator) {
+                    navigator.vibrate([500, 200, 500, 200, 1000, 500, 2000]);
+                }
+                
+                // Beep Sound
+                try {
+                    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    let osc = audioCtx.createOscillator();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                    osc.connect(audioCtx.destination);
+                    osc.start();
+                    setTimeout(() => osc.stop(), 3000);
+                } catch(e) {}
 
-        function runConsole() {
-            setTimeout(() => { document.getElementById('c1').style.display = 'block'; }, 500);
-            setTimeout(() => { document.getElementById('c2').style.display = 'block'; }, 1000);
-            setTimeout(() => { document.getElementById('c3').style.display = 'block'; }, 1500);
-            setTimeout(() => { document.getElementById('c4').style.display = 'block'; document.body.classList.add('shake-body'); }, 2000);
-
-            // Transition to Birthday
-            setTimeout(() => {
-                document.body.classList.remove('shake-body');
-                document.getElementById('console-log').style.display = 'none';
-                document.getElementById('page1').style.display = 'flex';
-                document.getElementById('footer').style.opacity = '1';
-                startBirthday();
-            }, 3500);
-        }
-
-        const nameStr = "Safwan";
-        const wrap = document.getElementById('letters-wrap');
-        nameStr.split('').forEach(char => { const span = document.createElement('span'); span.innerText = char; span.className = 'letter'; wrap.appendChild(span); });
-
-        function startBirthday() {
-            const lts = document.querySelectorAll('.letter');
-            lts.forEach((l, i) => { setTimeout(() => { l.classList.add('fall'); }, i * 150); });
-            setTimeout(() => {
-                document.getElementById('happy-msg').style.display = 'block';
-                confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#ffd700', '#ff0000', '#00ff00'] });
-                setTimeout(() => { document.getElementById('cake-area').style.display = 'block'; document.getElementById('next-btn').style.display = 'block'; }, 800);
-            }, (lts.length * 150) + 500);
-        }
-
-        function showLastPage() {
-            document.getElementById('page1').style.display = 'none';
-            document.getElementById('page2').style.display = 'flex';
-            confetti({ particleCount: 100, spread: 160, colors: ['#ff0000', '#ffffff'] });
+            }, 7500);
         }
     </script>
 </body>
