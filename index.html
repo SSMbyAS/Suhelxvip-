@@ -3,116 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRITICAL_SYSTEM_HALT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bungee+Inline&display=swap" rel="stylesheet">
+    <title>SYSTEM_HACKED_MAAZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bungee+Inline&family=Poppins:wght@900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; height: 100vh; overflow: hidden; font-family: 'Share Tech Mono', monospace; color: #0f0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        body { background: #000; overflow: hidden; font-family: 'Share Tech Mono', monospace; color: #0f0; }
 
-        /* Hacker Console */
-        #hacker-ui { width: 85%; font-size: 13px; line-height: 1.6; }
-        .red { color: #ff0000; font-weight: bold; }
+        /* Matrix Background */
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
+
+        .screen { height: 100vh; width: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding: 20px; }
+
+        /* STEP 1: The Scary Alert */
+        #hacker-alert { display: flex; color: #ff0000; }
+        .warning-box { border: 4px solid #ff0000; padding: 20px; animation: flash 0.3s infinite; }
+        .warning-text { font-size: 35px; font-weight: 900; font-family: 'Poppins'; }
+
+        /* STEP 2: Console Log */
+        #console-log { display: none; text-align: left; width: 90%; font-size: 13px; line-height: 1.6; }
+        .red { color: #ff0000; }
+
+        /* STEP 3: Birthday Wish */
+        #page1 { padding: 20px; }
+        .letter { display: inline-block; font-family: 'Bungee Inline'; font-size: 40px; color: #fff; text-shadow: 0 0 15px #0f0; opacity: 0; transform: translateY(-600px); }
+        .fall { animation: drop 0.4s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        /* Hacker Logo Screen */
-        #hacker-logo-screen { display: none; text-align: center; animation: glitch 0.2s infinite; }
-        .skull { font-size: 100px; filter: drop-shadow(0 0 20px #ff0000); }
-        .hacked-text { color: #ff0000; font-size: 20px; font-weight: bold; letter-spacing: 5px; margin-top: 10px; }
-        .dev-name { color: #fff; text-shadow: 0 0 10px #0f0; font-size: 14px; }
+        #happy-msg { display: none; font-family: 'Bungee Inline'; font-size: 34px; color: #ffd700; text-shadow: 0 0 25px #ff0000; margin: 15px 0; animation: zoomIn 0.6s forwards; }
+        .cake-wrap { font-size: 90px; margin: 10px 0; position: relative; display: none; }
+        .cake-name { position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%); font-size: 20px; color: #ff00ea; font-family: 'Poppins'; font-weight: 900; text-shadow: 0 0 5px #fff; }
 
-        /* Birthday Card */
-        #wish-card { display: none; text-align: center; z-index: 100; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .main-text { font-family: 'Bungee Inline', cursive; font-size: 35px; color: #fff; text-shadow: 0 0 20px #ff0000; }
-        .name-text { font-size: 55px; font-weight: 900; background: linear-gradient(45deg, #ffd700, #ff00ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px #fff); }
-
-        /* Interactive Cake */
-        #cake-box { margin-top: 20px; cursor: pointer; font-size: 70px; }
-        .cake-slice { display: inline-block; transition: 0.5s; }
-        .cut { transform: translateX(15px) rotate(10deg); opacity: 0.8; }
+        /* STEP 4: Party Address */
+        #page2 { background: rgba(0, 0, 0, 0.95); }
+        .final-box { border: 3px solid #ff0000; padding: 25px; background: rgba(255, 0, 0, 0.1); box-shadow: 0 0 40px #ff0000; border-radius: 15px; }
 
         /* Animations */
-        @keyframes glitch {
-            0% { transform: translate(2px,0); }
-            50% { transform: translate(-2px,0); opacity: 0.8; }
-            100% { transform: translate(0,0); }
-        }
-        @keyframes popIn { from { scale: 0; } to { scale: 1; } }
-        .heavy-shake { animation: shake 0.1s infinite; }
-        @keyframes shake { 0% { transform: translate(3px,3px); } 50% { transform: translate(-3px,-3px); } }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes drop { to { transform: translateY(0); opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .shake-body { animation: heavyShake 0.1s infinite; }
+        @keyframes heavyShake { 0% { transform: translate(5px, 5px); } 50% { transform: translate(-5px, -5px); } }
+
+        .btn { margin-top: 30px; padding: 12px 35px; border: 2px solid #0f0; background: #000; color: #0f0; cursor: pointer; font-family: 'Share Tech Mono'; box-shadow: 0 0 15px #0f0; font-weight: bold; }
+        #footer { position: fixed; bottom: 15px; width: 100%; text-align: center; color: #0f0; opacity: 0; transition: 1s; }
     </style>
 </head>
-<body onclick="startExploit()">
+<body onclick="startHacking()">
 
-    <div id="hacker-ui">
-        <p>> CONNECTING TO REMOTE SERVER...</p>
-        <p id="l1" style="display:none;">> BYPASSING GOOGLE_AUTH... <span class="red">[OK]</span></p>
-        <p id="l2" style="display:none;">> EXTRACTING VLOG_DATA... <span class="red">[100%]</span></p>
-        <p id="l3" style="display:none;">> INJECTING MALWARE... <span class="red">[DONE]</span></p>
-        <p id="l4" style="display:none;">> DESTROYING DATABASE... <span class="red">FAILED!</span></p>
-        <p id="l5" style="display:none;">> OVERRIDING SYSTEM CONTROL...</p>
+    <canvas id="matrix"></canvas>
+
+    <div id="tap-msg" class="screen" style="display:flex;">
+        <p style="font-size: 20px;">> CONNECTING_TO_SERVER...</p>
+        <p style="font-size: 12px; color: #fff; margin-top: 10px;">[TAP TO ENTER VLOG]</p>
     </div>
 
-    <div id="hacker-logo-screen">
-        <div class="skull">☠️</div>
-        <p class="hacked-text">SYSTEM HACKED</p>
-        <p class="dev-name">BY SUHEL DEVELOPER</p>
-    </div>
-
-    <div id="wish-card">
-        <p style="color: #0f0; margin-bottom: 10px;">[DECRYPTION SUCCESSFUL]</p>
-        <p class="main-text">HAPPY BIRTHDAY</p>
-        <p class="name-text">MAAZ VLOGGER</p>
-        
-        <div id="cake-box" onclick="cutCake(event)">
-            <span id="c1" class="cake-slice">🎂</span>
-            <p id="hint" style="color: #0f0; font-size: 12px; margin-top: 10px;">[TAP CAKE TO UNLOCK PARTY]</p>
+    <div id="hacker-alert" class="screen">
+        <div class="warning-box">
+            <p class="warning-text">SYSTEM HACKED</p>
+            <p style="font-size: 14px;">ALL DATA EXPOSED</p>
         </div>
-        <p style="font-size: 10px; color: #555; margin-top: 20px;">SECURED BY: SUHEL X MODS</p>
+    </div>
+
+    <div id="console-log" class="screen">
+        <p>> TARGET: MAAZ VLOGGER</p>
+        <p id="c1" style="display:none;">> ACCESSING GALLERY... <span class="red">[100%]</span></p>
+        <p id="c2" style="display:none;">> DOWNLOADING PRIVATE VIDEOS...</p>
+        <p id="c3" style="display:none;">> SENDING DATA TO CLOUD...</p>
+        <p id="c4" style="display:none; font-weight:bold;">> <span class="red">SYSTEM OVERRIDE DETECTED!</span></p>
+    </div>
+
+    <div id="page1" class="screen">
+        <div id="letters-wrap"></div>
+        <h2 id="happy-msg">HAPPIEST BIRTHDAY</h2>
+        <div id="cake-area" class="cake-wrap">
+            🎂<span class="cake-name">MAAZ</span>
+        </div>
+        <button id="next-btn" class="btn" style="display:none;" onclick="showLastPage()">DECRYPT ADDRESS ➔</button>
+    </div>
+
+    <div id="page2" class="screen">
+        <div class="final-box">
+            <p style="color: #ff0000; font-size: 28px; font-weight: 900;">PRTY KHA HAI? 🔥</p>
+            <p style="color: #fff; margin-top: 10px; font-size: 18px;">ADDRESS BHEJ BADHU! 📍</p>
+        </div>
+    </div>
+
+    <div id="footer">
+        <p style="font-size: 25px;">☠️</p>
+        <p>DEVELOPED BY SUHEL X MODS</p>
     </div>
 
     <script>
-        let run = false;
-        function startExploit() {
-            if(run) return; run = true;
+        // Matrix Background Logic
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const matrixChars = "01SYSTEMHACKEDMAAZVLOGGER777";
+        const fontSize = 16; const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+        function drawMatrix() { ctx.fillStyle = "rgba(0, 0, 0, 0.08)"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px arial"; for (let i = 0; i < drops.length; i++) { const text = matrixChars[Math.floor(Math.random() * matrixChars.length)]; ctx.fillText(text, i * fontSize, drops[i] * fontSize); if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; } }
+        setInterval(drawMatrix, 35);
 
-            // Hacker Typing
-            setTimeout(() => { document.getElementById('l1').style.display='block'; }, 700);
-            setTimeout(() => { document.getElementById('l2').style.display='block'; }, 1400);
-            setTimeout(() => { document.getElementById('l3').style.display='block'; }, 2100);
-            setTimeout(() => { document.getElementById('l4').style.display='block'; }, 2800);
-            setTimeout(() => { 
-                document.getElementById('l5').style.display='block'; 
-                document.body.classList.add('heavy-shake');
-            }, 3500);
-
-            // Show Hacker Logo
+        let sequence = false;
+        function startHacking() {
+            if(sequence) return; sequence = true;
+            document.getElementById('tap-msg').style.display = 'none';
+            
+            // Step 1: Alert Flash
+            document.getElementById('hacker-alert').style.display = 'flex';
             setTimeout(() => {
-                document.getElementById('hacker-ui').style.display = 'none';
-                document.body.classList.remove('heavy-shake');
-                document.getElementById('hacker-logo-screen').style.display = 'block';
-            }, 5000);
-
-            // Final Reveal
-            setTimeout(() => {
-                document.getElementById('hacker-logo-screen').style.display = 'none';
-                document.getElementById('wish-card').style.display = 'block';
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            }, 7500);
+                document.getElementById('hacker-alert').style.display = 'none';
+                document.getElementById('console-log').style.display = 'flex';
+                runConsole();
+            }, 2000);
         }
 
-        function cutCake(e) {
-            e.stopPropagation();
-            document.getElementById('c1').innerHTML = "🍰 🍰";
-            document.getElementById('c1').classList.add('cut');
-            document.getElementById('hint').innerText = "VLOG ACCESS GRANTED! ENJOY!";
-            
-            // Party Rain
-            var end = Date.now() + (10 * 1000);
-            (function frame() {
-                confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff0000', '#ffd700'] });
-                confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff0000', '#ffd700'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+        function runConsole() {
+            setTimeout(() => { document.getElementById('c1').style.display = 'block'; }, 500);
+            setTimeout(() => { document.getElementById('c2').style.display = 'block'; }, 1000);
+            setTimeout(() => { document.getElementById('c3').style.display = 'block'; }, 1500);
+            setTimeout(() => { document.getElementById('c4').style.display = 'block'; document.body.classList.add('shake-body'); }, 2000);
+
+            // Transition to Birthday
+            setTimeout(() => {
+                document.body.classList.remove('shake-body');
+                document.getElementById('console-log').style.display = 'none';
+                document.getElementById('page1').style.display = 'flex';
+                document.getElementById('footer').style.opacity = '1';
+                startBirthday();
+            }, 3500);
+        }
+
+        const nameStr = "MAAZVLOGGER";
+        const wrap = document.getElementById('letters-wrap');
+        nameStr.split('').forEach(char => { const span = document.createElement('span'); span.innerText = char; span.className = 'letter'; wrap.appendChild(span); });
+
+        function startBirthday() {
+            const lts = document.querySelectorAll('.letter');
+            lts.forEach((l, i) => { setTimeout(() => { l.classList.add('fall'); }, i * 150); });
+            setTimeout(() => {
+                document.getElementById('happy-msg').style.display = 'block';
+                confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 }, colors: ['#ffd700', '#ff0000', '#00ff00'] });
+                setTimeout(() => { document.getElementById('cake-area').style.display = 'block'; document.getElementById('next-btn').style.display = 'block'; }, 800);
+            }, (lts.length * 150) + 500);
+        }
+
+        function showLastPage() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'flex';
+            confetti({ particleCount: 100, spread: 160, colors: ['#ff0000', '#ffffff'] });
         }
     </script>
 </body>
