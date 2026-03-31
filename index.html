@@ -1,242 +1,119 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSMBYAS V23 | Official Panel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CRITICAL_SYSTEM_HALT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bungee+Inline&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --primary: #00c853; --bg: #f0f2f5; --card: #ffffff; --text: #1c1e21; --accent: #1877f2; --danger: #ff5252; --gold: #ffd700; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 90px; }
-        .header { background: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo { font-size: 22px; font-weight: 800; color: var(--accent); letter-spacing: 1px; }
-        .screen { display: none; padding: 15px; max-width: 500px; margin: 0 auto; animation: fadeIn 0.4s; }
-        .active { display: block; }
-        .card { background: var(--card); padding: 18px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        .inp, select { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 12px; font-size: 14px; outline: none; transition: 0.3s; }
-        .btn { width: 100%; padding: 14px; border-radius: 12px; border: none; background: var(--primary); color: #fff; font-weight: 700; cursor: pointer; font-size: 15px; transition: 0.2s; }
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        .stat-item { background: #fff; padding: 15px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--accent); }
-        .notice-box { background: linear-gradient(45deg, #1877f2, #00c853); color: white; padding: 15px; border-radius: 15px; font-size: 12px; margin-top: 20px; text-align: left; line-height: 1.6; }
-        .order-item { border-left: 4px solid var(--primary); padding: 10px; background: #f9f9f9; border-radius: 8px; margin-bottom: 8px; font-size: 12px; }
-        .sup-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 12px; color: white; text-decoration: none; margin-bottom: 10px; font-weight: 600; }
-        .nav { position: fixed; bottom: 15px; width: 90%; max-width: 450px; left: 50%; transform: translateX(-50%); background: #1c1e21; display: flex; border-radius: 25px; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .nav-item { flex: 1; text-align: center; color: #bbb; font-size: 10px; cursor: pointer; }
-        .nav-item.active { color: #fff; }
-        .nav-item i { font-size: 18px; display: block; margin-bottom: 2px; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; height: 100vh; overflow: hidden; font-family: 'Share Tech Mono', monospace; color: #0f0; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+        /* Hacker Console */
+        #hacker-ui { width: 85%; font-size: 13px; line-height: 1.6; }
+        .red { color: #ff0000; font-weight: bold; }
+        
+        /* Hacker Logo Screen */
+        #hacker-logo-screen { display: none; text-align: center; animation: glitch 0.2s infinite; }
+        .skull { font-size: 100px; filter: drop-shadow(0 0 20px #ff0000); }
+        .hacked-text { color: #ff0000; font-size: 20px; font-weight: bold; letter-spacing: 5px; margin-top: 10px; }
+        .dev-name { color: #fff; text-shadow: 0 0 10px #0f0; font-size: 14px; }
+
+        /* Birthday Card */
+        #wish-card { display: none; text-align: center; z-index: 100; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .main-text { font-family: 'Bungee Inline', cursive; font-size: 35px; color: #fff; text-shadow: 0 0 20px #ff0000; }
+        .name-text { font-size: 55px; font-weight: 900; background: linear-gradient(45deg, #ffd700, #ff00ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 10px #fff); }
+
+        /* Interactive Cake */
+        #cake-box { margin-top: 20px; cursor: pointer; font-size: 70px; }
+        .cake-slice { display: inline-block; transition: 0.5s; }
+        .cut { transform: translateX(15px) rotate(10deg); opacity: 0.8; }
+
+        /* Animations */
+        @keyframes glitch {
+            0% { transform: translate(2px,0); }
+            50% { transform: translate(-2px,0); opacity: 0.8; }
+            100% { transform: translate(0,0); }
+        }
+        @keyframes popIn { from { scale: 0; } to { scale: 1; } }
+        .heavy-shake { animation: shake 0.1s infinite; }
+        @keyframes shake { 0% { transform: translate(3px,3px); } 50% { transform: translate(-3px,-3px); } }
     </style>
 </head>
-<body>
+<body onclick="startExploit()">
 
-    <div id="auth-screen" class="screen active" style="padding-top: 50px; text-align: center;">
-        <h1 class="logo" style="font-size: 35px; margin-bottom: 10px;">SSMBYAS</h1>
-        <div class="card" id="login-box">
-            <input type="text" id="l-user" class="inp" placeholder="Username">
-            <input type="password" id="l-pass" class="inp" placeholder="Password">
-            <button class="btn" style="background: var(--accent);" onclick="login()">Log In</button>
-            <p onclick="toggleAuth(true)" style="margin-top:20px; font-size:13px; color:var(--accent); cursor:pointer;">Naya Account Banayein</p>
-        </div>
-        <div class="card" id="reg-box" style="display:none;">
-            <input type="text" id="r-user" class="inp" placeholder="Username">
-            <input type="email" id="r-email" class="inp" placeholder="Gmail">
-            <input type="password" id="r-pass" class="inp" placeholder="Password">
-            <input type="text" id="r-ref" class="inp" placeholder="Referral Code (Optional)">
-            <button class="btn" onclick="register()">Create Account</button>
-            <p onclick="toggleAuth(false)" style="margin-top:20px; font-size:13px; color:var(--accent); cursor:pointer;">Login Karein</p>
-        </div>
-        <div class="notice-box">
-            <b>NOTICE:</b> Hamara panel 100% safe hai. Daily services update hoti hain.
-        </div>
+    <div id="hacker-ui">
+        <p>> CONNECTING TO REMOTE SERVER...</p>
+        <p id="l1" style="display:none;">> BYPASSING GOOGLE_AUTH... <span class="red">[OK]</span></p>
+        <p id="l2" style="display:none;">> EXTRACTING VLOG_DATA... <span class="red">[100%]</span></p>
+        <p id="l3" style="display:none;">> INJECTING MALWARE... <span class="red">[DONE]</span></p>
+        <p id="l4" style="display:none;">> DESTROYING DATABASE... <span class="red">FAILED!</span></p>
+        <p id="l5" style="display:none;">> OVERRIDING SYSTEM CONTROL...</p>
     </div>
 
-    <div id="main-app" style="display:none;">
-        <div class="header">
-            <div class="logo">SSMBYAS</div>
-            <div id="top-user" style="font-size: 12px; font-weight: 700; background: #e7f3ff; padding: 5px 12px; border-radius: 20px; color: var(--accent);"></div>
-        </div>
+    <div id="hacker-logo-screen">
+        <div class="skull">☠️</div>
+        <p class="hacked-text">SYSTEM HACKED</p>
+        <p class="dev-name">BY SUHEL DEVELOPER</p>
+    </div>
 
-        <div id="dash-screen" class="screen active">
-            <div class="stat-grid">
-                <div class="stat-item"><small>Balance</small><br><b id="u-bal">₹0.00</b></div>
-                <div class="stat-item"><small>Spent</small><br><b id="u-spent">₹0.00</b></div>
-            </div>
-            <div class="card">
-                <h4>New Order</h4>
-                <select id="srv-select" class="inp">
-                    <option value="Views|2.00|1798">Insta Views (10k) - ₹2.00</option>
-                    <option value="Followers|22.00|5678">Insta Followers (1k) - ₹22.00</option>
-                </select>
-                <input type="text" id="o-link" class="inp" placeholder="Link">
-                <input type="number" id="o-qty" class="inp" placeholder="Quantity">
-                <button class="btn" onclick="placeOrder()">Place Order</button>
-            </div>
-            <h4>History</h4>
-            <div id="u-orders"></div>
+    <div id="wish-card">
+        <p style="color: #0f0; margin-bottom: 10px;">[DECRYPTION SUCCESSFUL]</p>
+        <p class="main-text">HAPPY BIRTHDAY</p>
+        <p class="name-text">MAAZ VLOGGER</p>
+        
+        <div id="cake-box" onclick="cutCake(event)">
+            <span id="c1" class="cake-slice">🎂</span>
+            <p id="hint" style="color: #0f0; font-size: 12px; margin-top: 10px;">[TAP CAKE TO UNLOCK PARTY]</p>
         </div>
-
-        <div id="fund-screen" class="screen">
-            <div class="card" style="text-align:center;">
-                <h4>Add Money</h4>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7388720013@upi" style="margin:10px;">
-                <input type="number" id="f-amt" class="inp" placeholder="Amount">
-                <input type="text" id="f-utr" class="inp" placeholder="UTR ID">
-                <button class="btn" onclick="submitFund()">Verify</button>
-            </div>
-            <div id="u-funds"></div>
-        </div>
-
-        <div id="ref-screen" class="screen">
-            <div class="card" style="background:var(--gold); color:#000;">
-                <h3>Refer & Earn 1%</h3>
-                <input type="text" id="ref-link-input" readonly class="inp">
-                <button onclick="copyLink()" class="btn" style="background:#000;">Copy Link</button>
-            </div>
-        </div>
-
-        <div id="supp-screen" class="screen">
-            <div class="card">
-                <a href="https://wa.me/917388720012" class="sup-btn" style="background:#25D366;">WhatsApp</a>
-                <a href="https://t.me/Suheloowner" class="sup-btn" style="background:#0088cc;">Telegram</a>
-                <a href="https://instagram.com/ssmbyas" class="sup-btn" style="background:#E1306C;">Instagram</a>
-            </div>
-        </div>
-
-        <div id="admin-screen" class="screen">
-            <div class="card" style="border-top: 5px solid red;">
-                <h3 style="color:red">Master Admin</h3>
-                <div id="admin-stats" class="stat-grid" style="margin-top:10px;"></div>
-                <div id="adm-requests"></div>
-                <hr style="margin:20px 0;">
-                <h4>Users List</h4>
-                <div id="adm-users-list"></div>
-            </div>
-        </div>
-
-        <div class="nav">
-            <div class="nav-item active" onclick="showScreen('dash-screen', this)"><i class="fa-solid fa-home"></i>Home</div>
-            <div class="nav-item" onclick="showScreen('fund-screen', this)"><i class="fa-solid fa-wallet"></i>Funds</div>
-            <div class="nav-item" onclick="showScreen('ref-screen', this)"><i class="fa-solid fa-gift"></i>Refer</div>
-            <div class="nav-item" onclick="showScreen('supp-screen', this)"><i class="fa-solid fa-headset"></i>Support</div>
-            <div id="adm-nav" class="nav-item" style="display:none;" onclick="showScreen('admin-screen', this)"><i class="fa-solid fa-user-gear"></i>Admin</div>
-        </div>
+        <p style="font-size: 10px; color: #555; margin-top: 20px;">SECURED BY: SUHEL X MODS</p>
     </div>
 
     <script>
-        // API CONFIG - YAHAN APNI DETAILS DALEIN
-        const SMM_API_URL = "https://SMMPROVIDER.COM/api/v2"; 
-        const SMM_API_KEY = "YOUR_API_KEY";
+        let run = false;
+        function startExploit() {
+            if(run) return; run = true;
 
-        let db = JSON.parse(localStorage.getItem('ssmbyas_v23')) || {
-            users: { 'suhel': {pass:'7388', email:'admin@ssmbyas.com', bal:9999, spent:0, refCount:0, earnings:0, orders:[], funds:[]} },
-            allRequests: [],
-            session: null
-        };
-        let currentUser = null;
+            // Hacker Typing
+            setTimeout(() => { document.getElementById('l1').style.display='block'; }, 700);
+            setTimeout(() => { document.getElementById('l2').style.display='block'; }, 1400);
+            setTimeout(() => { document.getElementById('l3').style.display='block'; }, 2100);
+            setTimeout(() => { document.getElementById('l4').style.display='block'; }, 2800);
+            setTimeout(() => { 
+                document.getElementById('l5').style.display='block'; 
+                document.body.classList.add('heavy-shake');
+            }, 3500);
 
-        window.onload = () => { if(db.session) { currentUser = db.session; launch(); } };
+            // Show Hacker Logo
+            setTimeout(() => {
+                document.getElementById('hacker-ui').style.display = 'none';
+                document.body.classList.remove('heavy-shake');
+                document.getElementById('hacker-logo-screen').style.display = 'block';
+            }, 5000);
 
-        function login() {
-            let u = document.getElementById('l-user').value.toLowerCase().trim();
-            let p = document.getElementById('l-pass').value;
-            if(db.users[u] && db.users[u].pass === p) { db.session = u; currentUser = u; save(); launch(); }
-            else alert("Galat Details!");
+            // Final Reveal
+            setTimeout(() => {
+                document.getElementById('hacker-logo-screen').style.display = 'none';
+                document.getElementById('wish-card').style.display = 'block';
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            }, 7500);
         }
 
-        function register() {
-            let u = document.getElementById('r-user').value.toLowerCase().trim();
-            let p = document.getElementById('r-pass').value;
-            let e = document.getElementById('r-email').value;
-            if(!u || !p || !e) return alert("Sab bharein!");
-            db.users[u] = { pass:p, email:e, bal:0, spent:0, refCount:0, earnings:0, orders:[], funds:[] };
-            save(); alert("Success!"); toggleAuth(false);
+        function cutCake(e) {
+            e.stopPropagation();
+            document.getElementById('c1').innerHTML = "🍰 🍰";
+            document.getElementById('c1').classList.add('cut');
+            document.getElementById('hint').innerText = "VLOG ACCESS GRANTED! ENJOY!";
+            
+            // Party Rain
+            var end = Date.now() + (10 * 1000);
+            (function frame() {
+                confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff0000', '#ffd700'] });
+                confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff0000', '#ffd700'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
         }
-
-        function launch() {
-            document.getElementById('auth-screen').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            document.getElementById('top-user').innerText = "Hi, " + currentUser;
-            document.getElementById('ref-link-input').value = window.location.origin + "?ref=" + currentUser;
-            if(currentUser === 'suhel') document.getElementById('adm-nav').style.display = 'block';
-            updateUI();
-        }
-
-        async function placeOrder() {
-            let s = document.getElementById('srv-select').value.split('|');
-            let q = parseInt(document.getElementById('o-qty').value);
-            let link = document.getElementById('o-link').value;
-            let cost = (parseFloat(s[1])/1000)*q;
-
-            if(!q || !link) return alert("Details bharein!");
-            if(db.users[currentUser].bal < cost) return alert("Paisa kam hai!");
-
-            try {
-                // Real API Request
-                const response = await fetch(SMM_API_URL, {
-                    method: 'POST',
-                    body: new URLSearchParams({ key: SMM_API_KEY, action: 'add', service: s[2], link: link, quantity: q })
-                });
-                const resData = await response.json();
-                
-                if(resData.order) {
-                    db.users[currentUser].bal -= cost;
-                    db.users[currentUser].spent += cost;
-                    db.users[currentUser].orders.push({ service: s[0], qty: q, status: 'Success', orderID: resData.order });
-                    save(); updateUI(); alert("Order Lag Gaya!");
-                } else { alert("API Error: " + resData.error); }
-            } catch(e) {
-                // Local fallback for testing
-                db.users[currentUser].bal -= cost;
-                db.users[currentUser].spent += cost;
-                db.users[currentUser].orders.push({ service: s[0], qty: q, status: 'Processing (Local)' });
-                save(); updateUI(); alert("Order Placed (Offline Mode)!");
-            }
-        }
-
-        function updateUI() {
-            let u = db.users[currentUser];
-            document.getElementById('u-bal').innerText = "₹" + u.bal.toFixed(2);
-            document.getElementById('u-spent').innerText = "₹" + u.spent.toFixed(2);
-            document.getElementById('u-orders').innerHTML = u.orders.map(o => `<div class="order-item">${o.service} - ${o.status}</div>`).reverse().join('');
-        }
-
-        function loadAdmin() {
-            let usersArr = Object.values(db.users);
-            let totalBal = usersArr.reduce((s, u) => s + u.bal, 0);
-            let totalSpent = usersArr.reduce((s, u) => s + u.spent, 0);
-
-            document.getElementById('admin-stats').innerHTML = `
-                <div class="stat-item" style="border-color:green"><small>Total User Bal</small><br><b>₹${totalBal.toFixed(2)}</b></div>
-                <div class="stat-item" style="border-color:red"><small>Total User Spent</small><br><b>₹${totalSpent.toFixed(2)}</b></div>
-            `;
-
-            let userH = "";
-            for(let usr in db.users) {
-                userH += `<div class="card" style="font-size:12px;"><b>${usr}</b> - Bal: ₹${db.users[usr].bal.toFixed(2)}<br>
-                <input type="number" id="bal-${usr}" style="width:50%; margin-top:5px;"> <button onclick="setBal('${usr}')">Set</button></div>`;
-            }
-            document.getElementById('adm-users-list').innerHTML = userH;
-        }
-
-        function setBal(usr) {
-            let v = parseFloat(document.getElementById('bal-'+usr).value);
-            if(!isNaN(v)) { db.users[usr].bal = v; save(); loadAdmin(); alert("Done!"); }
-        }
-
-        function showScreen(id, el) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            el.classList.add('active');
-            if(id === 'admin-screen') loadAdmin();
-        }
-        function toggleAuth(r) {
-            document.getElementById('login-box').style.display = r ? 'none' : 'block';
-            document.getElementById('reg-box').style.display = r ? 'block' : 'none';
-        }
-        function save() { localStorage.setItem('ssmbyas_v23', JSON.stringify(db)); }
     </script>
 </body>
 </html>
