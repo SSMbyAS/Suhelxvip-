@@ -1,171 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATAL_ERROR_ACCESS_DENIED</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Archivo+Black&display=swap" rel="stylesheet">
+    <title>SMMbyAS - Professional Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #0f0; font-family: 'Share Tech Mono', monospace; overflow: hidden; height: 100vh; cursor: crosshair; }
+        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; --whatsapp: #25d366; --gold: #facc15; --red: #ef4444; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; }
+        .hidden { display: none !important; }
+        
+        /* Header & Wallet */
+        .header { background: var(--card); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        .wallet-box { background: rgba(56, 189, 248, 0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--primary); color: var(--primary); font-weight: bold; cursor: pointer; }
+        
+        /* Main Card */
+        .card { background: var(--card); padding: 20px; border-radius: 15px; margin: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        label { display: block; margin-bottom: 8px; font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
+        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
+        
+        .btn-main { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-main:active { transform: scale(0.98); }
 
-        /* Background Matrix */
-        canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
-
-        /* Terminal Styling */
-        #terminal { padding: 20px; font-size: 14px; line-height: 1.8; height: 100vh; display: flex; flex-direction: column; justify-content: flex-start; }
-        .red { color: #ff0000; font-weight: bold; }
-        .cyan { color: #00ffff; }
-        .blink { animation: blinker 0.1s infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
-        /* THE FINAL HACKED SCREEN */
-        #hacked-screen {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #ff0000;
-            color: #fff;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            z-index: 9999;
-            animation: flash-bg 0.1s infinite;
-        }
-
-        .hacked-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 40px;
-            text-transform: uppercase;
-            text-shadow: 4px 4px #000;
-            padding: 15px;
-            animation: shake 0.1s infinite;
-        }
-
-        .skull { font-size: 70px; margin-bottom: 15px; }
-
-        @keyframes flash-bg {
-            0%, 100% { background: #ff0000; }
-            50% { background: #000; }
-        }
-
-        @keyframes shake {
-            0% { transform: translate(2px, 2px); }
-            50% { transform: translate(-2px, -2px); }
-            100% { transform: translate(2px, -2px); }
-        }
-
-        #click-to-start {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 10000;
-        }
+        /* Modal Overlay */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: var(--card); width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid var(--primary); }
+        
+        /* Admin Req Style */
+        .admin-req { background: #111; padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--gold); text-align: left; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <div id="click-to-start" onclick="initiateHacking()">
-        <p style="font-size: 20px; color: #0f0;">> [LINK_SECURE_ENCRYPTED]</p>
-        <p style="font-size: 12px; color: #fff; margin-top: 10px;">TAP TO VIEW PRIVATE VLOG</p>
-    </div>
-
-    <canvas id="matrix-canvas"></canvas>
-
-    <div id="terminal">
-        <p id="t1" style="display:none;">> INITIALIZING_REMOTE_EXPLOIT...</p>
-        <p id="t2" style="display:none;">> TARGETING_USER: <span class="red">AFTAB</span></p>
-        <p id="t3" style="display:none;">> STATUS: <span class="cyan">BYPASSING_FIREWALL...</span> [OK]</p>
-        <p id="t4" style="display:none;">> EXTRACTING_METADATA...</p>
-        <div id="leak" style="display:none; color: #00ffff; border-left: 2px solid #00ffff; padding-left: 10px; margin: 10px 0;">
-            <p id="p-os"></p>
-            <p id="p-batt"></p>
-            <p id="p-res"></p>
+    <div id="user-ui">
+        <div class="header">
+            <b onclick="showAdminLogin()" style="cursor:pointer; font-size: 20px;">SMMbyAS</b>
+            <div class="wallet-box" onclick="toggleModal('fund-modal', true)">
+                <i class="fas fa-wallet"></i> ₹<span id="balance">0.00</span>
+            </div>
         </div>
-        <p id="t5" style="display:none;">> ACCESSING_GALLERY: <span class="red">ROOT_ACCESS_GRANTED</span></p>
-        <p id="t6" style="display:none;">> UPLOADING_TO_SERVER: 4.2GB / 12.8GB...</p>
-        <p id="t7" style="display:none; margin-top: 20px;" class="red blink">> CRITICAL ERROR: SYSTEM OVERRIDE BY SUHEL_MODS</p>
+
+        <div class="card">
+            <label><i class="fas fa-list"></i> Category</label>
+            <select id="categorySelect" onchange="loadServices()">
+                <option value="">-- Choose Category --</option>
+                <optgroup label="Instagram Services">
+                    <option value="ig_views">Instagram Views 🎬</option>
+                    <option value="ig_followers">Instagram Followers 👤</option>
+                </optgroup>
+                <optgroup label="YouTube Services">
+                    <option value="yt_subs">YouTube Subscribers 🔴</option>
+                </optgroup>
+            </select>
+
+            <label><i class="fas fa-box-open"></i> Package</label>
+            <select id="serviceSelect" onchange="updatePrice()"><option>Select Category First</option></select>
+            
+            <label><i class="fas fa-link"></i> Target Link</label>
+            <input type="text" id="targetLink" placeholder="https://instagram.com/p/...">
+
+            <label><i class="fas fa-sort-numeric-up"></i> Quantity</label>
+            <input type="number" id="quantity" value="1000" min="100" oninput="updatePrice()">
+
+            <div style="text-align:center; margin: 15px 0;">
+                <span style="color:#94a3b8; font-size: 14px;">Total Cost:</span>
+                <div id="priceDisplay" style="font-size:32px; color:var(--primary); font-weight:900;">₹0.00</div>
+            </div>
+            
+            <button class="btn-main" id="orderBtn" onclick="placeOrder()">PLACE ORDER NOW</button>
+        </div>
     </div>
 
-    <div id="hacked-screen">
-        <div class="skull">☠️</div>
-        <h1 class="hacked-title">YOUR DEVICE HACKED BY SUHEL</h1>
-        <p style="font-weight: bold; font-size: 18px;">ALL DATA HAS BEEN LEAKED</p>
-        <p style="margin-top: 20px; font-size: 12px; letter-spacing: 2px;">LOG_ID: UP51AT6552-X</p>
+    <div id="admin-login-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 style="color:var(--gold);">Admin Panel Access</h3>
+            <input type="text" id="adminUser" placeholder="Username">
+            <input type="password" id="adminPass" placeholder="Password">
+            <button class="btn-main" style="background:var(--gold); color:black;" onclick="handleAdminLogin()">LOGIN</button>
+            <p onclick="toggleModal('admin-login-modal', false)" style="cursor:pointer; margin-top:15px; color:gray;">Close</p>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="hidden" style="padding: 20px;">
+        <h2 style="color:var(--gold);">Pending Fund Requests</h2>
+        <div id="admin-req-list"></div>
+        <button class="btn-main" onclick="location.reload()" style="background:var(--red); margin-top:20px;">Logout</button>
+    </div>
+
+    <div id="fund-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Add Funds (Automatic QR)</h3>
+            <input type="number" id="fundAmt" placeholder="Enter Amount (Min ₹10)">
+            <button class="btn-main" style="background:var(--gold); color:black;" onclick="generateQR()">Show QR Code</button>
+            
+            <div id="qr-area" class="hidden">
+                <img id="qrImg" src="" style="width:200px; margin:20px auto; border:5px solid white; border-radius:10px;">
+                <p style="font-size:12px; color:var(--gold); font-weight: bold;">UPI ID: 7388720012@fam</p>
+                <input type="text" id="fundUTR" placeholder="Enter 12 Digit UTR Number">
+                <button class="btn-main" style="background:var(--whatsapp);" onclick="submitFund()">Submit UTR</button>
+            </div>
+            
+            <button onclick="toggleModal('fund-modal', false)" style="background:none; border:none; color:gray; margin-top:15px; cursor:pointer;">Cancel</button>
+        </div>
     </div>
 
     <script>
-        // Matrix Background
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const alphabet = "01SUHELMODSHACKED777";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        // --- FIXED API CONFIGURATION ---
+        const API_KEY = "C080bea1759ed16e9a765520067e86ed";
+        const API_URL = "https://mrsmm.org/api/v2";
 
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#0F0";
-            ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+        // Service List with mrsmm.org Real IDs
+        const serviceData = {
+            "ig_views": [
+                {id: "1798", name: "Instagram Views [Instant]", rate: 0.50}, // ID 1798 fixed
+                {id: "1800", name: "Instagram Super Fast Views", rate: 1.50}
+            ],
+            "ig_followers": [
+                {id: "1850", name: "IG Followers [30 Days Refill]", rate: 38.00},
+                {id: "1855", name: "IG Followers [Lifetime]", rate: 55.00}
+            ],
+            "yt_subs": [
+                {id: "2100", name: "YouTube Subscribers [Non Drop]", rate: 180.00}
+            ]
+        };
+
+        let userBal = parseFloat(localStorage.getItem('as_wallet_bal')) || 0.00;
+        document.getElementById('balance').innerText = userBal.toFixed(2);
+
+        function toggleModal(id, show) { document.getElementById(id).classList.toggle('hidden', !show); }
+        function showAdminLogin() { toggleModal('admin-login-modal', true); }
+
+        function loadServices() {
+            const cat = document.getElementById('categorySelect').value;
+            const sSel = document.getElementById('serviceSelect');
+            sSel.innerHTML = "";
+            if(cat && serviceData[cat]) {
+                serviceData[cat].forEach(s => {
+                    let opt = document.createElement('option');
+                    opt.value = JSON.stringify(s);
+                    opt.text = `${s.name} - ₹${s.rate}/1k`;
+                    sSel.add(opt);
+                });
+            }
+            updatePrice();
+        }
+
+        function updatePrice() {
+            const val = document.getElementById('serviceSelect').value;
+            const qty = document.getElementById('quantity').value || 0;
+            if(val) {
+                const s = JSON.parse(val);
+                const total = (s.rate / 1000) * qty;
+                document.getElementById('priceDisplay').innerText = "₹" + total.toFixed(2);
             }
         }
-        setInterval(drawMatrix, 33);
 
-        function initiateHacking() {
-            document.getElementById('click-to-start').style.display = 'none';
+        // --- ORDER PLACING LOGIC ---
+        async function placeOrder() {
+            const val = document.getElementById('serviceSelect').value;
+            const link = document.getElementById('targetLink').value;
+            const qty = document.getElementById('quantity').value;
+            const btn = document.getElementById('orderBtn');
+
+            if(!val || !link || qty < 10) return alert("Pehle details check karein!");
             
-            // Start Terminal Sequence
-            setTimeout(() => { document.getElementById('t1').style.display = 'block'; }, 500);
-            setTimeout(() => { document.getElementById('t2').style.display = 'block'; }, 1200);
-            setTimeout(() => { document.getElementById('t3').style.display = 'block'; }, 2000);
-            setTimeout(() => { 
-                document.getElementById('t4').style.display = 'block';
-                document.getElementById('leak').style.display = 'block';
-                document.getElementById('p-os').innerText = "> Device_OS: " + navigator.platform;
-                document.getElementById('p-res').innerText = "> Screen_Res: " + window.screen.width + "x" + window.screen.height;
-                
-                // Get Battery
-                if(navigator.getBattery) {
-                    navigator.getBattery().then(batt => {
-                        document.getElementById('p-batt').innerText = "> Battery_Level: " + Math.round(batt.level * 100) + "% [STOLEN]";
-                    });
+            const s = JSON.parse(val);
+            const cost = (s.rate / 1000) * qty;
+
+            if(userBal < cost) return alert("Balance kam hai! Please Add Funds.");
+
+            btn.innerText = "Connecting to Server... 🔄";
+            btn.disabled = true;
+
+            // CORS Bypass Proxy
+            const orderUrl = `${API_URL}?key=${API_KEY}&action=add&service=${s.id}&link=${encodeURIComponent(link)}&quantity=${qty}`;
+            const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(orderUrl)}`;
+
+            try {
+                const res = await fetch(proxy);
+                const dataRaw = await res.json();
+                const data = JSON.parse(dataRaw.contents);
+
+                if(data.order) {
+                    userBal -= cost;
+                    localStorage.setItem('as_wallet_bal', userBal);
+                    document.getElementById('balance').innerText = userBal.toFixed(2);
+                    alert("Order Placed! Order ID: " + data.order);
+                    location.reload();
+                } else {
+                    alert("Error: " + (data.error || "Order rejected by API."));
                 }
-            }, 2800);
+            } catch (err) {
+                alert("Connection Error! Try again or use Paid Hosting.");
+            } finally {
+                btn.innerText = "PLACE ORDER NOW";
+                btn.disabled = false;
+            }
+        }
 
-            setTimeout(() => { document.getElementById('t5').style.display = 'block'; }, 4000);
-            setTimeout(() => { document.getElementById('t6').style.display = 'block'; }, 4800);
-            setTimeout(() => { document.getElementById('t7').style.display = 'block'; }, 5500);
+        // --- FUND SYSTEM ---
+        function generateQR() {
+            const amt = document.getElementById('fundAmt').value;
+            if(amt < 10) return alert("Min ₹10!");
+            document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=7388720012@fam%26am=${amt}%26cu=INR`;
+            document.getElementById('qr-area').classList.remove('hidden');
+        }
 
-            // THE FINAL REVEAL
-            setTimeout(() => {
-                document.getElementById('terminal').style.display = 'none';
-                document.getElementById('hacked-screen').style.display = 'flex';
-                
-                // Vibration & Sound Attack
-                if ("vibrate" in navigator) {
-                    navigator.vibrate([500, 200, 500, 200, 1000, 500, 2000]);
-                }
-                
-                // Beep Sound
-                try {
-                    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    let osc = audioCtx.createOscillator();
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-                    osc.connect(audioCtx.destination);
-                    osc.start();
-                    setTimeout(() => osc.stop(), 3000);
-                } catch(e) {}
+        function submitFund() {
+            const amt = document.getElementById('fundAmt').value;
+            const utr = document.getElementById('fundUTR').value;
+            if(utr.length < 12) return alert("Sahi UTR number daalo!");
 
-            }, 7500);
+            let reqs = JSON.parse(localStorage.getItem('as_admin_reqs')) || [];
+            reqs.push({amt, utr, id: Date.now()});
+            localStorage.setItem('as_admin_reqs', JSON.stringify(reqs));
+            alert("Request Sent! Admin approve karega.");
+            location.reload();
+        }
+
+        // --- ADMIN DASHBOARD ---
+        function handleAdminLogin() {
+            if(document.getElementById('adminUser').value === "admin786" && document.getElementById('adminPass').value === "suhel@pass") {
+                document.getElementById('user-ui').classList.add('hidden');
+                document.getElementById('admin-login-modal').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                loadReqs();
+            } else { alert("Wrong Login!"); }
+        }
+
+        function loadReqs() {
+            const list = document.getElementById('admin-req-list');
+            let reqs = JSON.parse(localStorage.getItem('as_admin_reqs')) || [];
+            list.innerHTML = reqs.length === 0 ? "<p>No requests.</p>" : reqs.map(r => `
+                <div class="admin-req">
+                    <b>UTR:</b> ${r.utr} | <b>₹${r.amt}</b>
+                    <button onclick="approve(${r.id}, ${r.amt})" style="background:green; color:white; border:none; padding:5px; float:right;">Approve</button>
+                </div>
+            `).join('');
+        }
+
+        function approve(id, amt) {
+            userBal += parseFloat(amt);
+            localStorage.setItem('as_wallet_bal', userBal);
+            let reqs = JSON.parse(localStorage.getItem('as_admin_reqs')) || [];
+            reqs = reqs.filter(x => x.id !== id);
+            localStorage.setItem('as_admin_reqs', JSON.stringify(reqs));
+            alert("Balance Added!"); loadReqs();
         }
     </script>
 </body>
