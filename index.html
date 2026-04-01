@@ -1,251 +1,146 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMMbyAS - Professional Panel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>FutureOfSMM - GitHub Edition</title>
     <style>
-        :root { --primary: #38bdf8; --bg: #0f172a; --card: #1e293b; --whatsapp: #25d366; --gold: #facc15; --red: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding-bottom: 80px; }
+        :root { --red: #ff4d4d; --bg: #f4f7f6; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; padding: 0; }
         .hidden { display: none !important; }
         
-        /* Header & Wallet */
-        .header { background: var(--card); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
-        .wallet-box { background: rgba(56, 189, 248, 0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--primary); color: var(--primary); font-weight: bold; cursor: pointer; }
-        
-        /* Main Card */
-        .card { background: var(--card); padding: 20px; border-radius: 15px; margin: 15px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        label { display: block; margin-bottom: 8px; font-size: 12px; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
-        input, select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
-        
-        .btn-main { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-main:active { transform: scale(0.98); }
+        /* Login UI from Image 111 */
+        .auth-screen { background: white; min-height: 100vh; text-align: center; padding: 20px; }
+        .since-badge { background: var(--red); color: white; padding: 8px 20px; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 20px; }
+        input { width: 100%; max-width: 350px; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 25px; background: #fcfcfc; box-sizing: border-box; text-align: center; }
+        .btn-red { background: var(--red); color: white; border: none; width: 100%; max-width: 350px; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,77,77,0.3); }
 
-        /* Modal Overlay */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .modal-content { background: var(--card); width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; text-align: center; border: 1px solid var(--primary); }
+        /* Dashboard Styles */
+        .header { background: white; padding: 15px; border-bottom: 2px solid var(--red); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .card { background: white; padding: 15px; margin: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .service-list-container { max-height: 400px; overflow-y: auto; }
         
-        /* Admin Req Style */
-        .admin-req { background: #111; padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--gold); text-align: left; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: var(--red); color: white; padding: 10px; position: sticky; top: 0; }
+        td { padding: 10px; border-bottom: 1px solid #eee; }
+        .id-tag { background: #eee; padding: 2px 5px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+        #status-msg { color: var(--red); font-weight: bold; text-align: center; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="user-ui">
+    <div id="auth-page" class="auth-screen">
+        <div class="since-badge">SINCE 2019</div>
+        <p><b>Best and most Trusted SMM panel in the world</b></p>
+        
+        <div id="login-box">
+            <input type="text" id="l-user" placeholder="Username">
+            <input type="password" id="l-pass" placeholder="Password">
+            <button class="btn-red" onclick="doLogin()">Log In</button>
+            <p style="font-size: 13px; margin-top: 15px;">No account? <span style="color:red; cursor:pointer" onclick="toggleAuth(true)">Sign Up</span></p>
+        </div>
+
+        <div id="signup-box" class="hidden">
+            <input type="text" id="s-user" placeholder="New Username">
+            <input type="email" id="s-mail" placeholder="Gmail">
+            <input type="password" id="s-pass" placeholder="New Password">
+            <button class="btn-red" onclick="doSignup()">Create Account</button>
+            <p style="font-size: 13px; margin-top: 15px;">Have account? <span style="color:red; cursor:pointer" onclick="toggleAuth(false)">Login</span></p>
+        </div>
+        <img src="https://i.ibb.co/hR0Z0wz/girl-smm.png" style="width: 85%; max-width: 380px; margin-top: 20px;">
+    </div>
+
+    <div id="dashboard" class="hidden">
         <div class="header">
-            <b onclick="showAdminLogin()" style="cursor:pointer; font-size: 20px;">SMMbyAS</b>
-            <div class="wallet-box" onclick="toggleModal('fund-modal', true)">
-                <i class="fas fa-wallet"></i> ₹<span id="balance">0.00</span>
-            </div>
+            <b>FutureOfSMM</b>
+            <span onclick="location.reload()" style="color:red; font-weight:bold; cursor:pointer;">Logout</span>
+        </div>
+
+        <div class="card" style="text-align:center; background: var(--red); color: white;">
+            <small>WALLET BALANCE</small>
+            <h2 id="wallet-amt">₹ 0.00</h2>
         </div>
 
         <div class="card">
-            <label><i class="fas fa-list"></i> Category</label>
-            <select id="categorySelect" onchange="loadServices()">
-                <option value="">-- Choose Category --</option>
-                <optgroup label="Instagram Services">
-                    <option value="ig_views">Instagram Views 🎬</option>
-                    <option value="ig_followers">Instagram Followers 👤</option>
-                </optgroup>
-                <optgroup label="YouTube Services">
-                    <option value="yt_subs">YouTube Subscribers 🔴</option>
-                </optgroup>
-            </select>
-
-            <label><i class="fas fa-box-open"></i> Package</label>
-            <select id="serviceSelect" onchange="updatePrice()"><option>Select Category First</option></select>
-            
-            <label><i class="fas fa-link"></i> Target Link</label>
-            <input type="text" id="targetLink" placeholder="https://instagram.com/p/...">
-
-            <label><i class="fas fa-sort-numeric-up"></i> Quantity</label>
-            <input type="number" id="quantity" value="1000" min="100" oninput="updatePrice()">
-
-            <div style="text-align:center; margin: 15px 0;">
-                <span style="color:#94a3b8; font-size: 14px;">Total Cost:</span>
-                <div id="priceDisplay" style="font-size:32px; color:var(--primary); font-weight:900;">₹0.00</div>
+            <h4>All API Services (mrsmm.org)</h4>
+            <div id="status-msg">Fetching Services...</div>
+            <div class="service-list-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Service Name</th><th>Rate/1k</th></tr>
+                    </thead>
+                    <tbody id="service-body">
+                        </tbody>
+                </table>
             </div>
-            
-            <button class="btn-main" id="orderBtn" onclick="placeOrder()">PLACE ORDER NOW</button>
-        </div>
-    </div>
-
-    <div id="admin-login-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3 style="color:var(--gold);">Admin Panel Access</h3>
-            <input type="text" id="adminUser" placeholder="Username">
-            <input type="password" id="adminPass" placeholder="Password">
-            <button class="btn-main" style="background:var(--gold); color:black;" onclick="handleAdminLogin()">LOGIN</button>
-            <p onclick="toggleModal('admin-login-modal', false)" style="cursor:pointer; margin-top:15px; color:gray;">Close</p>
-        </div>
-    </div>
-
-    <div id="admin-panel" class="hidden" style="padding: 20px;">
-        <h2 style="color:var(--gold);">Pending Fund Requests</h2>
-        <div id="admin-req-list"></div>
-        <button class="btn-main" onclick="location.reload()" style="background:var(--red); margin-top:20px;">Logout</button>
-    </div>
-
-    <div id="fund-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Add Funds (Automatic QR)</h3>
-            <input type="number" id="fundAmt" placeholder="Enter Amount (Min ₹10)">
-            <button class="btn-main" style="background:var(--gold); color:black;" onclick="generateQR()">Show QR Code</button>
-            
-            <div id="qr-area" class="hidden">
-                <img id="qrImg" src="" style="width:200px; margin:20px auto; border:5px solid white; border-radius:10px;">
-                <p style="font-size:12px; color:var(--gold); font-weight: bold;">UPI ID: 7388720012@fam</p>
-                <input type="text" id="fundUTR" placeholder="Enter 12 Digit UTR Number">
-                <button class="btn-main" style="background:var(--whatsapp);" onclick="submitFund()">Submit UTR</button>
-            </div>
-            
-            <button onclick="toggleModal('fund-modal', false)" style="background:none; border:none; color:gray; margin-top:15px; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
     <script>
-        // --- FIXED API CONFIGURATION ---
-        const API_KEY = "C080bea1759ed16e9a765520067e86ed";
-        const API_URL = "https://mrsmm.org/api/v2";
-
-        // Service List with mrsmm.org Real IDs
-        const serviceData = {
-            "ig_views": [
-                {id: "1798", name: "Instagram Views [Instant]", rate: 0.50}, // ID 1798 fixed
-                {id: "1800", name: "Instagram Super Fast Views", rate: 1.50}
-            ],
-            "ig_followers": [
-                {id: "1850", name: "IG Followers [30 Days Refill]", rate: 38.00},
-                {id: "1855", name: "IG Followers [Lifetime]", rate: 55.00}
-            ],
-            "yt_subs": [
-                {id: "2100", name: "YouTube Subscribers [Non Drop]", rate: 180.00}
-            ]
-        };
-
-        let userBal = parseFloat(localStorage.getItem('as_wallet_bal')) || 0.00;
-        document.getElementById('balance').innerText = userBal.toFixed(2);
-
-        function toggleModal(id, show) { document.getElementById(id).classList.toggle('hidden', !show); }
-        function showAdminLogin() { toggleModal('admin-login-modal', true); }
-
-        function loadServices() {
-            const cat = document.getElementById('categorySelect').value;
-            const sSel = document.getElementById('serviceSelect');
-            sSel.innerHTML = "";
-            if(cat && serviceData[cat]) {
-                serviceData[cat].forEach(s => {
-                    let opt = document.createElement('option');
-                    opt.value = JSON.stringify(s);
-                    opt.text = `${s.name} - ₹${s.rate}/1k`;
-                    sSel.add(opt);
-                });
-            }
-            updatePrice();
+        const API_KEY = "c1e861781b85818df7b3a4bd6b9509cb";
+        
+        function toggleAuth(isSignup) {
+            document.getElementById('signup-box').classList.toggle('hidden', !isSignup);
+            document.getElementById('login-box').classList.toggle('hidden', isSignup);
         }
 
-        function updatePrice() {
-            const val = document.getElementById('serviceSelect').value;
-            const qty = document.getElementById('quantity').value || 0;
-            if(val) {
-                const s = JSON.parse(val);
-                const total = (s.rate / 1000) * qty;
-                document.getElementById('priceDisplay').innerText = "₹" + total.toFixed(2);
+        function doSignup() {
+            let u = document.getElementById('s-user').value;
+            let p = document.getElementById('s-pass').value;
+            if(u && p) {
+                localStorage.setItem('u', u); localStorage.setItem('p', p);
+                alert("Account created! Now Login."); toggleAuth(false);
             }
         }
 
-        // --- ORDER PLACING LOGIC ---
-        async function placeOrder() {
-            const val = document.getElementById('serviceSelect').value;
-            const link = document.getElementById('targetLink').value;
-            const qty = document.getElementById('quantity').value;
-            const btn = document.getElementById('orderBtn');
-
-            if(!val || !link || qty < 10) return alert("Pehle details check karein!");
+        function doLogin() {
+            let u = document.getElementById('l-user').value;
+            let p = document.getElementById('l-pass').value;
             
-            const s = JSON.parse(val);
-            const cost = (s.rate / 1000) * qty;
-
-            if(userBal < cost) return alert("Balance kam hai! Please Add Funds.");
-
-            btn.innerText = "Connecting to Server... 🔄";
-            btn.disabled = true;
-
-            // CORS Bypass Proxy
-            const orderUrl = `${API_URL}?key=${API_KEY}&action=add&service=${s.id}&link=${encodeURIComponent(link)}&quantity=${qty}`;
-            const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(orderUrl)}`;
-
-            try {
-                const res = await fetch(proxy);
-                const dataRaw = await res.json();
-                const data = JSON.parse(dataRaw.contents);
-
-                if(data.order) {
-                    userBal -= cost;
-                    localStorage.setItem('as_wallet_bal', userBal);
-                    document.getElementById('balance').innerText = userBal.toFixed(2);
-                    alert("Order Placed! Order ID: " + data.order);
-                    location.reload();
-                } else {
-                    alert("Error: " + (data.error || "Order rejected by API."));
-                }
-            } catch (err) {
-                alert("Connection Error! Try again or use Paid Hosting.");
-            } finally {
-                btn.innerText = "PLACE ORDER NOW";
-                btn.disabled = false;
+            // Admin bypass
+            if(u === 'admin' && p === 'suhel@786') {
+                alert("Admin Access!"); loadServices();
+                document.getElementById('auth-page').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                return;
             }
+
+            if(u === localStorage.getItem('u') && p === localStorage.getItem('p')) {
+                document.getElementById('auth-page').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                loadServices();
+            } else { alert("Invalid Credentials!"); }
         }
 
-        // --- FUND SYSTEM ---
-        function generateQR() {
-            const amt = document.getElementById('fundAmt').value;
-            if(amt < 10) return alert("Min ₹10!");
-            document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=7388720012@fam%26am=${amt}%26cu=INR`;
-            document.getElementById('qr-area').classList.remove('hidden');
-        }
+        // --- THE FIX FOR CORS ERROR ON GITHUB ---
+        async function loadServices() {
+            const status = document.getElementById('status-msg');
+            const tbody = document.getElementById('service-body');
+            
+            try {
+                // Using a different proxy: AllOrigins
+                const targetUrl = `https://mrsmm.org/api/v2?key=${API_KEY}&action=services`;
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
 
-        function submitFund() {
-            const amt = document.getElementById('fundAmt').value;
-            const utr = document.getElementById('fundUTR').value;
-            if(utr.length < 12) return alert("Sahi UTR number daalo!");
+                const response = await fetch(proxyUrl);
+                const json = await response.json();
+                const services = JSON.parse(json.contents);
 
-            let reqs = JSON.parse(localStorage.getItem('as_admin_reqs')) || [];
-            reqs.push({amt, utr, id: Date.now()});
-            localStorage.setItem('as_admin_reqs', JSON.stringify(reqs));
-            alert("Request Sent! Admin approve karega.");
-            location.reload();
-        }
+                let html = "";
+                services.forEach(s => {
+                    html += `<tr>
+                        <td><span class="id-tag">${s.service}</span></td>
+                        <td>${s.name}</td>
+                        <td style="color:red; font-weight:bold;">₹${s.rate}</td>
+                    </tr>`;
+                });
 
-        // --- ADMIN DASHBOARD ---
-        function handleAdminLogin() {
-            if(document.getElementById('adminUser').value === "admin786" && document.getElementById('adminPass').value === "suhel@pass") {
-                document.getElementById('user-ui').classList.add('hidden');
-                document.getElementById('admin-login-modal').classList.add('hidden');
-                document.getElementById('admin-panel').classList.remove('hidden');
-                loadReqs();
-            } else { alert("Wrong Login!"); }
-        }
-
-        function loadReqs() {
-            const list = document.getElementById('admin-req-list');
-            let reqs = JSON.parse(localStorage.getItem('as_admin_reqs')) || [];
-            list.innerHTML = reqs.length === 0 ? "<p>No requests.</p>" : reqs.map(r => `
-                <div class="admin-req">
-                    <b>UTR:</b> ${r.utr} | <b>₹${r.amt}</b>
-                    <button onclick="approve(${r.id}, ${r.amt})" style="background:green; color:white; border:none; padding:5px; float:right;">Approve</button>
-                </div>
-            `).join('');
-        }
-
-        function approve(id, amt) {
-            userBal += parseFloat(amt);
-            localStorage.setItem('as_wallet_bal', userBal);
-            let reqs = JSON.parse(localStorage.getItem('as_admin_reqs')) || [];
-            reqs = reqs.filter(x => x.id !== id);
-            localStorage.setItem('as_admin_reqs', JSON.stringify(reqs));
-            alert("Balance Added!"); loadReqs();
+                tbody.innerHTML = html;
+                status.classList.add('hidden');
+            } catch (err) {
+                status.innerText = "Error: Proxy Busy. Refresh the page or try again!";
+                console.error(err);
+            }
         }
     </script>
 </body>
