@@ -3,596 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HACKER X KING</title>
+    <title>SUHEL X MODS - VIP SERVER</title>
     <style>
-        :root {
-            --primary: #FF4D4D;
-            --secondary: #B31217;
-            --accent: #00E676;
-            --gold: #FFD700;
-            --dark: #121212;
-            --light: #FFFFFF;
-            --card-bg: rgba(20, 20, 20, 0.97);
-            --glass: rgba(255, 255, 255, 0.15);
-            --telegram-blue: #0088CC;
-        }
+        :root { --neon: #00ff41; --danger: #ff003c; --gold: #ffea00; --bg: #050505; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
         
-        @font-face {
-            font-family: 'Rajdhani';
-            src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
-        }
+        .top-bar { display: flex; justify-content: space-between; padding: 10px 15px; background: #000; font-size: 11px; border-bottom: 1px solid #111; }
+        .zigzag-name { font-size: 32px; font-weight: 900; letter-spacing: 3px; margin: 20px 0; color: #fff; text-shadow: 0 0 15px var(--neon); }
         
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: radial-gradient(circle at center, #000000, #121212);
-            color: var(--light);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-        }
+        .glass-box { max-width: 400px; margin: 10px auto; background: rgba(255,255,255,0.02); border: 1px solid #222; border-radius: 20px; padding: 20px; }
         
-        /* Login Page */
-        .login-container {
-            width: 95%;
-            max-width: 350px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 
-                0 0 20px rgba(255, 77, 77, 0.3),
-                inset 0 0 10px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass);
-            padding: 30px;
-            text-align: center;
-            animation: fadeIn 0.5s ease-out;
-        }
+        .pred-display { font-size: 50px; font-weight: 900; margin: 15px 0; color: var(--neon); text-shadow: 0 0 20px var(--neon); }
+        .locked-text { color: #111; text-shadow: none; -webkit-text-stroke: 1px var(--neon); }
         
-        .login-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--light);
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
+        .btn-active { width: 90%; padding: 15px; background: var(--neon); border: none; border-radius: 12px; color: #000; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
         
-        .login-input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: 2px solid var(--glass);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            font-size: 16px;
-            outline: none;
-            font-weight: 600;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
-            transition: all 0.3s;
-        }
-        
-        .login-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
-        }
-        
-        .login-button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 77, 0.5);
-            transition: all 0.3s;
-        }
-        
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(255, 77, 77, 0.7);
-        }
-        
-        /* Main Dashboard (hidden initially) */
-        .dashboard {
-            display: none;
-            width: 95%;
-            max-width: 400px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 
-                0 0 20px rgba(255, 77, 77, 0.3),
-                inset 0 0 10px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass);
-            position: relative;
-            margin: 20px;
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        /* Header */
-        .header {
-            padding: 20px;
-            background: linear-gradient(135deg, 
-                rgba(255, 77, 77, 0.8), 
-                rgba(179, 18, 23, 0.8));
-            text-align: center;
-            border-bottom: 1px solid var(--glass);
-        }
-        
-        .title {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            margin: 0;
-        }
-        
-        /* Input Section */
-        .input-section {
-            padding: 20px;
-            border-bottom: 1px solid var(--glass);
-            text-align: center;
-        }
-        
-        .period-input {
-            width: 140px;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid var(--glass);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            font-size: 24px;
-            text-align: center;
-            outline: none;
-            font-weight: 700;
-            margin: 0 auto;
-            display: block;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
-        }
-        
-        /* Prediction Display */
-        .prediction-display {
-            padding: 25px;
-            position: relative;
-            min-height: 200px;
-        }
-        
-        .ultimate-orb {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, 
-                rgba(30, 30, 30, 0.9) 0%, 
-                rgba(18, 18, 18, 0.9) 70%);
-            border: 6px solid var(--primary);
-            box-shadow: 
-                inset 0 0 30px rgba(0, 0, 0, 0.9),
-                0 0 40px rgba(255, 77, 77, 0.5);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .ultimate-orb.green {
-            border-color: var(--accent);
-            box-shadow: 
-                inset 0 0 30px rgba(0, 0, 0, 0.9),
-                0 0 40px rgba(0, 230, 118, 0.5);
-        }
-        
-        .prediction-content {
-            text-align: center;
-            width: 100%;
-        }
-        
-        .prediction-label {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-        
-        .prediction-number {
-            font-size: 50px;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 0 10px currentColor;
-            margin-top: 5px;
-        }
-        
-        .red-label {
-            color: var(--primary);
-            text-shadow: 0 0 8px var(--primary);
-        }
-        
-        .green-label {
-            color: var(--accent);
-            text-shadow: 0 0 8px var(--accent);
-        }
-        
-        .sure-badge {
-            position: absolute;
-            bottom: 20px;
-            background: rgba(255, 215, 0, 0.2);
-            color: var(--gold);
-            padding: 6px 15px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-            border: 1px solid rgba(255, 215, 0, 0.4);
-        }
-        
-        /* Action Button */
-        .action-button {
-            width: calc(100% - 40px);
-            margin: 0 20px 20px;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(to right, 
-                var(--primary), 
-                var(--secondary));
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 77, 77, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Status Message */
-        .status-message {
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            min-height: 18px;
-            font-weight: 600;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 15px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.5);
-            border-top: 1px solid var(--glass);
-        }
-        
-        /* Popup */
-        .popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        
-        .popup-content {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 300px;
-            border: 1px solid var(--glass);
-            box-shadow: 0 0 30px rgba(255, 77, 77, 0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s;
-        }
-        
-        .popup.show {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .popup.show .popup-content {
-            transform: scale(1);
-        }
-        
-        .popup-title {
-            color: var(--primary);
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .popup-message {
-            margin-bottom: 20px;
-        }
-        
-        .popup-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .popup-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(255, 77, 77, 0.5);
-        }
+        table { width: 100%; margin-top: 15px; border-collapse: collapse; font-size: 13px; color: #ccc; }
+        th { color: #555; padding: 10px; border-bottom: 1px solid #222; }
+        td { padding: 12px; border-bottom: 1px solid #111; }
+        .win { color: var(--neon); font-weight: bold; }
+        .loss { color: var(--danger); font-weight: bold; }
 
-        /* Telegram FAB (Floating Action Button) */
-        #telegramFab {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--telegram-blue);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            z-index: 99;
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        #telegramFab:hover {
-            transform: scale(1.1) translateY(-2px);
-            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.6);
-        }
-
-        #telegramFab img {
-            width: 30px;
-            height: 30px;
-        }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .modal-content { background: #111; padding: 25px; border-radius: 20px; border: 1px solid var(--neon); width: 85%; max-width: 350px; }
         
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        
-        /* Special Prediction Indicator */
-        .special-prediction {
-            margin-top: 10px;
-            font-size: 12px;
-            color: var(--gold);
-            text-shadow: 0 0 5px var(--gold);
-            font-weight: 600;
-        }
+        /* QR Container Fix */
+        .qr-frame { background: #fff; padding: 15px; border-radius: 15px; margin: 15px auto; width: 200px; height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .qr-frame img { width: 100%; height: auto; display: block; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="login-container" id="loginContainer">
-        <div class="login-title">𓆩HACKER X KING 𝙇𝙊𝙂𝙄𝙉 𝙋𝘼𝙂𝙀𓆪 LOGIN</div>
-        <input type="text" class="login-input" id="usernameInput" placeholder="Username" autocomplete="off">
-        <input type="password" class="login-input" id="passwordInput" placeholder="Password" autocomplete="off">
-        <button class="login-button" id="loginButton">LOGIN</button>
+
+<div class="top-bar">
+    <div id="live-clock">--:--:--</div>
+    <div id="expire-timer" style="color: var(--gold);">EXPIRES IN: 72:00:00</div>
+</div>
+
+<div class="zigzag-name">SUHEL X MODS</div>
+
+<div class="glass-box">
+    <div id="period-id" style="color:#888; font-size: 13px;">LIVE PERIOD NUMBER: FETCHING...</div>
+    <div id="prediction-box" class="pred-display locked-text">LOCKED</div>
+    <div id="game-timer" style="color:var(--gold); font-family: monospace; font-size: 18px;">00:00</div>
+    <button id="action-btn" class="btn-active" onclick="showPay()">PREMIUM ACTIVE ✅</button>
+</div>
+
+<div class="glass-box">
+    <h4 style="text-align: left; margin: 0; color: #555; font-size: 12px;">SIGNAL HISTORY</h4>
+    <table>
+        <thead><tr><th>PRD</th><th>SIGNAL</th><th>RESULT</th></tr></thead>
+        <tbody id="logs"></tbody>
+    </table>
+</div>
+
+<div id="payModal" class="modal">
+    <div class="modal-content">
+        <h3 style="color:var(--neon); margin: 0;">Activate VIP Server</h3>
+        <p style="font-size: 12px; color: #888;">Scan & Pay ₹500 (3 Days Access)</p>
+        
+        <div class="qr-frame">
+             <img src="https://i.ibb.co/VpXN1XF/qr.png" alt="QR Code">
+        </div>
+        
+        <p style="color:var(--neon); font-weight:bold; margin: 5px 0; font-size: 14px;">7388720012@fam</p>
+        
+        <input type="text" id="utr" placeholder="Enter 12 Digit UTR" style="width:90%; padding:12px; margin-bottom:15px; background:#000; border:1px solid #333; color:var(--neon); text-align:center; border-radius: 8px;">
+        <button class="btn-active" onclick="submitUTR()">SUBMIT UTR</button>
+        <button onclick="closePay()" style="background:none; border:none; color:#444; margin-top:10px; cursor:pointer;">Cancel</button>
     </div>
+</div>
 
-    <div class="dashboard" id="dashboard">
-        <div class="header">
-            <div class="title">HACKER X KING</div>
-        </div>
-        
-        <div class="input-section">
-            <input type="number" class="period-input" id="periodInput" placeholder="000" maxlength="3">
-        </div>
-        
-        <div class="status-message" id="statusMessage">ENTER 3-DIGIT PERIOD (000-999)</div>
-        
-        <div class="prediction-display">
-            <div class="ultimate-orb" id="ultimateOrb">
-                <div class="prediction-content" id="predictionContent">
-                    <div class="prediction-label" id="predictionLabel">-</div>
-                    <div class="prediction-number" id="predictionNumber">-</div>
-                </div>
-                <div class="sure-badge" id="sureBadge">ANALYZING...</div>
-            </div>
-            <div class="special-prediction" id="specialPrediction"></div>
-        </div>
-        
-        <button class="action-button" id="predictBtn">PREDICT NOW</button>
-        
-        <div class="footer">
-            DXM STAR ULTIMATE PREDICTOR © 2025
-        </div>
-    </div>
+<script>
+    const DEVICE_ID = btoa(navigator.userAgent).slice(0, 8);
+    let isVip = false;
+    let nextSignal = "";
 
-    <div id="telegramFab">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo">
-    </div>
+    setInterval(() => {
+        document.getElementById('live-clock').innerText = new Date().toLocaleTimeString().toLowerCase();
+        checkVipStatus();
+    }, 1000);
 
-    <div class="popup" id="loginPopup">
-        <div class="popup-content">
-            <div class="popup-title" id="loginPopupTitle">CHECKING KEY</div>
-            <div class="popup-message" id="loginPopupMessage">Please wait 3 seconds...</div>
-        </div>
-    </div>
+    function showPay() { if(!isVip) document.getElementById('payModal').style.display = 'flex'; }
+    function closePay() { document.getElementById('payModal').style.display = 'none'; }
 
-    <div class="popup" id="mainPopup">
-        <div class="popup-content">
-            <div class="popup-title" id="mainPopupTitle">ALREADY PREDICTED!</div>
-            <div class="popup-message" id="mainPopupMessage">This period was already analyzed. Please enter a different 3-digit number.</div>
-            <button class="popup-button" id="mainPopupButton">OK</button>
-        </div>
-    </div>
+    function submitUTR() {
+        const u = document.getElementById('utr').value;
+        if(u.length < 10) return alert("Please enter a valid 12-digit UTR!");
+        let r = JSON.parse(localStorage.getItem('suhel_reqs') || '[]');
+        r.push({ utr: u, dev: DEVICE_ID, status: 'pending', time: new Date().toLocaleString() });
+        localStorage.setItem('suhel_reqs', JSON.stringify(r));
+        alert("Success! Admin approval pending.");
+        closePay();
+    }
 
-    <script>
-        // Correct login credentials
-        const CORRECT_USERNAME = "HACKER";
-        const CORRECT_PASSWORD = "HACKERXKING";
+    function checkVipStatus() {
+        const apps = JSON.parse(localStorage.getItem('suhel_approvals') || '{}');
+        if (apps[DEVICE_ID]) {
+            const now = new Date().getTime();
+            const diff = apps[DEVICE_ID].expiry - now;
+            if (diff > 0) {
+                isVip = true;
+                document.getElementById('prediction-box').classList.remove('locked-text');
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                document.getElementById('expire-timer').innerText = `EXPIRES IN: ${h}:${m}:${s}`;
+            } else {
+                isVip = false;
+                document.getElementById('prediction-box').classList.add('locked-text');
+                document.getElementById('prediction-box').innerText = "LOCKED";
+            }
+        }
+    }
 
-        // Elements
-        const loginContainer = document.getElementById('loginContainer');
-        const dashboard = document.getElementById('dashboard');
-        const usernameInput = document.getElementById('usernameInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const loginButton = document.getElementById('loginButton');
-        const loginPopup = document.getElementById('loginPopup');
-        const loginPopupTitle = document.getElementById('loginPopupTitle');
-        const loginPopupMessage = document.getElementById('loginPopupMessage');
-        
-        const periodInput = document.getElementById('periodInput');
-        const predictBtn = document.getElementById('predictBtn');
-        const ultimateOrb = document.getElementById('ultimateOrb');
-        const predictionLabel = document.getElementById('predictionLabel');
-        const predictionNumber = document.getElementById('predictionNumber');
-        const statusMessage = document.getElementById('statusMessage');
-        const mainPopup = document.getElementById('mainPopup');
-        const mainPopupButton = document.getElementById('mainPopupButton');
-        const sureBadge = document.getElementById('sureBadge');
-        const specialPrediction = document.getElementById('specialPrediction');
-        const telegramFab = document.getElementById('telegramFab');
+    async function startServer() {
+        setInterval(async () => {
+            try {
+                const res = await fetch('https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json');
+                const data = await res.json();
+                const last = data.data.list[0];
+                
+                document.getElementById('period-id').innerText = "LIVE PERIOD NUMBER: " + (BigInt(last.issueNumber) + 1n);
+                const sec = 60 - new Date().getSeconds();
+                document.getElementById('game-timer').innerText = `00:${sec < 10 ? '0'+sec : sec}`;
 
-        // Track predicted periods
-        const predictedPeriods = new Set();
-        let lastPrediction = null;
-
-        // Login Button Click
-        loginButton.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-
-            // Show checking popup
-            loginPopupTitle.textContent = "CHECKING KEY";
-            loginPopupMessage.textContent = "Please wait 3 seconds...";
-            loginPopup.classList.add('show');
-
-            // Simulate authentication delay
-            setTimeout(() => {
-                if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
-                    // Successful login
-                    loginContainer.style.display = 'none';
-                    dashboard.style.display = 'block';
-                    periodInput.focus();
-                } else {
-                    // Failed login
-                    loginPopupTitle.textContent = "WRONG KEY!";
-                    loginPopupMessage.textContent = "KEY BUY KR LE BHENCHOD 🤡";
+                if (sec === 59 || !nextSignal) {
+                    nextSignal = Math.random() > 0.5 ? "BIG" : "SMALL";
                 }
 
-                // Hide popup after 3 seconds
-                setTimeout(() => {
-                    loginPopup.classList.remove('show');
-                }, 3000);
-            }, 3000);
-        });
+                if(isVip) {
+                    document.getElementById('prediction-box').innerText = nextSignal;
+                } else {
+                    document.getElementById('prediction-box').innerText = "LOCKED";
+                }
 
-        // Enhanced prediction algorithm
-        function generateSmartPrediction(period) {
-            const paddedPeriod = period.padStart(3, '0');
-            const digit1 = parseInt(paddedPeriod[0]);
-            const digit2 = parseInt(paddedPeriod[1]);
-            const digit3 = parseInt(paddedPeriod[2]);
-            
-            // Multiple calculation methods
-            const sum = digit1 + digit2 + digit3;
-            const product = digit1 * digit2 * digit3 || 1;
-            const digitSum = sum.toString().split('').reduce((a,b) => parseInt(a)+parseInt(b), 0);
-            const timeFactor = new Date().getSeconds() % 10;
-            
-            // Special pattern detection (for 100% sure predictions)
-            let isSpecial = false;
-            if (digit1 === digit2 && digit2 === digit3) {  // All digits same
-                isSpecial = true;
-            } else if (digit1+1 === digit2 && digit2+1 === digit3) {  // Consecutive numbers
-                isSpecial = true;
-            } else if (sum === 10 || sum === 20) {  // Special sums
-                isSpecial = true;
-            }
-            
-            // Final calculation
-            let finalNum = (sum * product + digitSum + timeFactor) % 10;
-            
-            // Determine BIG (5-9) or SMALL (0-4)
-            const isBig = finalNum >= 5;
-            
-            return {
-                number: finalNum,
-                type: isBig ? 'BIG' : 'SMALL',
-                color: isBig ? 'red' : 'green',
-                isSpecial: isSpecial
-            };
-        }
-        
-        // Display prediction
-        function displayPrediction(prediction) {
-            // Reset orb
-            ultimateOrb.className = "ultimate-orb";
-            
-            // Add color class
-            ultimateOrb.classList.add(prediction.color);
-            
-            // Display label and number
-            predictionLabel.textContent = prediction.type;
-            predictionLabel.className = `prediction-label ${prediction.color}-label fade-in`;
-            
-            predictionNumber.textContent = prediction.number;
-            predictionNumber.className = "prediction-number fade-in";
-            
-            // Update badge based on prediction confidence
-            if (prediction.isSpecial) {
-                sureBadge.textContent = "SURE 100%✓✓";
-                specialPrediction.textContent = "SPECIAL PATTERN DETECTED - SAFE BET!";
-            } else {
-                sureBadge.textContent = "ANALYZED 98.7%";
-                specialPrediction.textContent = "";
-            }
-            
-            // Store last prediction
-            lastPrediction = prediction;
-        }
-        
-        // Show popup
-        function showPopup() {
-            mainPopup.classList.add('show');
-        }
-        
-        // Hide popup
-        function hidePopup() {
-            mainPopup.classList.remove('show');
-        }
-        
-        // Prediction Button Click
-        predictBtn.addEventListener('click', () => {
-            const period = periodInput.value.trim();
-            
-            if (period.le
+                if (window.lastID !== last.issueNumber) {
+                    const actualRes = parseInt(last.number) >= 5 ? "BIG" : "SMALL";
+                    const displaySignal = window.prevSignal || (Math.random() > 0.5 ? "BIG" : "SMALL");
+                    const winStatus = (displaySignal === actualRes) ? "WIN" : "LOSS";
+                    
+                    const row = `<tr>
+                        <td>${last.issueNumber.slice(-4)}</td>
+                        <td>${displaySignal}</td>
+                        <td class="${winStatus === 'WIN' ? 'win' : 'loss'}">${winStatus}</td>
+                    </tr>`;
+                    
+                    document.getElementById('logs').insertAdjacentHTML('afterbegin', row);
+                    window.lastID = last.issueNumber;
+                    window.prevSignal = nextSignal;
+                }
+            } catch(e) { console.log("Sync Error"); }
+        }, 2000);
+    }
+    startServer();
+</script>
+</body>
+</html>
